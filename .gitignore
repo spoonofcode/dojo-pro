@@ -33,7 +33,7 @@ proguard/
 # Caches
 .idea/caches/
 
-# Keystore (if applicable)
+# Keystore
 # Uncomment if you don't want to track keystore files
 # *.jks
 # *.keystore
@@ -47,9 +47,30 @@ captures/
 **/build/
 !**/*/gradle/wrapper/gradle-wrapper.jar
 
-# iOS Specific (if applicable)
-# Refer to official documentation for details on ignoring Xcode project files
-# https://git-scm.com/docs/gitignore
+# Android
+local.properties
+**/build/
+**/captures/
+.externalNativeBuild/
+.cxx/
+gradle/
+**/outputs/
+**/generated/
+*.log
+*.keystore
+*.jks
+
+# iOS/macOS
+.DS_Store
+captures
+.externalNativeBuild
+.cxx
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
 
 # IDE specific ignore files (choose one based on your IDE)
 
@@ -58,6 +79,3 @@ captures/
 
 # For IntelliJ IDEA only
 *.form
-
-# macOS specific
-.DS_Store
