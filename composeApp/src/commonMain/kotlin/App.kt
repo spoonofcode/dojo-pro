@@ -6,15 +6,18 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import tabs.calendar.CalendarTab
 import tabs.home.HomeTab
-import tabs.settings.SettingsTab
+import tabs.profile.ProfileTab
+import tabs.search.SearchTab
+import tabs.shop.ShopTab
 
 @Composable
 @Preview
@@ -28,7 +31,10 @@ fun App() {
                 bottomBar = {
                     NavigationBar {
                         TabNavigationItem(HomeTab)
-                        TabNavigationItem(SettingsTab)
+                        TabNavigationItem(SearchTab)
+                        TabNavigationItem(CalendarTab)
+                        TabNavigationItem(ShopTab)
+                        TabNavigationItem(ProfileTab)
                     }
                 },
                 content = { CurrentTab() },
