@@ -10,6 +10,9 @@
 .gradle/
 build/
 
+# Kotlin
+.kotlin/
+
 # Local configuration
 local.properties
 
