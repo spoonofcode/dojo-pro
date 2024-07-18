@@ -10,15 +10,21 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import core.ui.ext.koinViewModel
 
 class ProfileScreen : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
+        val viewModel = koinViewModel<ProfileViewModel>()
+        val viewState by viewModel.viewState.collectAsState()
+
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -34,7 +40,7 @@ class ProfileScreen : Screen {
                     .padding(innerPadding)
             ) {
                 Text(
-                    text = "Profile",
+                    text = viewState.title,
                 )
             }
         }
