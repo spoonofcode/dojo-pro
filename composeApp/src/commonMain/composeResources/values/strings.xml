@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DojoPro</string>
+    <string name="coach">Coach</string>
+    <string name="settings">Settings</string>
+</resources>
