@@ -20,4 +20,8 @@ internal class CreateSportEventViewModel(
 //        }
 //    }
 
+    fun changeTitle(title:String) {
+
+    }
+
 }

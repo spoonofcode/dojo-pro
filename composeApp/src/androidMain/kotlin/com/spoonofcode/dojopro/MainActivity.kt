@@ -29,6 +29,7 @@ fun AppAndroidPreview() {
 //    App()
 
     CreateSportEventScreen().ContentView(
-        viewState = CreateSportEventViewState()
+        viewState = CreateSportEventViewState(),
+        changeTitle = {},
     )
 }
