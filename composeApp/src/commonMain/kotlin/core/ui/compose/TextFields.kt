@@ -12,7 +12,7 @@ object TextFields {
         value: String,
         label: String,
         onValueChange: (String) -> Unit,
-    ): Unit {
+    ) {
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,

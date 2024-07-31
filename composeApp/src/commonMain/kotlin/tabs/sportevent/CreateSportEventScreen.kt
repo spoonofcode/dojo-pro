@@ -25,13 +25,16 @@ import com.spoonofcode.dojopro.resources.min_number_of_people
 import com.spoonofcode.dojopro.resources.room
 import com.spoonofcode.dojopro.resources.start
 import com.spoonofcode.dojopro.resources.submit
+import com.spoonofcode.dojopro.resources.time
 import com.spoonofcode.dojopro.resources.title
 import com.spoonofcode.dojopro.resources.type
 import core.ui.Dimens
 import core.ui.compose.Buttons
+import core.ui.compose.DatePickers
 import core.ui.compose.DropdownMenu
 import core.ui.compose.Spacers
 import core.ui.compose.TextFields
+import core.ui.compose.TimePickers
 import core.ui.ext.koinViewModel
 import fakeData.getFakeCoaches
 import org.jetbrains.compose.resources.stringResource
@@ -126,6 +129,18 @@ class CreateSportEventScreen : Screen {
                     value = viewState.title,
                     onValueChange = { changeTitle(it) },
                     label = stringResource(resource = Res.string.min_number_of_people),
+                )
+
+                DatePickers.CustomDatePicker(
+                    label = stringResource(resource = Res.string.start),
+                    onValueChange = {}
+                )
+
+                TimePickers.CustomTimePicker(
+                    label = stringResource(resource = Res.string.time),
+                    onValueChange = {},
+                    onConfirm = {},
+                    onDismiss = {},
                 )
 
                 Spacers.Weight1(this)
