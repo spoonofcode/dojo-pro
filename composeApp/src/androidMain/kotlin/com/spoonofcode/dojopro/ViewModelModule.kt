@@ -5,7 +5,7 @@ import tabs.home.HomeViewModel
 import tabs.profile.ProfileViewModel
 import tabs.search.SearchViewModel
 import tabs.shop.ShopViewModel
-import tabs.sportevent.CreateSportEventViewModel
+import tabs.sportevent.create.CreateSportEventViewModel
 import tabs.settings.SettingsViewModel
 
 actual val viewModelModule = module {

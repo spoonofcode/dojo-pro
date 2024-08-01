@@ -1,8 +1,6 @@
-package tabs.sportevent
+package tabs.sportevent.create
 
-import androidx.lifecycle.viewModelScope
 import core.ui.BaseViewModel
-import kotlinx.coroutines.launch
 import repository.ProfileRepository
 
 internal class CreateSportEventViewModel(

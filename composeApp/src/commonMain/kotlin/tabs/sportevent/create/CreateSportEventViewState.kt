@@ -1,4 +1,4 @@
-package tabs.sportevent
+package tabs.sportevent.create
 
 import fakeData.getFakeCoaches
 import model.Coach
