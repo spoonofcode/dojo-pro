@@ -3,9 +3,9 @@ package tabs.sportevent.create
 import core.ui.BaseViewModel
 import repository.ProfileRepository
 
-internal class CreateSportEventViewModel(
+internal class SportEventCreateViewModel(
     private val profileRepository: ProfileRepository
-) : BaseViewModel<CreateSportEventViewState>(CreateSportEventViewState()) {
+) : BaseViewModel<SportEventCreateViewState>(SportEventCreateViewState()) {
 
 //    fun confirmEvent() {
 //        viewModelScope.launch {

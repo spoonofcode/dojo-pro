@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import com.spoonofcode.dojopro.resources.Res
@@ -40,11 +41,11 @@ import fakeData.getFakeLevels
 import fakeData.getFakeRooms
 import org.jetbrains.compose.resources.stringResource
 
-class CreateSportEventScreen : Screen {
+class SportEventCreateScreen : Screen {
 
     @Composable
     override fun Content() {
-        val viewModel = koinViewModel<CreateSportEventViewModel>()
+        val viewModel = koinViewModel<SportEventCreateViewModel>()
         val viewState by viewModel.viewState.collectAsState()
 
         ContentView(
@@ -56,7 +57,7 @@ class CreateSportEventScreen : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     internal fun ContentView(
-        viewState: CreateSportEventViewState,
+        viewState: SportEventCreateViewState,
         changeTitle: (String) -> Unit,
     ) {
         Scaffold(

@@ -6,8 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import tabs.sportevent.create.CreateSportEventScreen
-import tabs.sportevent.create.CreateSportEventViewState
+import tabs.sportevent.create.SportEventCreateScreen
+import tabs.sportevent.create.SportEventCreateViewState
 import java.util.Locale
 
 class MainActivity : ComponentActivity() {
@@ -28,8 +28,8 @@ class MainActivity : ComponentActivity() {
 fun AppAndroidPreview() {
 //    App()
 
-    CreateSportEventScreen().ContentView(
-        viewState = CreateSportEventViewState(),
+    SportEventCreateScreen().ContentView(
+        viewState = SportEventCreateViewState(),
         changeTitle = {},
     )
 }
