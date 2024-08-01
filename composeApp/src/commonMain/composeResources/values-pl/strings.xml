@@ -17,6 +17,8 @@
 
     <!-- SECTION Event -->
     <string name="room">Room</string>
+    <string name="group_classes">Group classes</string>
+    <string name="number_of_people">Number of People</string>
     <string name="max_number_of_people">Max Number of People</string>
     <string name="min_number_of_people">Min Number of People</string>
 </resources>

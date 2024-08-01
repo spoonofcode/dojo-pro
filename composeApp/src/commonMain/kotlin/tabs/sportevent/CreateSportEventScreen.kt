@@ -18,25 +18,27 @@ import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.coach
 import com.spoonofcode.dojopro.resources.cost
 import com.spoonofcode.dojopro.resources.description
-import com.spoonofcode.dojopro.resources.end
+import com.spoonofcode.dojopro.resources.group_classes
 import com.spoonofcode.dojopro.resources.level
-import com.spoonofcode.dojopro.resources.max_number_of_people
-import com.spoonofcode.dojopro.resources.min_number_of_people
+import com.spoonofcode.dojopro.resources.number_of_people
 import com.spoonofcode.dojopro.resources.room
 import com.spoonofcode.dojopro.resources.start
 import com.spoonofcode.dojopro.resources.submit
 import com.spoonofcode.dojopro.resources.time
 import com.spoonofcode.dojopro.resources.title
-import com.spoonofcode.dojopro.resources.type
 import core.ui.Dimens
 import core.ui.compose.Buttons
 import core.ui.compose.DatePickers
-import core.ui.compose.DropdownMenu
+import core.ui.compose.DropDownMenus.DropdownMenu
+import core.ui.compose.Sliders.RangeSlider
 import core.ui.compose.Spacers
+import core.ui.compose.Switchs.Switch
 import core.ui.compose.TextFields
 import core.ui.compose.TimePickers
 import core.ui.ext.koinViewModel
 import fakeData.getFakeCoaches
+import fakeData.getFakeLevels
+import fakeData.getFakeRooms
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -90,47 +92,37 @@ class CreateSportEventScreen : Screen {
                     values = getFakeCoaches().map { it.fullName },
                     onValueChange = { }
                 )
-                TextFields.Outlined(
-                    value = viewState.title,
-                    onValueChange = { changeTitle(it) },
+                DropdownMenu(
+                    enabled = true,
                     label = stringResource(resource = Res.string.room),
+                    value = getFakeRooms().first().name,
+                    values = getFakeRooms().map { it.name },
+                    onValueChange = { }
                 )
-                TextFields.Outlined(
-                    value = viewState.title,
-                    onValueChange = { changeTitle(it) },
+                DropdownMenu(
+                    enabled = true,
                     label = stringResource(resource = Res.string.level),
+                    value = getFakeLevels().first().name,
+                    values = getFakeLevels().map { it.name },
+                    onValueChange = { }
                 )
-                TextFields.Outlined(
-                    value = viewState.title,
-                    onValueChange = { changeTitle(it) },
-                    label = stringResource(resource = Res.string.type),
+
+                Switch(
+                    label = stringResource(resource = Res.string.group_classes)
                 )
+
+                RangeSlider(
+                    label = stringResource(resource = Res.string.number_of_people),
+                    minValue = 1f,
+                    maxValue = 10f,
+                    steps = 8,
+                )
+
                 TextFields.Outlined(
                     value = viewState.title,
                     onValueChange = { changeTitle(it) },
                     label = stringResource(resource = Res.string.cost),
                 )
-                TextFields.Outlined(
-                    value = viewState.title,
-                    onValueChange = { changeTitle(it) },
-                    label = stringResource(resource = Res.string.start),
-                )
-                TextFields.Outlined(
-                    value = viewState.title,
-                    onValueChange = { changeTitle(it) },
-                    label = stringResource(resource = Res.string.end),
-                )
-                TextFields.Outlined(
-                    value = viewState.title,
-                    onValueChange = { changeTitle(it) },
-                    label = stringResource(resource = Res.string.max_number_of_people),
-                )
-                TextFields.Outlined(
-                    value = viewState.title,
-                    onValueChange = { changeTitle(it) },
-                    label = stringResource(resource = Res.string.min_number_of_people),
-                )
-
                 DatePickers.CustomDatePicker(
                     label = stringResource(resource = Res.string.start),
                     onValueChange = {}
