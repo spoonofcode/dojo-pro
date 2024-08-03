@@ -6,6 +6,7 @@ import tabs.profile.ProfileViewModel
 import tabs.search.SearchViewModel
 import tabs.shop.ShopViewModel
 import tabs.sportevent.create.SportEventCreateViewModel
+import tabs.sportevent.details.SportEventDetailsViewModel
 import tabs.settings.SettingsViewModel
 
 actual val viewModelModule = module {
@@ -16,5 +17,6 @@ actual val viewModelModule = module {
     viewModelOf(::ShopViewModel)
 
     viewModelOf(::SportEventCreateViewModel)
+    viewModelOf(::SportEventDetailsViewModel)
     viewModelOf(::SettingsViewModel)
 }

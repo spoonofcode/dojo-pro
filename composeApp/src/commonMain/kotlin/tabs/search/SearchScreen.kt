@@ -1,6 +1,7 @@
 package tabs.search
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -26,9 +25,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import core.ui.ext.koinViewModel
 import fakeData.getFakeSportEvents
 import model.SportEvent
+import tabs.sportevent.details.SportEventDetailsScreen
 
 class SearchScreen : Screen {
 
@@ -37,6 +40,7 @@ class SearchScreen : Screen {
     override fun Content() {
         val viewModel = koinViewModel<SearchViewModel>()
         val viewState by viewModel.viewState.collectAsState()
+        val navigator: Navigator = LocalNavigator.currentOrThrow
 
         Scaffold(
             topBar = {
@@ -55,7 +59,10 @@ class SearchScreen : Screen {
                     LazyColumn(
                         content = {
                             itemsIndexed(it) { index: Int, item: SportEvent ->
-                                SportEventItem(item = item)
+                                SportEventItem(
+                                    item = item,
+                                    onClick = { navigator.push(SportEventDetailsScreen()) }
+                                )
                             }
                         }
                     )
@@ -65,16 +72,21 @@ class SearchScreen : Screen {
     }
 
     @Composable
-    fun SportEventItem(item: SportEvent) {
+    fun SportEventItem(
+        item: SportEvent,
+        onClick: () -> Unit,
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(MaterialTheme.colorScheme.primary)
-                .padding(16.dp),
+                .padding(16.dp)
+                .clickable {
+                    onClick()
+                },
             verticalAlignment = Alignment.CenterVertically
-
         ) {
             Column(
                 modifier = Modifier.weight(1f)

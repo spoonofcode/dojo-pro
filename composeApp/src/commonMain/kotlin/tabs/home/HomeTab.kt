@@ -10,6 +10,7 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cafe.adriel.voyager.transitions.SlideTransition
 import tabs.sportevent.create.SportEventCreateScreen
+import tabs.sportevent.details.SportEventDetailsScreen
 
 object HomeTab : Tab {
 
@@ -30,7 +31,7 @@ object HomeTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(screen = SportEventCreateScreen()) { navigator ->
+        Navigator(screen = SportEventDetailsScreen()) { navigator ->
             SlideTransition(navigator = navigator)
         }
     }
