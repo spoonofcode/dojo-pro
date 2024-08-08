@@ -1,7 +1,6 @@
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -12,6 +11,7 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import core.ui.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import tabs.calendar.CalendarTab
 import tabs.home.HomeTab
@@ -22,7 +22,7 @@ import tabs.shop.ShopTab
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    AppTheme {
         TabNavigator(
             tab = HomeTab
         ) {
