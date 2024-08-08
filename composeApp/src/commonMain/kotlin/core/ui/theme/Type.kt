@@ -5,14 +5,15 @@ import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import dojopro.composeapp.generated.resources.Res
-import dojopro.composeapp.generated.resources.plus_jakarta_sans_bold
-import dojopro.composeapp.generated.resources.plus_jakarta_sans_extra_bold
-import dojopro.composeapp.generated.resources.plus_jakarta_sans_extra_light
-import dojopro.composeapp.generated.resources.plus_jakarta_sans_light
-import dojopro.composeapp.generated.resources.plus_jakarta_sans_medium
-import dojopro.composeapp.generated.resources.plus_jakarta_sans_regular
-import dojopro.composeapp.generated.resources.plus_jakarta_sans_semi_bold
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.plus_jakarta_sans_bold
+import com.spoonofcode.dojopro.resources.plus_jakarta_sans_extra_bold
+import com.spoonofcode.dojopro.resources.plus_jakarta_sans_extra_light
+import com.spoonofcode.dojopro.resources.plus_jakarta_sans_light
+import com.spoonofcode.dojopro.resources.plus_jakarta_sans_medium
+import com.spoonofcode.dojopro.resources.plus_jakarta_sans_regular
+import com.spoonofcode.dojopro.resources.plus_jakarta_sans_semi_bold
+
 import org.jetbrains.compose.resources.Font
 
 @Composable
