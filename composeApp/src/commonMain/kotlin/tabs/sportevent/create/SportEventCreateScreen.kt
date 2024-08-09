@@ -122,12 +122,17 @@ class SportEventCreateScreen : Screen {
                     onValueChange = { changeTitle(it) },
                     label = stringResource(resource = Res.string.cost),
                 )
-                DatePickers.CustomDatePicker(
+
+                DatePickers.DatePickerWithTimer(
+                    label = stringResource(resource = Res.string.start),
+                )
+
+                DatePickers.DatePicker(
                     label = stringResource(resource = Res.string.start),
                     onValueChange = {}
                 )
 
-                TimePickers.CustomTimePicker(
+                TimePickers.TimePicker(
                     label = stringResource(resource = Res.string.time),
                     onValueChange = {},
                     onConfirm = {},
@@ -136,7 +141,7 @@ class SportEventCreateScreen : Screen {
 
                 Spacers.Weight1(this)
 
-                Spacers.BetweenFields()
+                Spacers.VerticalBetweenFields()
                 Buttons.PrimaryButton(
                     text = stringResource(resource = Res.string.submit),
                     onClick = {}

@@ -68,6 +68,6 @@ object DropDownMenus{
                 }
             }
         }
-        Spacers.BetweenFields()
+        Spacers.VerticalBetweenFields()
     }
 }

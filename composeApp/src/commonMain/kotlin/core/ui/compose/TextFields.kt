@@ -15,16 +15,17 @@ object TextFields {
         modifier: Modifier = Modifier.fillMaxWidth(),
         enabled: Boolean = true,
         readOnly: Boolean = false,
-        label: String,
+        label: String? = null,
         innerLabel: String? = null,
         trailingIcon: @Composable (() -> Unit)? = null,
         isError: Boolean = false,
     ) {
-
-        Text(
-            text = label,
-            fontWeight = FontWeight.Bold
-        )
+        label?.let {
+            Text(
+                text = it,
+                fontWeight = FontWeight.Bold
+            )
+        }
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
@@ -35,6 +36,6 @@ object TextFields {
             trailingIcon = trailingIcon,
             isError = isError,
         )
-        Spacers.BetweenFields()
+        Spacers.VerticalBetweenFields()
     }
 }

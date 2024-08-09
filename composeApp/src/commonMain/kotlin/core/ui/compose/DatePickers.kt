@@ -1,6 +1,8 @@
 package core.ui.compose
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
@@ -9,13 +11,13 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.accept
 import com.spoonofcode.dojopro.resources.cancel
@@ -30,9 +32,10 @@ import org.jetbrains.compose.resources.stringResource
 object DatePickers {
 
     @Composable
-    fun CustomDatePicker(
-        label: String,
+    fun DatePicker(
         onValueChange: (String) -> Unit,
+        modifier: Modifier = Modifier.fillMaxWidth(),
+        label: String? = null,
     ) {
         val date =
             remember {
@@ -43,10 +46,11 @@ object DatePickers {
         val isOpen = remember { mutableStateOf(false) }
 
         TextFields.Outlined(
-            readOnly = true,
             value = date.value.format(LocalDate.Formats.ISO),
-            label = label,
             onValueChange = onValueChange,
+            modifier = modifier,
+            readOnly = true,
+            label = label,
             trailingIcon = {
                 IconButton(
                     onClick = { isOpen.value = true } // show de dialog
@@ -57,7 +61,7 @@ object DatePickers {
         )
 
         if (isOpen.value) {
-            CustomDatePickerDialog(
+            DatePickerDialog(
                 onAccept = {
                     isOpen.value = false // close dialog
 
@@ -76,7 +80,35 @@ object DatePickers {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun CustomDatePickerDialog(
+    fun DatePickerWithTimer(
+        label: String? = null,
+    ) {
+        label?.let {
+            Text(
+                text = it,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        Row(
+            Modifier.fillMaxWidth()
+        ) {
+            DatePicker(
+                onValueChange = {},
+                modifier = Modifier.wrapContentWidth().weight(1f),
+            )
+            Spacers.HorizontalBetweenFields()
+            TimePickers.TimePicker(
+                onValueChange = {},
+                modifier = Modifier.wrapContentWidth().weight(1f),
+                onConfirm = {},
+                onDismiss = {},
+            )
+        }
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    private fun DatePickerDialog(
         onAccept: (Long?) -> Unit,
         onCancel: () -> Unit
     ) {

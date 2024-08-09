@@ -1,13 +1,12 @@
 package core.ui.compose
 
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
@@ -16,20 +15,19 @@ import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import kotlinx.datetime.Clock
-import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.format
 import kotlinx.datetime.toLocalDateTime
 
 object TimePickers {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun CustomTimePicker(
-        label: String,
+    fun TimePicker(
         onValueChange: (String) -> Unit,
+        modifier: Modifier = Modifier.fillMaxWidth(),
+        label: String? = null,
         onConfirm: (TimePickerState) -> Unit,
         onDismiss: () -> Unit,
     ) {
@@ -42,8 +40,9 @@ object TimePickers {
         val isOpen = remember { mutableStateOf(false) }
 
         TextFields.Outlined(
-            readOnly = true,
             value = timePickerState.hour.toString() + ":" + timePickerState.minute.toString(),
+            modifier = modifier,
+            readOnly = true,
             label = label,
             onValueChange = onValueChange,
             trailingIcon = {
@@ -74,7 +73,7 @@ object TimePickers {
     }
 
     @Composable
-    fun TimePickerDialog(
+    private fun TimePickerDialog(
         onDismiss: () -> Unit,
         onConfirm: () -> Unit,
         content: @Composable () -> Unit
