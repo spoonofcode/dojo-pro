@@ -31,7 +31,7 @@ object HomeTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(screen = SportEventDetailsScreen()) { navigator ->
+        Navigator(screen = SportEventCreateScreen()) { navigator ->
             SlideTransition(navigator = navigator)
         }
     }

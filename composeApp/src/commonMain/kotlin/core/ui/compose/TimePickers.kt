@@ -33,29 +33,27 @@ object TimePickers {
         onConfirm: (TimePickerState) -> Unit,
         onDismiss: () -> Unit,
     ) {
-
         val timePickerState = rememberTimePickerState(
             initialHour = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).hour,
-            initialMinute = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).minute,
+            initialMinute = Clock.System.now()
+                .toLocalDateTime(TimeZone.currentSystemDefault()).minute,
             is24Hour = true,
         )
         val isOpen = remember { mutableStateOf(false) }
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-
-            OutlinedTextField(
-                readOnly = true,
-                value = timePickerState.hour.toString() + ":" + timePickerState.minute.toString(),
-                label = { Text(text = label) },
-                onValueChange = onValueChange
-            )
-
-            IconButton(
-                onClick = { isOpen.value = true } // show de dialog
-            ) {
-                Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
+        TextFields.Outlined(
+            readOnly = true,
+            value = timePickerState.hour.toString() + ":" + timePickerState.minute.toString(),
+            label = label,
+            onValueChange = onValueChange,
+            trailingIcon = {
+                IconButton(
+                    onClick = { isOpen.value = true } // show de dialog
+                ) {
+                    Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
+                }
             }
-        }
+        )
 
         if (isOpen.value) {
             TimePickerDialog(

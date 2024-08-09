@@ -35,24 +35,26 @@ object DatePickers {
         onValueChange: (String) -> Unit,
     ) {
         val date =
-            remember { mutableStateOf(Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date) }
+            remember {
+                mutableStateOf(
+                    Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+                )
+            }
         val isOpen = remember { mutableStateOf(false) }
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-
-            OutlinedTextField(
-                readOnly = true,
-                value = date.value.format(LocalDate.Formats.ISO),
-                label = { Text(text = label) },
-                onValueChange = onValueChange
-            )
-
-            IconButton(
-                onClick = { isOpen.value = true } // show de dialog
-            ) {
-                Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
+        TextFields.Outlined(
+            readOnly = true,
+            value = date.value.format(LocalDate.Formats.ISO),
+            label = label,
+            onValueChange = onValueChange,
+            trailingIcon = {
+                IconButton(
+                    onClick = { isOpen.value = true } // show de dialog
+                ) {
+                    Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
+                }
             }
-        }
+        )
 
         if (isOpen.value) {
             CustomDatePickerDialog(
