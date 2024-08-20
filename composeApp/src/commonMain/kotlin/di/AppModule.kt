@@ -6,6 +6,7 @@ import io.ktor.serialization.kotlinx.json.json
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import repository.ProfileRepository
+import repository.SportEventRepository
 
 val appModule = module {
     single {
@@ -16,4 +17,5 @@ val appModule = module {
         }
     }
     singleOf(::ProfileRepository)
+    singleOf(::SportEventRepository)
 }

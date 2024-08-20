@@ -98,3 +98,9 @@ android {
     }
 }
 
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.spoonofcode.dojopro.resources"
+    generateResClass = always
+}
+

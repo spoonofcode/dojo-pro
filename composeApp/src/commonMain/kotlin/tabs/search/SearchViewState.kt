@@ -1,5 +1,7 @@
 package tabs.search
 
+import model.SportEvent
+
 internal data class SearchViewState(
-    val title: String = "Search title"
+    val sportEvents: List<SportEvent> = emptyList(),
 )
