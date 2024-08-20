@@ -16,6 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -42,6 +43,10 @@ class SearchScreen : Screen {
         val viewState by viewModel.viewState.collectAsState()
         val navigator: Navigator = LocalNavigator.currentOrThrow
 
+        LaunchedEffect(Unit) {
+            viewModel.getSportEvents()
+        }
+
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -55,7 +60,7 @@ class SearchScreen : Screen {
                     .padding(16.dp)
                     .padding(innerPadding)
             ) {
-                getFakeSportEvents().let {
+                viewState.sportEvents.let {
                     LazyColumn(
                         content = {
                             itemsIndexed(it) { index: Int, item: SportEvent ->
