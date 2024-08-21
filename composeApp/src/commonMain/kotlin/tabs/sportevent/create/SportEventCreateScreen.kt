@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -30,11 +31,13 @@ import core.ui.Dimens
 import core.ui.compose.Buttons
 import core.ui.compose.DatePickers
 import core.ui.compose.DropDownMenus
+import core.ui.compose.LoadingView
 import core.ui.compose.Sliders
 import core.ui.compose.Spacers
 import core.ui.compose.Switchs
 import core.ui.compose.TextFields
 import core.ui.compose.TimePickers
+import core.ui.ext.addIf
 import core.ui.ext.koinViewModel
 import fakeData.getFakeCoaches
 import fakeData.getFakeLevels
@@ -47,6 +50,10 @@ class SportEventCreateScreen : Screen {
     override fun Content() {
         val viewModel = koinViewModel<SportEventCreateViewModel>()
         val viewState by viewModel.viewState.collectAsState()
+
+        LaunchedEffect(Unit) {
+            viewModel.initView()
+        }
 
         ContentView(
             viewState = viewState,
@@ -67,87 +74,90 @@ class SportEventCreateScreen : Screen {
                 )
             }
         ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(Dimens.screenPadding)
-                    .padding(innerPadding)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                TextFields.Outlined(
-                    value = viewState.title,
-                    onValueChange = { changeTitle(it) },
-                    label = stringResource(resource = Res.string.title),
-                )
-                TextFields.Outlined(
-                    value = viewState.title,
-                    onValueChange = { changeTitle(it) },
-                    label = stringResource(resource = Res.string.description),
-                )
-                DropDownMenus.DropdownMenu(
-                    enabled = true,
-                    label = stringResource(resource = Res.string.coach),
-                    value = getFakeCoaches().first().fullName,
-                    values = getFakeCoaches().map { it.fullName },
-                    onValueChange = { }
-                )
-                DropDownMenus.DropdownMenu(
-                    enabled = true,
-                    label = stringResource(resource = Res.string.room),
-                    value = getFakeRooms().first().name,
-                    values = getFakeRooms().map { it.name },
-                    onValueChange = { }
-                )
-                DropDownMenus.DropdownMenu(
-                    enabled = true,
-                    label = stringResource(resource = Res.string.level),
-                    value = getFakeLevels().first().name,
-                    values = getFakeLevels().map { it.name },
-                    onValueChange = { }
-                )
+            if (viewState.isViewLoading) {
+                LoadingView()
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(Dimens.screenPadding)
+                        .padding(innerPadding)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    TextFields.Outlined(
+                        value = viewState.title,
+                        onValueChange = { changeTitle(it) },
+                        label = stringResource(resource = Res.string.title),
+                    )
+                    TextFields.Outlined(
+                        value = viewState.title,
+                        onValueChange = { changeTitle(it) },
+                        label = stringResource(resource = Res.string.description),
+                    )
+                    DropDownMenus.DropdownMenu(
+                        enabled = true,
+                        label = stringResource(resource = Res.string.coach),
+                        value = viewState.coaches.first().fullName,
+                        values = viewState.coaches.map { it.fullName },
+                        onValueChange = { }
+                    )
+                    DropDownMenus.DropdownMenu(
+                        enabled = true,
+                        label = stringResource(resource = Res.string.room),
+                        value = viewState.rooms.first().name,
+                        values = viewState.rooms.map { it.name },
+                        onValueChange = { }
+                    )
+                    DropDownMenus.DropdownMenu(
+                        enabled = true,
+                        label = stringResource(resource = Res.string.level),
+                        value = viewState.levels.first().name,
+                        values = viewState.levels.map { it.name },
+                        onValueChange = { }
+                    )
 
-                Switchs.Switch(
-                    label = stringResource(resource = Res.string.group_classes)
-                )
+                    Switchs.Switch(
+                        label = stringResource(resource = Res.string.group_classes)
+                    )
 
-                Sliders.RangeSlider(
-                    label = stringResource(resource = Res.string.number_of_people),
-                    minValue = 1f,
-                    maxValue = 10f,
-                    steps = 8,
-                )
+                    Sliders.RangeSlider(
+                        label = stringResource(resource = Res.string.number_of_people),
+                        minValue = 1f,
+                        maxValue = 10f,
+                        steps = 8,
+                    )
 
-                TextFields.Outlined(
-                    value = viewState.title,
-                    onValueChange = { changeTitle(it) },
-                    label = stringResource(resource = Res.string.cost),
-                )
+                    TextFields.Outlined(
+                        value = viewState.title,
+                        onValueChange = { changeTitle(it) },
+                        label = stringResource(resource = Res.string.cost),
+                    )
 
-                DatePickers.DatePickerWithTimer(
-                    label = stringResource(resource = Res.string.start),
-                )
+                    DatePickers.DatePickerWithTimer(
+                        label = stringResource(resource = Res.string.start),
+                    )
 
-                DatePickers.DatePicker(
-                    label = stringResource(resource = Res.string.start),
-                    onValueChange = {}
-                )
+                    DatePickers.DatePicker(
+                        label = stringResource(resource = Res.string.start),
+                        onValueChange = {}
+                    )
 
-                TimePickers.TimePicker(
-                    label = stringResource(resource = Res.string.time),
-                    onValueChange = {},
-                    onConfirm = {},
-                    onDismiss = {},
-                )
+                    TimePickers.TimePicker(
+                        label = stringResource(resource = Res.string.time),
+                        onValueChange = {},
+                        onConfirm = {},
+                        onDismiss = {},
+                    )
 
-                Spacers.Weight1(this)
+                    Spacers.Weight1(this)
 
-                Spacers.VerticalBetweenFields()
-                Buttons.PrimaryButton(
-                    text = stringResource(resource = Res.string.submit),
-                    onClick = {}
-                )
-                Spacers.BottomSpace()
-
+                    Spacers.VerticalBetweenFields()
+                    Buttons.PrimaryButton(
+                        text = stringResource(resource = Res.string.submit),
+                        onClick = {}
+                    )
+                    Spacers.BottomSpace()
+                }
             }
         }
     }

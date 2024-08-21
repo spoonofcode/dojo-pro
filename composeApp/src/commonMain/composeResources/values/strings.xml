@@ -15,6 +15,9 @@
     <string name="submit">Submit</string>
     <string name="time">Time</string>
 
+    <!-- SECTION Home -->
+    <string name="my_events">My Events</string>
+
     <!-- SECTION Event -->
     <string name="room">Room</string>
     <string name="group_classes">Group classes</string>

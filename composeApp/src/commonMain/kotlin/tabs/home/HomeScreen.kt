@@ -14,7 +14,10 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.my_events
 import core.ui.ext.koinViewModel
+import org.jetbrains.compose.resources.stringResource
 
 class HomeScreen : Screen {
 
@@ -31,6 +34,8 @@ class HomeScreen : Screen {
         ) {
             Text(text = "Home")
             Text(text = viewState.title)
+
+            Text(text = stringResource(resource = Res.string.my_events))
 
             Button(onClick = {
                 navigator.push(DetailsScreen(id = 1))
