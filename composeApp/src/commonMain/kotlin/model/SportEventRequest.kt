@@ -1,16 +1,10 @@
 package model
 
-import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SportEvent(
-    val id: Int,
-    val creationDate: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC),
-    val updateDate: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC),
+data class SportEventRequest(
     val title: String,
     val description: String,
     val minNumberOfPeople: Int,

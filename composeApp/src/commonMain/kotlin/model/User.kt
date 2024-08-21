@@ -3,7 +3,8 @@ package model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Type(
+data class User(
     val id: Int,
-    val name: String,
+    val firstName: String,
+    val lastName: String,
 )
