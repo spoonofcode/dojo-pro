@@ -1,4 +1,4 @@
-package repository
+package core.repository
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -13,6 +13,7 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import org.koin.mp.KoinPlatform.getKoin
+import repository.BASE_URL
 
 interface CrudRepository<RQ, RS> {
     suspend fun create(request: RQ): RS
@@ -35,8 +36,6 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
             contentType(ContentType.Application.Json)
             setBody(Json.encodeToString(requestSerializer, request)) // Serialize request
         }.body() // Get response as String
-
-        println("BARTEK responseBody = $responseBody")
 
         return Json.decodeFromString(responseSerializer, responseBody) // Deserialize response
     }

@@ -1,5 +1,6 @@
 package repository
 
+import core.repository.GenericCrudRepository
 import model.SportEvent
 import model.SportEventRequest
 
