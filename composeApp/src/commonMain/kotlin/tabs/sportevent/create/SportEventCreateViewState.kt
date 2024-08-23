@@ -3,7 +3,8 @@ package tabs.sportevent.create
 internal data class SportEventCreateViewState(
     val isViewEnable: Boolean = true,
     val isViewLoading: Boolean = true,
-    val title: String = "Profile title",
+    val title: String = "",
+    val description: String = "",
 
     val coaches: Map<Int, String> = emptyMap(),
     val rooms: Map<Int, String> = emptyMap(),
@@ -16,7 +17,8 @@ internal data class SportEventCreateViewState(
     val selectedLevelId: Int? = null,
     val selectedMinNumberOfPeople: Int = DEFAULT_MIN_NUMBER_OF_PEOPLE,
     val selectedMaxNumberOfPeople: Int = DEFAULT_MAX_NUMBER_OF_PEOPLE,
-    val cost: String? = null,
+
+    val cost: String = "",
 ) {
     companion object {
         private const val DEFAULT_MIN_NUMBER_OF_PEOPLE = 4

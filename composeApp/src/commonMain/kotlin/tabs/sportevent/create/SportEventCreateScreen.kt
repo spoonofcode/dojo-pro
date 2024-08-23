@@ -58,11 +58,13 @@ class SportEventCreateScreen : Screen {
         ContentView(
             viewState = viewState,
             changeTitle = { viewModel.changeTitle(it) },
+            changeDescription = { viewModel.changeDescription(it) },
             changeCoach = { viewModel.changeCoach(it) },
             changeRoom = { viewModel.changeRoom(it) },
             changeLevel = { viewModel.changeLevel(it) },
             changeMinNumberOfPeople = { viewModel.changeMinNumberOfPeople(it) },
             changeMaxNumberOfPeople = { viewModel.changeMaxNumberOfPeople(it) },
+            changeCost = { viewModel.changeCost(it) },
         )
     }
 
@@ -71,11 +73,13 @@ class SportEventCreateScreen : Screen {
     internal fun ContentView(
         viewState: SportEventCreateViewState,
         changeTitle: (String) -> Unit,
+        changeDescription: (String) -> Unit,
         changeCoach: (Int) -> Unit,
         changeRoom: (Int) -> Unit,
         changeLevel: (Int) -> Unit,
         changeMinNumberOfPeople: (Int) -> Unit,
         changeMaxNumberOfPeople: (Int) -> Unit,
+        changeCost: (String) -> Unit,
     ) {
         Scaffold(
             topBar = {
@@ -101,7 +105,7 @@ class SportEventCreateScreen : Screen {
                     )
                     TextFields.Outlined(
                         value = viewState.title,
-                        onValueChange = { changeTitle(it) },
+                        onValueChange = { changeDescription(it) },
                         label = stringResource(resource = Res.string.description),
                     )
                     DropDownMenus.DropdownMenu(
@@ -138,9 +142,9 @@ class SportEventCreateScreen : Screen {
                     )
 
                     TextFields.Outlined(
-                        value = viewState.title,
-                        onValueChange = { changeTitle(it) },
                         label = stringResource(resource = Res.string.cost),
+                        value = viewState.cost,
+                        onValueChange = { changeCost(it) },
                     )
 
                     DatePickers.DatePickerWithTimer(

@@ -9,7 +9,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import repository.CoachRepository
 import repository.LevelRepository
-import repository.ProfileRepository
 import repository.RoomRepository
 
 internal class SportEventCreateViewModel(
@@ -54,7 +53,19 @@ internal class SportEventCreateViewModel(
     }
 
     fun changeTitle(title: String) {
-        println("BARTEK changeTitle")
+        viewModelScope.launch {
+            updateState {
+                copy(title = title)
+            }
+        }
+    }
+
+    fun changeDescription(description: String) {
+        viewModelScope.launch {
+            updateState {
+                copy(description = description)
+            }
+        }
     }
 
     fun changeCoach(selectedCoachId: Int) {
@@ -93,6 +104,14 @@ internal class SportEventCreateViewModel(
         viewModelScope.launch {
             updateState {
                 copy(selectedMaxNumberOfPeople = selectedMaxNumberOfPeople)
+            }
+        }
+    }
+
+    fun changeCost(cost: String) {
+        viewModelScope.launch {
+            updateState {
+                copy(cost = cost)
             }
         }
     }
