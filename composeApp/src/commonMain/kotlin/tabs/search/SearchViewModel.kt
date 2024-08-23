@@ -14,7 +14,6 @@ internal class SearchViewModel(
 ) : BaseViewModel<SearchViewState>(SearchViewState()) {
 
     fun getSportEvents() {
-
         viewModelScope.launch {
             sportEventRepository.create(
                 SportEventRequest(

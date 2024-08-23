@@ -14,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -27,16 +28,21 @@ import core.ui.compose.Spacers
 import core.ui.ext.koinViewModel
 import org.jetbrains.compose.resources.painterResource
 
-class SportEventDetailsScreen : Screen {
+data class SportEventDetailsScreen(
+    val sportEventId: Int,
+) : Screen {
 
     @Composable
     override fun Content() {
         val viewModel = koinViewModel<SportEventDetailsViewModel>()
         val viewState by viewModel.viewState.collectAsState()
 
+        LaunchedEffect(Unit) {
+            viewModel.initView(sportEventId = sportEventId)
+        }
+
         ContentView(
             viewState = viewState,
-            changeTitle = { viewModel.changeTitle(it) }
         )
     }
 
@@ -44,7 +50,6 @@ class SportEventDetailsScreen : Screen {
     @Composable
     internal fun ContentView(
         viewState: SportEventDetailsViewState,
-        changeTitle: (String) -> Unit,
     ) {
         Scaffold(
             topBar = {

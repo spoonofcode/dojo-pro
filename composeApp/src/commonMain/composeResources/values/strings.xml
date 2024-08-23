@@ -16,7 +16,8 @@
     <string name="time">Time</string>
 
     <!-- SECTION Home -->
-    <string name="my_events">My Events</string>
+    <string name="my_events">My events</string>
+    <string name="create_event">Create event</string>
 
     <!-- SECTION Event -->
     <string name="room">Room</string>
