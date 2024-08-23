@@ -19,14 +19,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.dojo_room
+import core.ext.formatedLocalDateTime
 import core.ui.Dimens
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
 data class CarouselSportEventItem(
     // TODO Now set static image, later change to loaded image from backend
     val imageResId: DrawableResource = Res.drawable.dojo_room,
+    val sportEventId: Int,
     val title: String,
+    val startEventDateTime: LocalDateTime,
 )
 
 object Carousels {
@@ -35,7 +39,7 @@ object Carousels {
     fun CustomCarousel(
         title: String,
         items: List<CarouselSportEventItem>,
-        onItemClick: () -> Unit,
+        onItemClick: (sportEventId: Int) -> Unit,
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -55,7 +59,7 @@ object Carousels {
                 val item = items[i]
                 ElevatedCard(
                     modifier = Modifier.clickable {
-                        onItemClick()
+                        onItemClick(item.sportEventId)
                     },
                     elevation = CardDefaults.elevatedCardElevation(defaultElevation = 12.dp),
                 ) {
@@ -74,7 +78,7 @@ object Carousels {
                             modifier = Modifier.padding(8.dp)
                         ) {
                             Texts.BL(
-                                text = "CZW., SIE 22 18:00",
+                                text = item.startEventDateTime.formatedLocalDateTime(),
                             )
                             Spacers.VerticalBetweenFields()
                             Texts.BL(

@@ -43,7 +43,7 @@ class HomeScreen : Screen {
                 navigator.push(SportEventCreateScreen())
             },
             goToMyEvent = {
-                navigator.push(SportEventDetailsScreen(sportEventId = 1))
+                navigator.push(SportEventDetailsScreen(it))
             }
         )
     }
@@ -52,7 +52,7 @@ class HomeScreen : Screen {
     internal fun ContentView(
         viewState: HomeViewState,
         createSportEvent: () -> Unit,
-        goToMyEvent: () -> Unit,
+        goToMyEvent: (Int) -> Unit,
     ) {
         Column(
             modifier = Modifier
@@ -63,14 +63,18 @@ class HomeScreen : Screen {
                 LoadingView()
             } else {
                 val items =
-                    viewState.sportEvents.map {
-                        CarouselSportEventItem(title = it.title)
+                    viewState.sportEvents.map { sportEvent ->
+                        CarouselSportEventItem(
+                            sportEventId = sportEvent.id,
+                            title = sportEvent.title,
+                            startEventDateTime = sportEvent.startDateTime
+                        )
                     }
 
                 Carousels.CustomCarousel(
                     title = stringResource(resource = Res.string.my_events),
                     items = items,
-                    onItemClick = goToMyEvent
+                    onItemClick = { goToMyEvent(it) }
                 )
 
                 Column(
