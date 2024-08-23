@@ -5,5 +5,5 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 object LocalDateTimeUtils {
-    fun now() = Clock.System.now().toLocalDateTime(TimeZone.UTC)
+    fun now() = Clock.System.now().toLocalDateTime(TimeZoneUtils.DEFAULT_ZONE)
 }

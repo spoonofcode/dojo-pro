@@ -1,5 +1,10 @@
 package tabs.sportevent.create
 
+import core.ext.plus
+import core.ext.roundToNextHour
+import core.ui.utils.LocalDateTimeUtils
+import kotlinx.datetime.LocalDateTime
+
 internal data class SportEventCreateViewState(
     val isViewEnable: Boolean = true,
     val isViewLoading: Boolean = true,
@@ -19,6 +24,9 @@ internal data class SportEventCreateViewState(
     val selectedMaxNumberOfPeople: Int = DEFAULT_MAX_NUMBER_OF_PEOPLE,
 
     val cost: String = "",
+
+    val startDateTime: LocalDateTime = LocalDateTimeUtils.now().roundToNextHour(),
+    val endDateTime: LocalDateTime = LocalDateTimeUtils.now().plus(hours = 1).roundToNextHour(),
 ) {
     companion object {
         private const val DEFAULT_MIN_NUMBER_OF_PEOPLE = 4
