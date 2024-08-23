@@ -36,6 +36,7 @@ import core.ui.compose.Sliders
 import core.ui.compose.Spacers
 import core.ui.compose.TextFields
 import core.ui.ext.koinViewModel
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
 class SportEventCreateScreen : Screen {
@@ -65,6 +66,8 @@ class SportEventCreateScreen : Screen {
             changeMinNumberOfPeople = { viewModel.changeMinNumberOfPeople(it) },
             changeMaxNumberOfPeople = { viewModel.changeMaxNumberOfPeople(it) },
             changeCost = { viewModel.changeCost(it) },
+            changeStartDateTime = { viewModel.changeStartDateTime(it) },
+            changeEndDateTime = { viewModel.changeEndDateTime(it) },
         )
     }
 
@@ -80,6 +83,8 @@ class SportEventCreateScreen : Screen {
         changeMinNumberOfPeople: (Int) -> Unit,
         changeMaxNumberOfPeople: (Int) -> Unit,
         changeCost: (String) -> Unit,
+        changeStartDateTime: (LocalDateTime) -> Unit,
+        changeEndDateTime: (LocalDateTime) -> Unit,
     ) {
         Scaffold(
             topBar = {
@@ -149,10 +154,18 @@ class SportEventCreateScreen : Screen {
 
                     DatePickers.DatePickerWithTimer(
                         label = stringResource(resource = Res.string.start),
+                        value = viewState.startDateTime,
+                        onValueChange = {
+                            changeStartDateTime(it)
+                        },
                     )
 
                     DatePickers.DatePickerWithTimer(
                         label = stringResource(resource = Res.string.end),
+                        value = viewState.endDateTime,
+                        onValueChange = {
+                            changeEndDateTime(it)
+                        },
                     )
 
                     Spacers.Weight1(this)

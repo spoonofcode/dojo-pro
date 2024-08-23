@@ -11,13 +11,15 @@ import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Duration.Companion.hours
 
+
+
 private val DEFAULT_DATE_TIME_FORMAT = LocalDateTime.Format {
     date(
         LocalDate.Format {
             dayOfMonth()
             char(' ')
             monthName(MonthNames.ENGLISH_ABBREVIATED)
-            chars(" ")
+            char(' ')
             year()
         }
     )

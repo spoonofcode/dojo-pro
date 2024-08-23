@@ -1,12 +1,14 @@
 package tabs.sportevent.create
 
 import androidx.lifecycle.viewModelScope
+import core.ext.formatedLocalDateTime
 import core.ui.BaseViewModel
 import core.ui.ext.launchWithProgress
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDateTime
 import repository.CoachRepository
 import repository.LevelRepository
 import repository.RoomRepository
@@ -116,4 +118,20 @@ internal class SportEventCreateViewModel(
         }
     }
 
+    fun changeStartDateTime(startDateTime: LocalDateTime) {
+        println("BARTEK startDateTime = ${startDateTime.formatedLocalDateTime()}")
+        viewModelScope.launch {
+            updateState {
+                copy(startDateTime = startDateTime)
+            }
+        }
+    }
+
+    fun changeEndDateTime(endDateTime: LocalDateTime) {
+        viewModelScope.launch {
+            updateState {
+                copy(endDateTime = endDateTime)
+            }
+        }
+    }
 }
