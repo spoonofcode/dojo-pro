@@ -8,15 +8,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
+import model.SportEventRequest
 import repository.CoachRepository
 import repository.LevelRepository
 import repository.RoomRepository
+import repository.SportEventRepository
 
 internal class SportEventCreateViewModel(
     private val coachRepository: CoachRepository,
     private val roomRepository: RoomRepository,
     private val levelRepository: LevelRepository,
+    private val sportEventRepository: SportEventRepository,
 ) : BaseViewModel<SportEventCreateViewState>(SportEventCreateViewState()) {
 
     fun initView() {
@@ -131,6 +135,34 @@ internal class SportEventCreateViewModel(
         viewModelScope.launch {
             updateState {
                 copy(endDateTime = endDateTime)
+            }
+        }
+    }
+
+    fun createSportEvent() {
+        viewModelScope.launchWithProgress(
+            onProgress = ::setLoadingView
+        ) {
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    val currentState = currentState()
+                    sportEventRepository.create(
+                        request = SportEventRequest(
+                            title = currentState.title,
+                            description = currentState.description,
+                            minNumberOfPeople = currentState.selectedMinNumberOfPeople,
+                            maxNumberOfPeople = currentState.selectedMaxNumberOfPeople,
+                            cost = currentState.cost,
+                            startDateTime = currentState.startDateTime,
+                            endDateTime = currentState.endDateTime,
+                            coachId = currentState.selectedCoachId!!,
+                            roomId = currentState.selectedRoomId!!,
+                            typeId = 1,
+                            levelId = currentState.selectedLevelId!!,
+                            userId = 1,
+                        )
+                    )
+                }
             }
         }
     }

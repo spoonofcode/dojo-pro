@@ -68,6 +68,7 @@ class SportEventCreateScreen : Screen {
             changeCost = { viewModel.changeCost(it) },
             changeStartDateTime = { viewModel.changeStartDateTime(it) },
             changeEndDateTime = { viewModel.changeEndDateTime(it) },
+            createSportEvent = { viewModel.createSportEvent() },
         )
     }
 
@@ -85,6 +86,7 @@ class SportEventCreateScreen : Screen {
         changeCost: (String) -> Unit,
         changeStartDateTime: (LocalDateTime) -> Unit,
         changeEndDateTime: (LocalDateTime) -> Unit,
+        createSportEvent: () -> Unit,
     ) {
         Scaffold(
             topBar = {
@@ -109,7 +111,7 @@ class SportEventCreateScreen : Screen {
                         label = stringResource(resource = Res.string.title),
                     )
                     TextFields.Outlined(
-                        value = viewState.title,
+                        value = viewState.description,
                         onValueChange = { changeDescription(it) },
                         label = stringResource(resource = Res.string.description),
                     )
@@ -173,7 +175,7 @@ class SportEventCreateScreen : Screen {
                     Spacers.VerticalBetweenFields()
                     Buttons.PrimaryButton(
                         text = stringResource(resource = Res.string.submit),
-                        onClick = {}
+                        onClick = createSportEvent
                     )
                     Spacers.BottomSpace()
                 }
