@@ -1,6 +1,5 @@
 package core.ui.compose
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.AlertDialog
@@ -28,7 +27,7 @@ object TimePickers {
     fun TimePicker(
         value: LocalDateTime = LocalDateTimeUtils.now(),
         onValueChange: (LocalDateTime) -> Unit,
-        modifier: Modifier = Modifier.fillMaxWidth(),
+        modifier: Modifier = Modifier,
         label: String? = null,
         onConfirm: (TimePickerState) -> Unit,
         onDismiss: () -> Unit,

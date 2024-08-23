@@ -1,5 +1,6 @@
 package core.ui.compose
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -20,15 +21,16 @@ import androidx.compose.ui.Modifier
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.accept
 import com.spoonofcode.dojopro.resources.cancel
-import core.ext.DEFAULT_DATE_FORMAT
 import core.ext.formatedLocalDate
 import core.ui.utils.LocalDateTimeUtils
 import core.ui.utils.TimeZoneUtils
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Duration.Companion.days
 
 object DatePickers {
 
@@ -39,12 +41,7 @@ object DatePickers {
         modifier: Modifier = Modifier.fillMaxWidth(),
         label: String? = null,
     ) {
-        val date =
-            remember {
-                mutableStateOf(
-                    value
-                )
-            }
+        val date = remember { mutableStateOf(value) }
         val isOpen = remember { mutableStateOf(false) }
 
         TextFields.Outlined(
@@ -76,7 +73,8 @@ object DatePickers {
                 },
                 onCancel = {
                     isOpen.value = false
-                }
+                },
+                selectedDate = date.value
             )
         }
     }
@@ -91,8 +89,10 @@ object DatePickers {
         label?.let {
             Texts.BL(text = it)
         }
+
         Row(
-            Modifier.fillMaxWidth()
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             DatePicker(
                 value = value.date,
@@ -104,7 +104,7 @@ object DatePickers {
                         )
                     )
                 },
-                modifier = Modifier.wrapContentWidth().weight(1f),
+                modifier = Modifier.weight(1f),
             )
             Spacers.HorizontalBetweenFields()
             TimePickers.TimePicker(
@@ -112,7 +112,7 @@ object DatePickers {
                 onValueChange = {
                     onValueChange(it)
                 },
-                modifier = Modifier.wrapContentWidth().weight(1f),
+                modifier = Modifier.wrapContentWidth().weight(0.6f),
                 onConfirm = {},
                 onDismiss = {},
             )
@@ -124,9 +124,16 @@ object DatePickers {
     @Composable
     private fun DatePickerDialog(
         onAccept: (Long?) -> Unit,
-        onCancel: () -> Unit
+        onCancel: () -> Unit,
+        selectedDate: LocalDate,
     ) {
-        val state = rememberDatePickerState()
+        // We need to add on day to have selectedDate in Milliseconds
+        val state = rememberDatePickerState(
+            initialSelectedDateMillis = selectedDate
+                .atStartOfDayIn(TimeZoneUtils.DEFAULT_ZONE)
+                .plus(1.days)
+                .toEpochMilliseconds()
+        )
 
         DatePickerDialog(
             onDismissRequest = { },
