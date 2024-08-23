@@ -23,7 +23,7 @@ object Sliders {
     ) {
         var sliderPosition by remember { mutableStateOf(minValue..maxValue) }
         Column {
-            Text(text = label + " ${sliderPosition.start.toInt()} - ${sliderPosition.endInclusive.toInt()}")
+            Texts.BL(text = label + " ${sliderPosition.start.toInt()} - ${sliderPosition.endInclusive.toInt()}")
 
             RangeSlider(
                 value = sliderPosition,
@@ -31,6 +31,8 @@ object Sliders {
                 onValueChange = { sliderPosition = it },
                 valueRange = minValue..maxValue
             )
+
+            Spacers.VerticalBetweenFields()
         }
     }
 }

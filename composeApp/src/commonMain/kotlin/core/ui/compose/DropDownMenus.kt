@@ -29,7 +29,6 @@ object DropDownMenus{
         onValueChange: (String) -> Unit,
     ) {
         var expanded by remember { mutableStateOf(false) }
-        var selectedOptionText by remember { mutableStateOf(values[0]) }
 
         ExposedDropdownMenuBox(
             expanded = expanded,
@@ -39,7 +38,7 @@ object DropDownMenus{
         ) {
             TextFields.Outlined(
                 value = value,
-                onValueChange = onValueChange,
+                onValueChange = { onValueChange(it) },
                 readOnly = true,
                 label = label,
                 trailingIcon = {
@@ -61,7 +60,7 @@ object DropDownMenus{
                     DropdownMenuItem(
                         text = { Text(selectionOption) },
                         onClick = {
-                            selectedOptionText = selectionOption
+                            onValueChange(selectionOption)
                             expanded = false
                         }
                     )

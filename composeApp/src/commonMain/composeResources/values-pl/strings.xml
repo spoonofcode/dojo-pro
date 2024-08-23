@@ -20,6 +20,7 @@
     <string name="create_event">Create event</string>
 
     <!-- SECTION Event -->
+    <string name="sport_event">Sport Event</string>
     <string name="room">Room</string>
     <string name="group_classes">Group classes</string>
     <string name="number_of_people">Number of People</string>

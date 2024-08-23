@@ -19,13 +19,13 @@ import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.coach
 import com.spoonofcode.dojopro.resources.cost
 import com.spoonofcode.dojopro.resources.description
-import com.spoonofcode.dojopro.resources.group_classes
+import com.spoonofcode.dojopro.resources.end
 import com.spoonofcode.dojopro.resources.level
 import com.spoonofcode.dojopro.resources.number_of_people
 import com.spoonofcode.dojopro.resources.room
+import com.spoonofcode.dojopro.resources.sport_event
 import com.spoonofcode.dojopro.resources.start
 import com.spoonofcode.dojopro.resources.submit
-import com.spoonofcode.dojopro.resources.time
 import com.spoonofcode.dojopro.resources.title
 import core.ui.Dimens
 import core.ui.compose.Buttons
@@ -34,14 +34,8 @@ import core.ui.compose.DropDownMenus
 import core.ui.compose.LoadingView
 import core.ui.compose.Sliders
 import core.ui.compose.Spacers
-import core.ui.compose.Switchs
 import core.ui.compose.TextFields
-import core.ui.compose.TimePickers
-import core.ui.ext.addIf
 import core.ui.ext.koinViewModel
-import fakeData.getFakeCoaches
-import fakeData.getFakeLevels
-import fakeData.getFakeRooms
 import org.jetbrains.compose.resources.stringResource
 
 class SportEventCreateScreen : Screen {
@@ -57,7 +51,8 @@ class SportEventCreateScreen : Screen {
 
         ContentView(
             viewState = viewState,
-            changeTitle = { viewModel.changeTitle(it) }
+            changeTitle = { viewModel.changeTitle(it) },
+            changeCoach = { viewModel.changeCoach(it) }
         )
     }
 
@@ -66,11 +61,12 @@ class SportEventCreateScreen : Screen {
     internal fun ContentView(
         viewState: SportEventCreateViewState,
         changeTitle: (String) -> Unit,
+        changeCoach: (String) -> Unit,
     ) {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("SportEvent") },
+                    title = { Text(stringResource(Res.string.sport_event)) },
                 )
             }
         ) { innerPadding ->
@@ -97,9 +93,9 @@ class SportEventCreateScreen : Screen {
                     DropDownMenus.DropdownMenu(
                         enabled = true,
                         label = stringResource(resource = Res.string.coach),
-                        value = viewState.coaches.first().fullName,
+                        value = viewState.selectedCoach!!.fullName,
                         values = viewState.coaches.map { it.fullName },
-                        onValueChange = { }
+                        onValueChange = { changeCoach(it) }
                     )
                     DropDownMenus.DropdownMenu(
                         enabled = true,
@@ -114,10 +110,6 @@ class SportEventCreateScreen : Screen {
                         value = viewState.levels.first().name,
                         values = viewState.levels.map { it.name },
                         onValueChange = { }
-                    )
-
-                    Switchs.Switch(
-                        label = stringResource(resource = Res.string.group_classes)
                     )
 
                     Sliders.RangeSlider(
@@ -137,16 +129,8 @@ class SportEventCreateScreen : Screen {
                         label = stringResource(resource = Res.string.start),
                     )
 
-                    DatePickers.DatePicker(
-                        label = stringResource(resource = Res.string.start),
-                        onValueChange = {}
-                    )
-
-                    TimePickers.TimePicker(
-                        label = stringResource(resource = Res.string.time),
-                        onValueChange = {},
-                        onConfirm = {},
-                        onDismiss = {},
+                    DatePickers.DatePickerWithTimer(
+                        label = stringResource(resource = Res.string.end),
                     )
 
                     Spacers.Weight1(this)

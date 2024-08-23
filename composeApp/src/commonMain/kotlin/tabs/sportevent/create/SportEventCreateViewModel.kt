@@ -6,6 +6,7 @@ import core.ui.ext.launchWithProgress
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import repository.CoachRepository
 import repository.LevelRepository
 import repository.ProfileRepository
@@ -38,6 +39,7 @@ internal class SportEventCreateViewModel(
                         coaches = coaches,
                         rooms = rooms,
                         levels = levels,
+                        selectedCoach = coaches.first(),
                     )
                 }
             }
@@ -51,7 +53,16 @@ internal class SportEventCreateViewModel(
     }
 
     fun changeTitle(title: String) {
+        println("BARTEK changeTitle")
+    }
 
+    fun changeCoach(selectedCoach: String){
+        val newCoach = currentState().coaches.first { it.fullName == selectedCoach }
+        viewModelScope.launch {
+            updateState {
+                copy(selectedCoach = newCoach)
+            }
+        }
     }
 
 }
