@@ -40,6 +40,12 @@ import org.jetbrains.compose.resources.stringResource
 
 class SportEventCreateScreen : Screen {
 
+    companion object {
+        private const val PEOPLE_RANGE_MIN_VALUE = 1f
+        private const val PEOPLE_RANGE_MAX_VALUE = 10f
+        private const val PEOPLE_RANGE_NUMBER_OF_STEPS = 8
+    }
+
     @Composable
     override fun Content() {
         val viewModel = koinViewModel<SportEventCreateViewModel>()
@@ -52,7 +58,11 @@ class SportEventCreateScreen : Screen {
         ContentView(
             viewState = viewState,
             changeTitle = { viewModel.changeTitle(it) },
-            changeCoach = { viewModel.changeCoach(it) }
+            changeCoach = { viewModel.changeCoach(it) },
+            changeRoom = { viewModel.changeRoom(it) },
+            changeLevel = { viewModel.changeLevel(it) },
+            changeMinNumberOfPeople = { viewModel.changeMinNumberOfPeople(it) },
+            changeMaxNumberOfPeople = { viewModel.changeMaxNumberOfPeople(it) },
         )
     }
 
@@ -61,7 +71,11 @@ class SportEventCreateScreen : Screen {
     internal fun ContentView(
         viewState: SportEventCreateViewState,
         changeTitle: (String) -> Unit,
-        changeCoach: (String) -> Unit,
+        changeCoach: (Int) -> Unit,
+        changeRoom: (Int) -> Unit,
+        changeLevel: (Int) -> Unit,
+        changeMinNumberOfPeople: (Int) -> Unit,
+        changeMaxNumberOfPeople: (Int) -> Unit,
     ) {
         Scaffold(
             topBar = {
@@ -93,30 +107,34 @@ class SportEventCreateScreen : Screen {
                     DropDownMenus.DropdownMenu(
                         enabled = true,
                         label = stringResource(resource = Res.string.coach),
-                        value = viewState.selectedCoach!!.fullName,
-                        values = viewState.coaches.map { it.fullName },
+                        value = viewState.coaches.getValue(viewState.selectedCoachId!!),
+                        values = viewState.coaches,
                         onValueChange = { changeCoach(it) }
                     )
                     DropDownMenus.DropdownMenu(
                         enabled = true,
                         label = stringResource(resource = Res.string.room),
-                        value = viewState.rooms.first().name,
-                        values = viewState.rooms.map { it.name },
-                        onValueChange = { }
+                        value = viewState.rooms.getValue(viewState.selectedRoomId!!),
+                        values = viewState.rooms,
+                        onValueChange = { changeRoom(it) }
                     )
                     DropDownMenus.DropdownMenu(
                         enabled = true,
                         label = stringResource(resource = Res.string.level),
-                        value = viewState.levels.first().name,
-                        values = viewState.levels.map { it.name },
-                        onValueChange = { }
+                        value = viewState.levels.getValue(viewState.selectedLevelId!!),
+                        values = viewState.levels,
+                        onValueChange = { changeLevel(it) }
                     )
 
                     Sliders.RangeSlider(
                         label = stringResource(resource = Res.string.number_of_people),
-                        minValue = 1f,
-                        maxValue = 10f,
-                        steps = 8,
+                        minValue = PEOPLE_RANGE_MIN_VALUE,
+                        maxValue = PEOPLE_RANGE_MAX_VALUE,
+                        steps = PEOPLE_RANGE_NUMBER_OF_STEPS,
+                        selectedStartPosition = viewState.selectedMinNumberOfPeople.toFloat(),
+                        selectedEndPosition = viewState.selectedMaxNumberOfPeople.toFloat(),
+                        onStartPositionChange = { changeMinNumberOfPeople(it) },
+                        onEndPositionChange = { changeMaxNumberOfPeople(it) },
                     )
 
                     TextFields.Outlined(

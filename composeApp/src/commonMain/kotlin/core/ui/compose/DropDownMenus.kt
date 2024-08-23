@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import core.ui.ext.viewEnable
 
-object DropDownMenus{
+object DropDownMenus {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
@@ -25,8 +25,8 @@ object DropDownMenus{
         enabled: Boolean,
         label: String,
         value: String,
-        values: List<String>,
-        onValueChange: (String) -> Unit,
+        values: Map<Int, String>,
+        onValueChange: (Int) -> Unit,
     ) {
         var expanded by remember { mutableStateOf(false) }
 
@@ -38,7 +38,7 @@ object DropDownMenus{
         ) {
             TextFields.Outlined(
                 value = value,
-                onValueChange = { onValueChange(it) },
+                onValueChange = {},
                 readOnly = true,
                 label = label,
                 trailingIcon = {
@@ -58,9 +58,9 @@ object DropDownMenus{
             ) {
                 values.forEach { selectionOption ->
                     DropdownMenuItem(
-                        text = { Text(selectionOption) },
+                        text = { Text(selectionOption.value) },
                         onClick = {
-                            onValueChange(selectionOption)
+                            onValueChange(selectionOption.key)
                             expanded = false
                         }
                     )

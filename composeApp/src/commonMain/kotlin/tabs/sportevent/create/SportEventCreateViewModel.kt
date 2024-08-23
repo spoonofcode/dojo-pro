@@ -13,7 +13,6 @@ import repository.ProfileRepository
 import repository.RoomRepository
 
 internal class SportEventCreateViewModel(
-    private val profileRepository: ProfileRepository,
     private val coachRepository: CoachRepository,
     private val roomRepository: RoomRepository,
     private val levelRepository: LevelRepository,
@@ -36,10 +35,12 @@ internal class SportEventCreateViewModel(
             }.onSuccess { (coaches, rooms, levels) ->
                 updateState {
                     copy(
-                        coaches = coaches,
-                        rooms = rooms,
-                        levels = levels,
-                        selectedCoach = coaches.first(),
+                        coaches = coaches.associate { it.id to it.fullName },
+                        rooms = rooms.associate { it.id to it.name },
+                        levels = levels.associate { it.id to it.name },
+                        selectedCoachId = coaches.first().id,
+                        selectedRoomId = rooms.first().id,
+                        selectedLevelId = levels.first().id,
                     )
                 }
             }
@@ -56,11 +57,42 @@ internal class SportEventCreateViewModel(
         println("BARTEK changeTitle")
     }
 
-    fun changeCoach(selectedCoach: String){
-        val newCoach = currentState().coaches.first { it.fullName == selectedCoach }
+    fun changeCoach(selectedCoachId: Int) {
         viewModelScope.launch {
             updateState {
-                copy(selectedCoach = newCoach)
+                copy(selectedCoachId = selectedCoachId)
+            }
+        }
+    }
+
+    fun changeRoom(selectedRoomId: Int) {
+        viewModelScope.launch {
+            updateState {
+                copy(selectedRoomId = selectedRoomId)
+            }
+        }
+    }
+
+    fun changeLevel(selectedLevelId: Int) {
+        viewModelScope.launch {
+            updateState {
+                copy(selectedLevelId = selectedLevelId)
+            }
+        }
+    }
+
+    fun changeMinNumberOfPeople(selectedMinNumberOfPeople: Int) {
+        viewModelScope.launch {
+            updateState {
+                copy(selectedMinNumberOfPeople = selectedMinNumberOfPeople)
+            }
+        }
+    }
+
+    fun changeMaxNumberOfPeople(selectedMaxNumberOfPeople: Int) {
+        viewModelScope.launch {
+            updateState {
+                copy(selectedMaxNumberOfPeople = selectedMaxNumberOfPeople)
             }
         }
     }

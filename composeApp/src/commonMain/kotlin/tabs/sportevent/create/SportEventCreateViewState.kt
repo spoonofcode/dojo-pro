@@ -1,28 +1,25 @@
 package tabs.sportevent.create
 
-import model.Coach
-import model.Level
-import model.Room
-import model.SportEvent
-
 internal data class SportEventCreateViewState(
-    val isViewEnable:Boolean = true,
-    val isViewLoading:Boolean = true,
+    val isViewEnable: Boolean = true,
+    val isViewLoading: Boolean = true,
     val title: String = "Profile title",
-    val sportEvent: SportEvent? = null,
 
-
-    val coaches: List<Coach> = emptyList(),
-    val rooms: List<Room> = emptyList(),
-    val levels: List<Level> = emptyList(),
+    val coaches: Map<Int, String> = emptyMap(),
+    val rooms: Map<Int, String> = emptyMap(),
+    val levels: Map<Int, String> = emptyMap(),
 
     val eventTitle: String? = null,
     val eventDescription: String? = null,
-    val selectedCoach: Coach? = null,
+    val selectedCoachId: Int? = null,
     val selectedRoomId: Int? = null,
     val selectedLevelId: Int? = null,
-    val selectedMinNumberOfPeople: Int? = null,
-    val selectedMaxNumberOfPeople: Int? = null,
+    val selectedMinNumberOfPeople: Int = DEFAULT_MIN_NUMBER_OF_PEOPLE,
+    val selectedMaxNumberOfPeople: Int = DEFAULT_MAX_NUMBER_OF_PEOPLE,
     val cost: String? = null,
-
-)
+) {
+    companion object {
+        private const val DEFAULT_MIN_NUMBER_OF_PEOPLE = 4
+        private const val DEFAULT_MAX_NUMBER_OF_PEOPLE = 8
+    }
+}
