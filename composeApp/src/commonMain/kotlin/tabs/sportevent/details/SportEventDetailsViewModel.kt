@@ -1,25 +1,32 @@
 package tabs.sportevent.details
 
+import androidx.lifecycle.viewModelScope
 import core.ui.BaseViewModel
+import core.ui.ext.launchWithProgress
 import repository.ProfileRepository
+import repository.SportEventRepository
 
 internal class SportEventDetailsViewModel(
-    private val profileRepository: ProfileRepository
+    private val sportEventRepository: SportEventRepository
 ) : BaseViewModel<SportEventDetailsViewState>(SportEventDetailsViewState()) {
 
-//    fun confirmEvent() {
-//        viewModelScope.launch {
-//            val profile = profileRepository.getProfile()
-//            updateState {
-//                copy(
-//                    profile = profile
-//                )
-//            }
-//        }
-//    }
+    fun initView(sportEventId: Int) {
+        viewModelScope.launchWithProgress(
+            onProgress = ::setLoadingView
+        ) {
+            val sportEvent = sportEventRepository.read(id = sportEventId)
+            updateState {
+                copy(
+                    sportEvent = sportEvent
+                )
+            }
+        }
+    }
 
-    fun changeTitle(title:String) {
-
+    private fun setLoadingView(isLoading: Boolean) {
+        updateState {
+            copy(isViewLoading = isLoading)
+        }
     }
 
 }

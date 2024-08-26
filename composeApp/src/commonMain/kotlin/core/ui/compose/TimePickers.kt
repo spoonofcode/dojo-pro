@@ -1,6 +1,5 @@
 package core.ui.compose
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.AlertDialog
@@ -16,35 +15,36 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import core.ext.formatedTime
+import core.ui.utils.LocalDateTimeUtils
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
 
 object TimePickers {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun TimePicker(
-        onValueChange: (String) -> Unit,
-        modifier: Modifier = Modifier.fillMaxWidth(),
+        value: LocalDateTime = LocalDateTimeUtils.now(),
+        onValueChange: (LocalDateTime) -> Unit,
+        modifier: Modifier = Modifier,
         label: String? = null,
         onConfirm: (TimePickerState) -> Unit,
         onDismiss: () -> Unit,
     ) {
         val timePickerState = rememberTimePickerState(
-            initialHour = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).hour,
-            initialMinute = Clock.System.now()
-                .toLocalDateTime(TimeZone.currentSystemDefault()).minute,
+            initialHour = value.hour,
+            initialMinute = value.minute,
             is24Hour = true,
         )
         val isOpen = remember { mutableStateOf(false) }
 
         TextFields.Outlined(
-            value = timePickerState.hour.toString() + ":" + timePickerState.minute.toString(),
+            value = value.formatedTime(),
             modifier = modifier,
             readOnly = true,
             label = label,
-            onValueChange = onValueChange,
+            onValueChange = {},
             trailingIcon = {
                 IconButton(
                     onClick = { isOpen.value = true } // show de dialog
@@ -61,6 +61,18 @@ object TimePickers {
                     onDismiss()
                 },
                 onConfirm = {
+                    onValueChange(
+                        LocalDateTime(
+                            value.date,
+                            LocalTime(
+                                hour = timePickerState.hour,
+                                minute = timePickerState.minute,
+                                second = 0,
+                                nanosecond = 0
+                            )
+                        )
+                    )
+
                     isOpen.value = false //close dialog
                     onConfirm(timePickerState)
                 }

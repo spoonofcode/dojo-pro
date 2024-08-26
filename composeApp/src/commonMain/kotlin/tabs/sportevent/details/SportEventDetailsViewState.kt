@@ -1,11 +1,9 @@
 package tabs.sportevent.details
 
-import fakeData.getFakeCoaches
-import model.Coach
 import model.SportEvent
 
 internal data class SportEventDetailsViewState(
-    val title: String = "Profile title",
+    val isViewEnable:Boolean = true,
+    val isViewLoading:Boolean = true,
     val sportEvent: SportEvent? = null,
-    val coaches: List<Coach> = getFakeCoaches(),
 )

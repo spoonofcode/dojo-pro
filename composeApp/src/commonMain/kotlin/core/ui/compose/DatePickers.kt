@@ -1,5 +1,6 @@
 package core.ui.compose
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -17,37 +18,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.accept
 import com.spoonofcode.dojopro.resources.cancel
-import kotlinx.datetime.Clock
+import core.ext.formatedLocalDate
+import core.ui.utils.LocalDateTimeUtils
+import core.ui.utils.TimeZoneUtils
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.format
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Duration.Companion.days
 
 object DatePickers {
 
     @Composable
     fun DatePicker(
-        onValueChange: (String) -> Unit,
+        value: LocalDate = LocalDateTimeUtils.now().date,
+        onValueChange: (LocalDate) -> Unit,
         modifier: Modifier = Modifier.fillMaxWidth(),
         label: String? = null,
     ) {
-        val date =
-            remember {
-                mutableStateOf(
-                    Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
-                )
-            }
+        val date = remember { mutableStateOf(value) }
         val isOpen = remember { mutableStateOf(false) }
 
         TextFields.Outlined(
-            value = date.value.format(LocalDate.Formats.ISO),
-            onValueChange = onValueChange,
+            value = date.value.formatedLocalDate(),
+            onValueChange = {},
             modifier = modifier,
             readOnly = true,
             label = label,
@@ -63,17 +62,19 @@ object DatePickers {
         if (isOpen.value) {
             DatePickerDialog(
                 onAccept = {
-                    isOpen.value = false // close dialog
+                    isOpen.value = false
 
-                    if (it != null) { // Set the date
+                    if (it != null) {
                         date.value = Instant
                             .fromEpochMilliseconds(it)
-                            .toLocalDateTime(TimeZone.UTC).date
+                            .toLocalDateTime(TimeZoneUtils.DEFAULT_ZONE).date
                     }
+                    onValueChange(date.value)
                 },
                 onCancel = {
-                    isOpen.value = false //close dialog
-                }
+                    isOpen.value = false
+                },
+                selectedDate = date.value
             )
         }
     }
@@ -81,38 +82,58 @@ object DatePickers {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun DatePickerWithTimer(
+        value: LocalDateTime,
         label: String? = null,
+        onValueChange: (LocalDateTime) -> Unit,
     ) {
         label?.let {
-            Text(
-                text = it,
-                fontWeight = FontWeight.Bold
-            )
+            Texts.BL(text = it)
         }
+
         Row(
-            Modifier.fillMaxWidth()
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             DatePicker(
-                onValueChange = {},
-                modifier = Modifier.wrapContentWidth().weight(1f),
+                value = value.date,
+                onValueChange = {
+                    onValueChange(
+                        LocalDateTime(
+                            date = it,
+                            time = value.time
+                        )
+                    )
+                },
+                modifier = Modifier.weight(1f),
             )
             Spacers.HorizontalBetweenFields()
             TimePickers.TimePicker(
-                onValueChange = {},
-                modifier = Modifier.wrapContentWidth().weight(1f),
+                value = value,
+                onValueChange = {
+                    onValueChange(it)
+                },
+                modifier = Modifier.wrapContentWidth().weight(0.6f),
                 onConfirm = {},
                 onDismiss = {},
             )
         }
+        Spacers.VerticalBetweenFields()
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun DatePickerDialog(
         onAccept: (Long?) -> Unit,
-        onCancel: () -> Unit
+        onCancel: () -> Unit,
+        selectedDate: LocalDate,
     ) {
-        val state = rememberDatePickerState()
+        // We need to add on day to have selectedDate in Milliseconds
+        val state = rememberDatePickerState(
+            initialSelectedDateMillis = selectedDate
+                .atStartOfDayIn(TimeZoneUtils.DEFAULT_ZONE)
+                .plus(1.days)
+                .toEpochMilliseconds()
+        )
 
         DatePickerDialog(
             onDismissRequest = { },

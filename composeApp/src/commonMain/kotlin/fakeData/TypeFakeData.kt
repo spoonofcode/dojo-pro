@@ -1,18 +1,23 @@
 package fakeData
 
-import model.Level
+import model.Type
 
 fun getFakeTypes() = listOf(
     FAKE_TYPE_1,
     FAKE_TYPE_2,
 )
 
-private val FAKE_TYPE_1 = Level(
+val FAKE_TYPE_1 = Type(
     id = 1,
-    name = "Individual",
+    name = "Stand-up battle",
 )
 
-private val FAKE_TYPE_2 = Level(
+val FAKE_TYPE_2 = Type(
     id = 2,
-    name = "Group",
+    name = "Direct fight",
+)
+
+val FAKE_TYPE_3 = Type(
+    id = 2,
+    name = "Kicks",
 )

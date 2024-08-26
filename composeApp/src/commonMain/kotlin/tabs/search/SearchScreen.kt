@@ -29,8 +29,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import core.ext.formatedLocalDateTime
 import core.ui.ext.koinViewModel
-import fakeData.getFakeSportEvents
 import model.SportEvent
 import tabs.sportevent.details.SportEventDetailsScreen
 
@@ -66,7 +66,7 @@ class SearchScreen : Screen {
                             itemsIndexed(it) { index: Int, item: SportEvent ->
                                 SportEventItem(
                                     item = item,
-                                    onClick = { navigator.push(SportEventDetailsScreen()) }
+                                    onClick = { navigator.push(SportEventDetailsScreen(sportEventId = 1)) }
                                 )
                             }
                         }
@@ -97,7 +97,7 @@ class SearchScreen : Screen {
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = item.creationDate.toString(),
+                    text = item.creationDate.formatedLocalDateTime(),
                     fontSize = 12.sp,
                     color = Color.LightGray
                 )

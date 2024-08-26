@@ -23,7 +23,7 @@ class CalendarScreen : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        val viewModel = koinViewModel<HomeViewModel>()
+        val viewModel = koinViewModel<CalendarViewModel>()
         val viewState by viewModel.viewState.collectAsState()
 
         Scaffold(
