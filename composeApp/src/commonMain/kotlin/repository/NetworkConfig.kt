@@ -1,7 +1,6 @@
 package repository
 
-
 // For Android emulator
-private const val HOST = "192.168.0.190"
-private const val PORT = "8100"
-internal const val BASE_URL = "http://$HOST:$PORT"
+private const val HOST = "10.0.2.2"
+private const val PORT = "8443"
+internal const val BASE_URL = "https://$HOST:$PORT"

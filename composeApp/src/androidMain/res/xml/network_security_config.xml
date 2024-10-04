@@ -3,5 +3,8 @@
     <domain-config cleartextTrafficPermitted="false">
         <ip-address includeSubdomains="true">0.0.0.0</ip-address>
         <domain includeSubdomains="true">0.0.0.0</domain>
+        <trust-anchors>
+            <certificates src="@raw/server_cert" />
+        </trust-anchors>
     </domain-config>
 </network-security-config>
