@@ -13,7 +13,7 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import org.koin.mp.KoinPlatform.getKoin
-import repository.BASE_URL
+import network.NetworkConfig
 
 interface CrudRepository<RQ, RS> {
     suspend fun create(request: RQ): RS
@@ -30,9 +30,10 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
 ) : CrudRepository<RQ, RS> {
 
     protected val httpClient: HttpClient by getKoin().inject()
+    private val networkConfig: NetworkConfig by getKoin().inject()
 
     override suspend fun create(request: RQ): RS {
-        val responseBody: String = httpClient.post("$BASE_URL/$resourceName/") {
+        val responseBody: String = httpClient.post("${networkConfig.baseUrl}/$resourceName/") {
             contentType(ContentType.Application.Json)
             setBody(Json.encodeToString(requestSerializer, request)) // Serialize request
         }.body() // Get response as String
@@ -41,14 +42,14 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     }
 
     override suspend fun read(id: Int): RS {
-        val responseBody: String = httpClient.get("$BASE_URL/$resourceName/$id")
+        val responseBody: String = httpClient.get("${networkConfig.baseUrl}/$resourceName/$id")
             .body() // Get response as String
 
         return Json.decodeFromString(responseSerializer, responseBody) // Deserialize response
     }
 
     override suspend fun update(id: Int, request: RQ): Boolean {
-        httpClient.put("$BASE_URL/$resourceName/$id") {
+        httpClient.put("${networkConfig.baseUrl}/$resourceName/$id") {
             contentType(ContentType.Application.Json)
             setBody(Json.encodeToString(requestSerializer, request)) // Serialize request
         }
@@ -56,12 +57,12 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     }
 
     override suspend fun delete(id: Int): Boolean {
-        httpClient.delete("$BASE_URL/$resourceName/$id")
+        httpClient.delete("${networkConfig.baseUrl}/$resourceName/$id")
         return true // Simplified for this example
     }
 
     override suspend fun readAll(): List<RS> {
-        val responseBody: String = httpClient.get("$BASE_URL/$resourceName/")
+        val responseBody: String = httpClient.get("${networkConfig.baseUrl}/$resourceName/")
             .body() // Get response as String
 
         return Json.decodeFromString(
