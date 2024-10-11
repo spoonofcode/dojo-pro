@@ -8,6 +8,7 @@ import tabs.shop.ShopViewModel
 import tabs.sportevent.create.SportEventCreateViewModel
 import tabs.sportevent.details.SportEventDetailsViewModel
 import tabs.settings.SettingsViewModel
+import tabs.login.LoginViewModel
 
 actual val viewModelModule = module {
     singleOf(::CalendarViewModel)
@@ -19,4 +20,6 @@ actual val viewModelModule = module {
     singleOf(::SportEventCreateViewModel)
     singleOf(::SportEventDetailsViewModel)
     singleOf(::SettingsViewModel)
+
+    singleOf(::LoginViewModel)
 }
