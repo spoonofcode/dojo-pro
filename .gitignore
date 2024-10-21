@@ -1,86 +1,97 @@
-# Android Studio
-
-# IntelliJ IDEA specific files
-.idea/
-*.iml
-*.iws
-*.ipr
-
-# Gradle
+# Gradle files
 .gradle/
 build/
-
-# Kotlin
-.kotlin/
+**/build/
 
 # Local configuration
 local.properties
 
-# Generated files
-bin/
-gen/
-*.class
-*.dex
+# Gradle Wrapper
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
 
-# Android App packaging
+# IntelliJ IDEA files
+.idea/
+*.iml
+out/
+
+# Android files
+captures/
+.externalNativeBuild/
 *.apk
 *.ap_
-*.aab
+*.dex
+*.so
+*.o
+*.obj
 
-# Proguard
-proguard/
+# iOS files
+*.xcworkspace
+*.xcodeproj/project.xcworkspace/
+xcuserdata/
+DerivedData/
+build/
+*.ipa
 
-# Navigation Editor
-.navigation/
-
-# Caches
-.idea/caches/
-
-# Keystore
-# Uncomment if you don't want to track keystore files
-# *.jks
-# *.keystore
-
-# Android Studio captures folder
-captures/
-
-# Kotlin Multiplatform specific (platforms)
-# Ignore platform specific build folders
-# Modify as needed based on your project structure
-**/build/
-**/gradle/wrapper/gradle-wrapper.jar
-
-# Android
-local.properties
-**/build/
-**/captures/
-.externalNativeBuild/
-.cxx/
-**/outputs/
-**/generated/
-*.log
-*.keystore
-*.jks
-
-# iOS/macOS
+# macOS files
 .DS_Store
-captures
-.externalNativeBuild
-.cxx
-*.xcodeproj/*
-!*.xcodeproj/project.pbxproj
-!*.xcodeproj/project.xcworkspace/
-!*.xcodeproj/xcshareddata/
-!*.xcworkspace/contents.xcworkspacedata
-*.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
-/*.gcno
-*.xcworkspacedata
-*.xcuserdata
 
-## Cocoapods ##
+# Windows files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Kotlin/Java files
+*.class
+*.jar
+*.war
+*.ear
+*.dll
+*.exe
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# Log files
+*.log
+
+# Node.js files (if using npm/yarn)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Compose Multiplatform specific
+composeApp/build/
+composeDesktop/build/
+composeWeb/build/
+
+# Ktor client cache
+ktor-cache/
+
+# IDE files
+.vscode/
+*.idea/
+
+# CocoaPods (for iOS)
 Pods/
+Podfile.lock
 
-# IDE specific ignore files (choose one based on your IDE)
+# Carthage (for iOS/macOS)
+Carthage/Build/
+Carthage/Checkouts/
 
-# For Android Studio
-*.form
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# Firebase
+google-services.json
+GoogleService-Info.plist
+
+# Environment files
+.env
