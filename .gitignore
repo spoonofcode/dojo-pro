@@ -30,7 +30,7 @@ captures/
 
 # iOS files
 *.xcworkspace
-*.xcodeproj/project.xcworkspace/
+*.xcodeproj/
 xcuserdata/
 DerivedData/
 build/
