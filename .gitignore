@@ -69,15 +69,18 @@ captures
 .cxx
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
-!*.xcodeproj/xcshareddata/
 !*.xcodeproj/project.xcworkspace/
+!*.xcodeproj/xcshareddata/
 !*.xcworkspace/contents.xcworkspacedata
-**/xcshareddata/WorkspaceSettings.xcsettings
+*.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+/*.gcno
+*.xcworkspacedata
+*.xcuserdata
+
+## Cocoapods ##
+Pods/
 
 # IDE specific ignore files (choose one based on your IDE)
 
 # For Android Studio
-*.form
-
-# For IntelliJ IDEA only
 *.form

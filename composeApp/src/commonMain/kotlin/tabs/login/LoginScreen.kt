@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -14,9 +17,15 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import core.ui.Dimens
 import core.ui.compose.Buttons
+import core.ui.compose.Buttons.GoogleButtonClick
+import core.ui.compose.Buttons.GoogleSignInButton
 import core.ui.compose.LoadingView
 import core.ui.ext.koinViewModel
 import tabs.mainhost.MainHostScreen
+
+//import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+//import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+//import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 
 class LoginScreen : Screen {
 
@@ -44,20 +53,56 @@ class LoginScreen : Screen {
         goToHome: () -> Unit,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(Dimens.screenPadding),
-            verticalArrangement = Arrangement.Center
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            if (viewState.isViewLoading) {
-                LoadingView()
-            } else {
-                Buttons.PrimaryButton(
-                    text = "Login",
-                    onClick = goToHome
-                )
+            GoogleSignInButton(onGoogleSignInResult = { googleUser ->
+                // send Google id token to your server
+            }) {
+                Button(onClick = { this.onSignInClicked() }) { Text("Google Sign-In(Custom Design)") }
             }
         }
-    }
 
+
+//        Column(
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .padding(Dimens.screenPadding),
+//            verticalArrangement = Arrangement.Center
+//        ) {
+//            if (viewState.isViewLoading) {
+//                LoadingView()
+//            } else {
+////                Buttons.PrimaryButton(
+////                    text = "Login",
+////                    onClick = goToHome
+////                )
+//
+////                Buttons.GoogleLoginButton(
+////                    onClick = {
+////                        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+////                            .setFilterByAuthorizedAccounts(false) // Query all google accounts on the device
+////                            .setServerClientId(SERVER_CLIENT_ID)
+////                            .build()
+////
+////                        val request = GetCredentialRequest.Builder()
+////                            .addCredentialOption(googleIdOption)
+////                            .build()
+////
+////                        val credentialManager = CredentialManager.create(context)
+////
+////                        coroutineScope.launch {
+////                            try {
+////                                val result = credentialManager.getCredential(context, request)
+////                                handleSignIn(result)
+////                            } catch (e: GetCredentialException) {
+////                                Log.e("MainActivity", "GetCredentialException", e)
+////                            }
+////                        }
+////                    }
+////                )
+//            }
+//        }
+    }
 }
