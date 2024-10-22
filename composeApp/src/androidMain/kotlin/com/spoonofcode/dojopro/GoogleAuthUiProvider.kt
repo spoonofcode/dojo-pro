@@ -46,6 +46,6 @@ actual class GoogleAuthUiProvider(
     private fun getGoogleIdOption(): GetGoogleIdOption = GetGoogleIdOption.Builder()
         .setFilterByAuthorizedAccounts(false)
         .setAutoSelectEnabled(true)
-        .setServerClientId("Add your Google web client id")
+        .setServerClientId("518437212895-i1comth892l27krflb1os4vq4rnch9sd.apps.googleusercontent.com") // TODO #29-Change with system web client id
         .build()
 }

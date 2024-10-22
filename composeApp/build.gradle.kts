@@ -25,8 +25,6 @@ kotlin {
             baseName = "ComposeApp"
             isStatic = true
         }
-
-//        xcodeConfigurationToNativeBuildType["iOSConfigName"] = NativeBuildType.DEBUG
     }
 
     androidTarget {

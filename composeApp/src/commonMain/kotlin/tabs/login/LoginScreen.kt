@@ -3,7 +3,6 @@ package tabs.login
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,11 +14,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import core.ui.Dimens
-import core.ui.compose.Buttons
-import core.ui.compose.Buttons.GoogleButtonClick
 import core.ui.compose.Buttons.GoogleSignInButton
-import core.ui.compose.LoadingView
 import core.ui.ext.koinViewModel
 import tabs.mainhost.MainHostScreen
 
@@ -43,7 +38,8 @@ class LoginScreen : Screen {
             viewState = viewState,
             goToHome = {
                 navigator.replaceAll(MainHostScreen())
-            }
+            },
+            sendGoogleToken = { viewModel.sendGoogleToken(it) },
         )
     }
 
@@ -51,6 +47,7 @@ class LoginScreen : Screen {
     internal fun ContentView(
         viewState: LoginViewState,
         goToHome: () -> Unit,
+        sendGoogleToken: (String) -> Unit,
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -59,9 +56,16 @@ class LoginScreen : Screen {
         ) {
             GoogleSignInButton(onGoogleSignInResult = { googleUser ->
                 // send Google id token to your server
+                val idToken = requireNotNull(googleUser?.token)
+                println("BARTEK googleUser.idToken = $idToken")
+                sendGoogleToken(idToken)
             }) {
                 Button(onClick = { this.onSignInClicked() }) { Text("Google Sign-In(Custom Design)") }
             }
+
+            Text(
+                viewState.receivedToken
+            )
         }
 
 
