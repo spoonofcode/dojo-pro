@@ -11,6 +11,7 @@ import repository.ProfileRepository
 import repository.RoomRepository
 import repository.SportEventRepository
 import repository.GoogleAuthRepository
+import SessionRepository
 
 val appModule = module {
     single {
@@ -26,4 +27,5 @@ val appModule = module {
     singleOf(::RoomRepository)
     singleOf(::SportEventRepository)
     singleOf(::GoogleAuthRepository)
+    singleOf(::SessionRepository)
 }

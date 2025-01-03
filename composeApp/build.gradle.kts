@@ -47,6 +47,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.security)
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
             implementation(libs.ktor.client.okhttp)
@@ -72,6 +73,7 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.multiplatform.settings)
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab.navigator)
             implementation(libs.voyager.transitions)

@@ -40,6 +40,7 @@ class LoginScreen : Screen {
                 navigator.replaceAll(MainHostScreen())
             },
             sendGoogleToken = { viewModel.sendGoogleToken(it) },
+            getTokenFromStore = { viewModel.getTokenFromStore() },
         )
     }
 
@@ -48,6 +49,7 @@ class LoginScreen : Screen {
         viewState: LoginViewState,
         goToHome: () -> Unit,
         sendGoogleToken: (String) -> Unit,
+        getTokenFromStore: () -> Unit,
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -63,9 +65,14 @@ class LoginScreen : Screen {
                 Button(onClick = { this.onSignInClicked() }) { Text("Google Sign-In(Custom Design)") }
             }
 
-            Text(
-                viewState.receivedToken
-            )
+            Text("Received token from Server")
+            Text(viewState.receivedToken)
+
+            Button(onClick = { getTokenFromStore() }) {
+                Text("Get Token from Store!")
+            }
+            Text("Received token from Store")
+            Text(viewState.receivedTokenFromStore)
         }
 
 

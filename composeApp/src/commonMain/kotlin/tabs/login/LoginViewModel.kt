@@ -1,5 +1,6 @@
 package tabs.login
 
+import SessionRepository
 import androidx.lifecycle.viewModelScope
 import core.ui.BaseViewModel
 import core.ui.ext.launchWithProgress
@@ -11,6 +12,7 @@ import repository.GoogleAuthRepository
 
 internal class LoginViewModel(
     private val googleAuthRepository: GoogleAuthRepository,
+    private val sessionRepository: SessionRepository,
 ) : BaseViewModel<LoginViewState>(LoginViewState()) {
 
 //    fun initView() {
@@ -46,11 +48,20 @@ internal class LoginViewModel(
                 }
             }.onSuccess { googleAuthToken ->
                 // TODO #29 Store token in EncryptedDataStore preferences
+                sessionRepository.saveSessionToken(token = googleAuthToken.idToken)
                 updateState {
                     copy(receivedToken = googleAuthToken.idToken)
                 }
             }
         }
+    }
+
+    fun getTokenFromStore() {
+        val sessionToken = sessionRepository.getSessionToken()
+        updateState {
+            copy(receivedTokenFromStore = sessionToken ?: "TEST-STORE")
+        }
+
     }
 
 }
