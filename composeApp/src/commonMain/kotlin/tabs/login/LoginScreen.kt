@@ -16,11 +16,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import core.ui.compose.Buttons.GoogleSignInButton
 import core.ui.ext.koinViewModel
-import tabs.mainhost.MainHostScreen
-
-//import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-//import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
-//import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import navigation.NavigationHandler
 
 class LoginScreen : Screen {
 
@@ -30,15 +26,13 @@ class LoginScreen : Screen {
         val viewModel = koinViewModel<LoginViewModel>()
         val viewState by viewModel.viewState.collectAsState()
 
-//        LaunchedEffect(Unit) {
-//            viewModel.initView()
-//        }
+        NavigationHandler(
+            navigationFlow = viewModel.navigationFlow,
+            navigator = navigator
+        )
 
         ContentView(
             viewState = viewState,
-            goToHome = {
-                navigator.replaceAll(MainHostScreen())
-            },
             sendGoogleToken = { viewModel.sendGoogleToken(it) },
             getTokenFromStore = { viewModel.getTokenFromStore() },
         )
@@ -47,7 +41,6 @@ class LoginScreen : Screen {
     @Composable
     internal fun ContentView(
         viewState: LoginViewState,
-        goToHome: () -> Unit,
         sendGoogleToken: (String) -> Unit,
         getTokenFromStore: () -> Unit,
     ) {
@@ -74,46 +67,5 @@ class LoginScreen : Screen {
             Text("Received token from Store")
             Text(viewState.receivedTokenFromStore)
         }
-
-
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(Dimens.screenPadding),
-//            verticalArrangement = Arrangement.Center
-//        ) {
-//            if (viewState.isViewLoading) {
-//                LoadingView()
-//            } else {
-////                Buttons.PrimaryButton(
-////                    text = "Login",
-////                    onClick = goToHome
-////                )
-//
-////                Buttons.GoogleLoginButton(
-////                    onClick = {
-////                        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-////                            .setFilterByAuthorizedAccounts(false) // Query all google accounts on the device
-////                            .setServerClientId(SERVER_CLIENT_ID)
-////                            .build()
-////
-////                        val request = GetCredentialRequest.Builder()
-////                            .addCredentialOption(googleIdOption)
-////                            .build()
-////
-////                        val credentialManager = CredentialManager.create(context)
-////
-////                        coroutineScope.launch {
-////                            try {
-////                                val result = credentialManager.getCredential(context, request)
-////                                handleSignIn(result)
-////                            } catch (e: GetCredentialException) {
-////                                Log.e("MainActivity", "GetCredentialException", e)
-////                            }
-////                        }
-////                    }
-////                )
-//            }
-//        }
     }
 }

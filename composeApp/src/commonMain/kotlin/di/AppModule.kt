@@ -11,6 +11,7 @@ import repository.ProfileRepository
 import repository.RoomRepository
 import repository.SportEventRepository
 import repository.GoogleAuthRepository
+import navigation.ViewModelNavigator
 import SessionRepository
 
 val appModule = module {
@@ -28,4 +29,6 @@ val appModule = module {
     singleOf(::SportEventRepository)
     singleOf(::GoogleAuthRepository)
     singleOf(::SessionRepository)
+
+    singleOf(::ViewModelNavigator)
 }
