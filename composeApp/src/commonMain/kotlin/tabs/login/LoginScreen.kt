@@ -34,7 +34,6 @@ class LoginScreen : Screen {
         ContentView(
             viewState = viewState,
             sendGoogleToken = { viewModel.sendGoogleToken(it) },
-            getTokenFromStore = { viewModel.getTokenFromStore() },
         )
     }
 
@@ -42,7 +41,6 @@ class LoginScreen : Screen {
     internal fun ContentView(
         viewState: LoginViewState,
         sendGoogleToken: (String) -> Unit,
-        getTokenFromStore: () -> Unit,
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -60,12 +58,6 @@ class LoginScreen : Screen {
 
             Text("Received token from Server")
             Text(viewState.receivedToken)
-
-            Button(onClick = { getTokenFromStore() }) {
-                Text("Get Token from Store!")
-            }
-            Text("Received token from Store")
-            Text(viewState.receivedTokenFromStore)
         }
     }
 }

@@ -6,7 +6,6 @@ import core.ui.BaseViewModel
 import core.ui.ext.launchWithProgress
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import model.GoogleAuthTokenRequest
 import repository.GoogleAuthRepository
@@ -36,19 +35,17 @@ internal class LoginViewModel(
                     )
                 }
             }.onSuccess { googleAuthToken ->
-                sessionRepository.saveSessionToken(token = googleAuthToken.idToken)
-                updateState {
-                    copy(receivedToken = googleAuthToken.idToken)
+                runCatching {
+                    withContext(Dispatchers.IO) {
+                        sessionRepository.saveSessionToken(token = googleAuthToken.idToken)
+                    }
+                }.onSuccess {
+                    updateState {
+                        copy(receivedToken = googleAuthToken.idToken)
+                    }
+                    viewModelNavigator.replaceAll(listOf(MainHostScreen()))
                 }
-                viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             }
-        }
-    }
-
-    fun getTokenFromStore() {
-        val sessionToken = sessionRepository.getSessionToken()
-        updateState {
-            copy(receivedTokenFromStore = sessionToken ?: "TEST-STORE")
         }
     }
 }
