@@ -1,6 +1,5 @@
-package tabs.login
+package tabs.registration
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,31 +13,24 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.spoonofcode.dojopro.resources.Res
-import com.spoonofcode.dojopro.resources.compose_multiplatform
-import com.spoonofcode.dojopro.resources.dojo_room
 import com.spoonofcode.dojopro.resources.email
-import com.spoonofcode.dojopro.resources.forget_password
-import com.spoonofcode.dojopro.resources.ic_google
 import com.spoonofcode.dojopro.resources.password
-import com.spoonofcode.dojopro.resources.sign_in
 import com.spoonofcode.dojopro.resources.sign_up
 import core.ui.Dimens
 import core.ui.compose.Buttons
-import core.ui.compose.Buttons.GoogleSignInButton
 import core.ui.compose.LoadingView
 import core.ui.compose.Spacers
 import core.ui.compose.TextFields
 import core.ui.ext.koinViewModel
 import navigation.NavigationHandler
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
-class LoginScreen : Screen {
+class RegistrationScreen : Screen {
 
     @Composable
     override fun Content() {
         val navigator: Navigator = LocalNavigator.currentOrThrow
-        val viewModel = koinViewModel<LoginViewModel>()
+        val viewModel = koinViewModel<RegistrationViewModel>()
         val viewState by viewModel.viewState.collectAsState()
 
         NavigationHandler(
@@ -50,21 +42,15 @@ class LoginScreen : Screen {
             viewState = viewState,
             changeEmail = { viewModel.changeEmail(it) },
             changePassword = { viewModel.changePassword(it) },
-            forgotPassword = { viewModel.forgotPassword() },
-            signIn = { viewModel.signIn() },
-            signInWithGoogle = { viewModel.signInWithGoogle(it) },
             signUp = { viewModel.signUp() },
         )
     }
 
     @Composable
     internal fun ContentView(
-        viewState: LoginViewState,
+        viewState: RegistrationViewState,
         changeEmail: (String) -> Unit,
         changePassword: (String) -> Unit,
-        forgotPassword: () -> Unit,
-        signIn: () -> Unit,
-        signInWithGoogle: (String) -> Unit,
         signUp: () -> Unit,
     ) {
         Column(
@@ -75,6 +61,7 @@ class LoginScreen : Screen {
             if (viewState.isViewLoading) {
                 LoadingView()
             } else {
+
                 TextFields.Outlined(
                     value = viewState.email,
                     onValueChange = { changeEmail(it) },
@@ -88,27 +75,6 @@ class LoginScreen : Screen {
                     onValueChange = { changePassword(it) },
                     label = stringResource(resource = Res.string.password),
                 )
-
-                Spacers.VerticalBetweenFields()
-
-                Buttons.PrimaryButton(
-                    text = stringResource(resource = Res.string.sign_in),
-                    onClick = { signIn() }
-                )
-
-                Buttons.PrimaryButton(
-                    text = stringResource(resource = Res.string.forget_password),
-                    onClick = { forgotPassword() }
-                )
-
-                Spacers.VerticalBetweenFields()
-
-                GoogleSignInButton(onGoogleSignInResult = { googleUser ->
-                    // send Google id token to your server
-                    val idToken = requireNotNull(googleUser?.token)
-                    println("BARTEK googleUser.idToken = $idToken")
-                    signInWithGoogle(idToken)
-                })
 
                 Spacers.VerticalBetweenFields()
 

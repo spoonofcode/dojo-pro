@@ -10,7 +10,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import model.GoogleAuthTokenRequest
 import repository.GoogleAuthRepository
+import tabs.forgotPassword.ForgotPasswordScreen
 import tabs.mainhost.MainHostScreen
+import tabs.registration.RegistrationScreen
 
 internal class LoginViewModel(
     private val googleAuthRepository: GoogleAuthRepository,
@@ -43,7 +45,7 @@ internal class LoginViewModel(
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView
         ) {
-
+            viewModelNavigator.push(ForgotPasswordScreen())
         }
     }
 
@@ -83,7 +85,7 @@ internal class LoginViewModel(
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView
         ) {
-
+            viewModelNavigator.push(RegistrationScreen())
         }
     }
 }
