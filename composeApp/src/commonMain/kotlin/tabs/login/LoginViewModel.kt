@@ -6,6 +6,7 @@ import core.ui.BaseViewModel
 import core.ui.ext.launchWithProgress
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import model.GoogleAuthTokenRequest
 import repository.GoogleAuthRepository
@@ -22,7 +23,39 @@ internal class LoginViewModel(
         }
     }
 
-    fun sendGoogleToken(idToken: String) {
+    fun changeEmail(email: String) {
+        viewModelScope.launch {
+            updateState {
+                copy(email = email)
+            }
+        }
+    }
+
+    fun changePassword(password: String) {
+        viewModelScope.launch {
+            updateState {
+                copy(password = password)
+            }
+        }
+    }
+
+    fun forgotPassword() {
+        viewModelScope.launchWithProgress(
+            onProgress = ::setLoadingView
+        ) {
+
+        }
+    }
+
+    fun signIn() {
+        viewModelScope.launchWithProgress(
+            onProgress = ::setLoadingView
+        ) {
+
+        }
+    }
+
+    fun signInWithGoogle(idToken: String) {
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView
         ) {
@@ -40,12 +73,17 @@ internal class LoginViewModel(
                         sessionRepository.saveSessionToken(token = googleAuthToken.idToken)
                     }
                 }.onSuccess {
-                    updateState {
-                        copy(receivedToken = googleAuthToken.idToken)
-                    }
                     viewModelNavigator.replaceAll(listOf(MainHostScreen()))
                 }
             }
+        }
+    }
+
+    fun signUp() {
+        viewModelScope.launchWithProgress(
+            onProgress = ::setLoadingView
+        ) {
+
         }
     }
 }

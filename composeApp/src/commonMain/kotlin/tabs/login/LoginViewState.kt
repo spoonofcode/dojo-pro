@@ -1,8 +1,8 @@
 package tabs.login
 
 internal data class LoginViewState(
-    val isViewEnable:Boolean = true,
-    val isViewLoading:Boolean = false,
-    val receivedToken: String = "TEST",
-    val receivedTokenFromStore: String = "TEST-STORE",
+    val email: String = "",
+    val password: String = "",
+    val isViewEnable: Boolean = true,
+    val isViewLoading: Boolean = false,
 )

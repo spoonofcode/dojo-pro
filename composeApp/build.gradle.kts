@@ -73,6 +73,8 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.material.icons.core)
+            implementation(libs.material.icons.extended)
             implementation(libs.multiplatform.settings)
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab.navigator)

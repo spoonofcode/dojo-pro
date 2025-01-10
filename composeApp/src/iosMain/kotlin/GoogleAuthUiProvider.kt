@@ -37,4 +37,10 @@ actual class GoogleAuthUiProvider {
                     }
             }
         }
+
+
+    @OptIn(ExperimentalForeignApi::class)
+    actual suspend fun signOut() {
+        GIDSignIn.sharedInstance.signOut()
+    }
 }

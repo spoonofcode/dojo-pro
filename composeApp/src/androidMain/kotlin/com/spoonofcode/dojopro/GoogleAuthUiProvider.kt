@@ -1,4 +1,5 @@
 import android.content.Context
+import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.Credential
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
@@ -20,6 +21,10 @@ actual class GoogleAuthUiProvider(
         handleSignIn(credential)
     } catch (e: Exception) {
         null
+    }
+
+    actual suspend fun signOut() {
+        credentialManager.clearCredentialState(ClearCredentialStateRequest())
     }
 
     private fun handleSignIn(credential: Credential): GoogleAccount? = when {

@@ -11,8 +11,4 @@ actual class GoogleAuthProvider(
         val activityContext = LocalContext.current
         return GoogleAuthUiProvider(activityContext, credentialManager)
     }
-
-    actual suspend fun signOut() {
-        credentialManager.clearCredentialState(ClearCredentialStateRequest())
-    }
 }
