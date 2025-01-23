@@ -1,6 +1,5 @@
 package tabs.login
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,11 +13,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.spoonofcode.dojopro.resources.Res
-import com.spoonofcode.dojopro.resources.compose_multiplatform
-import com.spoonofcode.dojopro.resources.dojo_room
 import com.spoonofcode.dojopro.resources.email
 import com.spoonofcode.dojopro.resources.forget_password
-import com.spoonofcode.dojopro.resources.ic_google
 import com.spoonofcode.dojopro.resources.password
 import com.spoonofcode.dojopro.resources.sign_in
 import com.spoonofcode.dojopro.resources.sign_up
@@ -30,7 +26,6 @@ import core.ui.compose.Spacers
 import core.ui.compose.TextFields
 import core.ui.ext.koinViewModel
 import navigation.NavigationHandler
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 class LoginScreen : Screen {
@@ -105,9 +100,8 @@ class LoginScreen : Screen {
 
                 GoogleSignInButton(onGoogleSignInResult = { googleUser ->
                     // send Google id token to your server
-                    val idToken = requireNotNull(googleUser?.token)
-                    println("BARTEK googleUser.idToken = $idToken")
-                    signInWithGoogle(idToken)
+                    val googleIdToken = requireNotNull(googleUser?.token)
+                    signInWithGoogle(googleIdToken)
                 })
 
                 Spacers.VerticalBetweenFields()
