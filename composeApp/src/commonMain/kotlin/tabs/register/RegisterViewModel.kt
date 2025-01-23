@@ -8,7 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import model.LoginGoogleRequest
 import model.RegisterRequest
 import repository.RegisterRepository
 import tabs.mainhost.MainHostScreen
@@ -74,7 +73,7 @@ internal class RegisterViewModel(
             }.onSuccess { token ->
                 runCatching {
                     withContext(Dispatchers.IO) {
-                        sessionRepository.saveSessionToken(token = token.idToken)
+                        sessionRepository.saveSessionToken(token = token.jwtToken)
                     }
                 }.onSuccess {
                     viewModelNavigator.replaceAll(listOf(MainHostScreen()))

@@ -86,14 +86,14 @@ internal class LoginViewModel(
                 withContext(Dispatchers.IO) {
                     loginGoogleRepository.create(
                         request = LoginGoogleRequest(
-                            googleIdToken = googleIdToken,
+                            googleUserToken = googleIdToken,
                         )
                     )
                 }
             }.onSuccess { token ->
                 runCatching {
                     withContext(Dispatchers.IO) {
-                        sessionRepository.saveSessionToken(token = token.idToken)
+                        sessionRepository.saveSessionToken(token = token.jwtToken)
                     }
                 }.onSuccess {
                     viewModelNavigator.replaceAll(listOf(MainHostScreen()))

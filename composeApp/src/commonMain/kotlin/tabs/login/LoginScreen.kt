@@ -100,8 +100,8 @@ class LoginScreen : Screen {
 
                 GoogleSignInButton(onGoogleSignInResult = { googleUser ->
                     // send Google id token to your server
-                    val googleIdToken = requireNotNull(googleUser?.token)
-                    signInWithGoogle(googleIdToken)
+                    val googleUserToken = requireNotNull(googleUser?.token)
+                    signInWithGoogle(googleUserToken)
                 })
 
                 Spacers.VerticalBetweenFields()
