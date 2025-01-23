@@ -5,7 +5,7 @@ import tabs.forgotPassword.ForgotPasswordViewModel
 import tabs.home.HomeViewModel
 import tabs.login.LoginViewModel
 import tabs.profile.ProfileViewModel
-import tabs.registration.RegistrationViewModel
+import tabs.register.RegisterViewModel
 import tabs.search.SearchViewModel
 import tabs.settings.SettingsViewModel
 import tabs.shop.ShopViewModel
@@ -24,6 +24,6 @@ actual val viewModelModule = module {
     viewModelOf(::SettingsViewModel)
 
     viewModelOf(::LoginViewModel)
-    viewModelOf(::RegistrationViewModel)
+    viewModelOf(::RegisterViewModel)
     viewModelOf(::ForgotPasswordViewModel)
 }

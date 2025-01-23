@@ -14,13 +14,17 @@
     <string name="time">Time</string>
     <string name="title">Title</string>
     <string name="type">Type</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 
     <!-- SECTION Login -->
-    <string name="email">Email</string>
     <string name="forget_password">Forget password?</string>
-    <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
+
+    <!-- SECTION Register -->
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
 
     <!-- SECTION Home -->
     <string name="create_event">Create event</string>

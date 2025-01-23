@@ -1,4 +1,4 @@
-package tabs.registration
+package tabs.register
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,6 +14,8 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.email
+import com.spoonofcode.dojopro.resources.first_name
+import com.spoonofcode.dojopro.resources.last_name
 import com.spoonofcode.dojopro.resources.password
 import com.spoonofcode.dojopro.resources.sign_up
 import core.ui.Dimens
@@ -25,12 +27,12 @@ import core.ui.ext.koinViewModel
 import navigation.NavigationHandler
 import org.jetbrains.compose.resources.stringResource
 
-class RegistrationScreen : Screen {
+class RegisterScreen : Screen {
 
     @Composable
     override fun Content() {
         val navigator: Navigator = LocalNavigator.currentOrThrow
-        val viewModel = koinViewModel<RegistrationViewModel>()
+        val viewModel = koinViewModel<RegisterViewModel>()
         val viewState by viewModel.viewState.collectAsState()
 
         NavigationHandler(
@@ -42,15 +44,19 @@ class RegistrationScreen : Screen {
             viewState = viewState,
             changeEmail = { viewModel.changeEmail(it) },
             changePassword = { viewModel.changePassword(it) },
+            changeFirstName = { viewModel.changeFirstName(it) },
+            changeLastName = { viewModel.changeLastName(it) },
             signUp = { viewModel.signUp() },
         )
     }
 
     @Composable
     internal fun ContentView(
-        viewState: RegistrationViewState,
+        viewState: RegisterViewState,
         changeEmail: (String) -> Unit,
         changePassword: (String) -> Unit,
+        changeFirstName: (String) -> Unit,
+        changeLastName: (String) -> Unit,
         signUp: () -> Unit,
     ) {
         Column(
@@ -74,6 +80,22 @@ class RegistrationScreen : Screen {
                     value = viewState.password,
                     onValueChange = { changePassword(it) },
                     label = stringResource(resource = Res.string.password),
+                )
+
+                Spacers.VerticalBetweenFields()
+
+                TextFields.Outlined(
+                    value = viewState.firstName,
+                    onValueChange = { changeFirstName(it) },
+                    label = stringResource(resource = Res.string.first_name),
+                )
+
+                Spacers.VerticalBetweenFields()
+
+                TextFields.Outlined(
+                    value = viewState.lastName,
+                    onValueChange = { changeLastName(it) },
+                    label = stringResource(resource = Res.string.last_name),
                 )
 
                 Spacers.VerticalBetweenFields()

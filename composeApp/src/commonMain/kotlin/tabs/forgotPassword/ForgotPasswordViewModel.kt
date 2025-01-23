@@ -4,16 +4,11 @@ import SessionRepository
 import androidx.lifecycle.viewModelScope
 import core.ui.BaseViewModel
 import core.ui.ext.launchWithProgress
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import model.GoogleAuthTokenRequest
-import repository.GoogleAuthRepository
-import tabs.mainhost.MainHostScreen
+import repository.LoginGoogleRepository
 
 internal class ForgotPasswordViewModel(
-    private val googleAuthRepository: GoogleAuthRepository,
+    private val loginGoogleRepository: LoginGoogleRepository,
     private val sessionRepository: SessionRepository,
 ) : BaseViewModel<ForgotPasswordViewState>(ForgotPasswordViewState()) {
 

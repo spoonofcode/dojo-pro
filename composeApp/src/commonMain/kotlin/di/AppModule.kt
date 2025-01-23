@@ -8,9 +8,12 @@ import org.koin.dsl.module
 import repository.CoachRepository
 import repository.LevelRepository
 import repository.ProfileRepository
+import repository.UserRepository
 import repository.RoomRepository
 import repository.SportEventRepository
-import repository.GoogleAuthRepository
+import repository.LoginGoogleRepository
+import repository.LoginRepository
+import repository.RegisterRepository
 import navigation.ViewModelNavigator
 import SessionRepository
 
@@ -27,8 +30,11 @@ val appModule = module {
     singleOf(::LevelRepository)
     singleOf(::RoomRepository)
     singleOf(::SportEventRepository)
-    singleOf(::GoogleAuthRepository)
+    singleOf(::LoginGoogleRepository)
     singleOf(::SessionRepository)
+    singleOf(::UserRepository)
+    singleOf(::LoginRepository)
+    singleOf(::RegisterRepository)
 
     singleOf(::ViewModelNavigator)
 }

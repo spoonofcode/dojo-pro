@@ -3,6 +3,7 @@ package core.repository
 import SessionRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -14,8 +15,8 @@ import io.ktor.http.contentType
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
-import org.koin.mp.KoinPlatform.getKoin
 import network.NetworkConfig
+import org.koin.mp.KoinPlatform.getKoin
 
 interface CrudRepository<RQ, RS> {
     suspend fun create(request: RQ): RS
@@ -28,16 +29,17 @@ interface CrudRepository<RQ, RS> {
 abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     private val resourceName: String,
     private val requestSerializer: KSerializer<RQ>,
-    private val responseSerializer: KSerializer<RS>
+    private val responseSerializer: KSerializer<RS>,
+    private val sessionTokenRequired: Boolean = true,
 ) : CrudRepository<RQ, RS> {
 
-    protected val httpClient: HttpClient by getKoin().inject()
+    private val httpClient: HttpClient by getKoin().inject()
     private val networkConfig: NetworkConfig by getKoin().inject()
     private val sessionRepository: SessionRepository by getKoin().inject()
 
     override suspend fun create(request: RQ): RS {
         val responseBody: String = httpClient.post("${networkConfig.baseUrl}/$resourceName/") {
-            header("Authorization", "Bearer ${getJWTToken()}")
+            getHeader(this)
             contentType(ContentType.Application.Json)
             setBody(Json.encodeToString(requestSerializer, request)) // Serialize request
         }.body() // Get response as String
@@ -47,7 +49,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
 
     override suspend fun read(id: Int): RS {
         val responseBody: String = httpClient.get("${networkConfig.baseUrl}/$resourceName/$id") {
-            header("Authorization", "Bearer ${getJWTToken()}")
+            getHeader(this)
         }
             .body() // Get response as String
 
@@ -56,7 +58,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
 
     override suspend fun update(id: Int, request: RQ): Boolean {
         httpClient.put("${networkConfig.baseUrl}/$resourceName/$id") {
-            header("Authorization", "Bearer ${getJWTToken()}")
+            getHeader(this)
             contentType(ContentType.Application.Json)
             setBody(Json.encodeToString(requestSerializer, request)) // Serialize request
         }
@@ -64,15 +66,15 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     }
 
     override suspend fun delete(id: Int): Boolean {
-        httpClient.delete("${networkConfig.baseUrl}/$resourceName/$id"){
-            header("Authorization", "Bearer ${getJWTToken()}")
+        httpClient.delete("${networkConfig.baseUrl}/$resourceName/$id") {
+            getHeader(this)
         }
         return true // Simplified for this example
     }
 
     override suspend fun readAll(): List<RS> {
-        val responseBody: String = httpClient.get("${networkConfig.baseUrl}/$resourceName/"){
-            header("Authorization", "Bearer ${getJWTToken()}")
+        val responseBody: String = httpClient.get("${networkConfig.baseUrl}/$resourceName/") {
+            getHeader(this)
         }
             .body() // Get response as String
 
@@ -80,6 +82,17 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
             ListSerializer(responseSerializer),
             responseBody
         ) // Deserialize list of responses
+    }
+
+    private suspend fun getHeader(
+        httpRequestBuilder: HttpRequestBuilder,
+    ) {
+        if (sessionTokenRequired) {
+            httpRequestBuilder.header(
+                "Authorization",
+                "Bearer ${getJWTToken()}"
+            )
+        }
     }
 
     private suspend fun getJWTToken(): String {
