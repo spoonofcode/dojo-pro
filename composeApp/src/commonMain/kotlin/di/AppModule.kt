@@ -16,6 +16,7 @@ import repository.LoginRepository
 import repository.RegisterRepository
 import navigation.ViewModelNavigator
 import SessionRepository
+import tabs.login.LoginUseCase
 
 val appModule = module {
     single {
@@ -35,6 +36,7 @@ val appModule = module {
     singleOf(::UserRepository)
     singleOf(::LoginRepository)
     singleOf(::RegisterRepository)
+    singleOf(::LoginUseCase)
 
     singleOf(::ViewModelNavigator)
 }
