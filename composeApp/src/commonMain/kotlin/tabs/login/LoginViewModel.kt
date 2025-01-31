@@ -4,6 +4,7 @@ import SessionRepository
 import androidx.lifecycle.viewModelScope
 import core.ui.BaseViewModel
 import core.ui.ext.launchWithProgress
+import io.ktor.util.rootCause
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
@@ -65,14 +66,18 @@ internal class LoginViewModel(
                         )
                     )
                 }
-            }.onSuccess { token ->
+            }.onSuccess { login ->
                 runCatching {
                     withContext(Dispatchers.IO) {
-                        sessionRepository.saveSessionToken(token = token.idToken)
+                        sessionRepository.saveSessionToken(token = login.jwtToken)
                     }
                 }.onSuccess {
                     viewModelNavigator.replaceAll(listOf(MainHostScreen()))
                 }
+            }.onFailure {
+                println("BARTEK onFailure = $it")
+                println("BARTEK onFailure = ${it.message}")
+                println("BARTEK onFailure = ${it.cause}")
             }
         }
 
@@ -90,10 +95,10 @@ internal class LoginViewModel(
                         )
                     )
                 }
-            }.onSuccess { token ->
+            }.onSuccess { loginGoogle ->
                 runCatching {
                     withContext(Dispatchers.IO) {
-                        sessionRepository.saveSessionToken(token = token.jwtToken)
+                        sessionRepository.saveSessionToken(token = loginGoogle.jwtToken)
                     }
                 }.onSuccess {
                     viewModelNavigator.replaceAll(listOf(MainHostScreen()))

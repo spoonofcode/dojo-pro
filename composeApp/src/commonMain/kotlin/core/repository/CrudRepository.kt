@@ -10,11 +10,13 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
+import network.HttpStatusCodes
 import network.NetworkConfig
 import org.koin.mp.KoinPlatform.getKoin
 
@@ -38,50 +40,58 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     private val sessionRepository: SessionRepository by getKoin().inject()
 
     override suspend fun create(request: RQ): RS {
-        val responseBody: String = httpClient.post("${networkConfig.baseUrl}/$resourceName/") {
+        val response: HttpResponse = httpClient.post("${networkConfig.baseUrl}/$resourceName/") {
             getHeader(this)
             contentType(ContentType.Application.Json)
-            setBody(Json.encodeToString(requestSerializer, request)) // Serialize request
-        }.body() // Get response as String
+            setBody(Json.encodeToString(requestSerializer, request))
+        }
 
-        return Json.decodeFromString(responseSerializer, responseBody) // Deserialize response
+        val responseBody = responseOrException(response).body<String>()
+
+        return Json.decodeFromString(responseSerializer, responseBody)
     }
 
     override suspend fun read(id: Int): RS {
-        val responseBody: String = httpClient.get("${networkConfig.baseUrl}/$resourceName/$id") {
+        val response: HttpResponse = httpClient.get("${networkConfig.baseUrl}/$resourceName/$id") {
             getHeader(this)
         }
-            .body() // Get response as String
 
-        return Json.decodeFromString(responseSerializer, responseBody) // Deserialize response
+        val responseBody = responseOrException(response).body<String>()
+
+        return Json.decodeFromString(responseSerializer, responseBody)
     }
 
     override suspend fun update(id: Int, request: RQ): Boolean {
-        httpClient.put("${networkConfig.baseUrl}/$resourceName/$id") {
+        val response: HttpResponse = httpClient.put("${networkConfig.baseUrl}/$resourceName/$id") {
             getHeader(this)
             contentType(ContentType.Application.Json)
             setBody(Json.encodeToString(requestSerializer, request)) // Serialize request
         }
-        return true // Simplified for this example
+
+        responseOrException(response).body<String>()
+        return true
     }
 
     override suspend fun delete(id: Int): Boolean {
-        httpClient.delete("${networkConfig.baseUrl}/$resourceName/$id") {
-            getHeader(this)
-        }
-        return true // Simplified for this example
+        val response: HttpResponse =
+            httpClient.delete("${networkConfig.baseUrl}/$resourceName/$id") {
+                getHeader(this)
+            }
+
+        responseOrException(response).body<String>()
+        return true
     }
 
     override suspend fun readAll(): List<RS> {
-        val responseBody: String = httpClient.get("${networkConfig.baseUrl}/$resourceName/") {
+        val response: HttpResponse = httpClient.get("${networkConfig.baseUrl}/$resourceName/") {
             getHeader(this)
         }
-            .body() // Get response as String
+        val responseBody = responseOrException(response).body<String>()
 
         return Json.decodeFromString(
             ListSerializer(responseSerializer),
             responseBody
-        ) // Deserialize list of responses
+        )
     }
 
     private suspend fun getHeader(
@@ -93,6 +103,19 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
                 "Bearer ${getJWTToken()}"
             )
         }
+    }
+
+    private fun responseOrException(response: HttpResponse): HttpResponse {
+        return when (response.status) {
+            in HttpStatusCodes.HTTP_SUCCESS_CODES -> return response
+            in HttpStatusCodes.HTTP_CLIENT_ERROR_CODES -> throw Exception("Client Error")
+            in HttpStatusCodes.HTTP_SERVER_ERROR_CODES -> throw Exception("Server Error")
+            else -> unhandledException(response)
+        }
+    }
+
+    private fun unhandledException(response: HttpResponse): HttpResponse {
+        throw Exception("Unhandled Error $response")
     }
 
     private suspend fun getJWTToken(): String {
