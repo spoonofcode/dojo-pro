@@ -13,6 +13,9 @@ import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
@@ -40,58 +43,71 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     private val sessionRepository: SessionRepository by getKoin().inject()
 
     override suspend fun create(request: RQ): RS {
-        val response: HttpResponse = httpClient.post("${networkConfig.baseUrl}/$resourceName/") {
-            getHeader(this)
-            contentType(ContentType.Application.Json)
-            setBody(Json.encodeToString(requestSerializer, request))
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse =
+                httpClient.post("${networkConfig.baseUrl}/$resourceName/") {
+                    getHeader(this)
+                    contentType(ContentType.Application.Json)
+                    setBody(Json.encodeToString(requestSerializer, request))
+                }
+
+            val responseBody = responseOrException(response).body<String>()
+
+            Json.decodeFromString(responseSerializer, responseBody)
         }
-
-        val responseBody = responseOrException(response).body<String>()
-
-        return Json.decodeFromString(responseSerializer, responseBody)
     }
 
     override suspend fun read(id: Int): RS {
-        val response: HttpResponse = httpClient.get("${networkConfig.baseUrl}/$resourceName/$id") {
-            getHeader(this)
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse =
+                httpClient.get("${networkConfig.baseUrl}/$resourceName/$id") {
+                    getHeader(this)
+                }
+
+            val responseBody = responseOrException(response).body<String>()
+
+            Json.decodeFromString(responseSerializer, responseBody)
         }
-
-        val responseBody = responseOrException(response).body<String>()
-
-        return Json.decodeFromString(responseSerializer, responseBody)
     }
 
     override suspend fun update(id: Int, request: RQ): Boolean {
-        val response: HttpResponse = httpClient.put("${networkConfig.baseUrl}/$resourceName/$id") {
-            getHeader(this)
-            contentType(ContentType.Application.Json)
-            setBody(Json.encodeToString(requestSerializer, request)) // Serialize request
-        }
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse =
+                httpClient.put("${networkConfig.baseUrl}/$resourceName/$id") {
+                    getHeader(this)
+                    contentType(ContentType.Application.Json)
+                    setBody(Json.encodeToString(requestSerializer, request)) // Serialize request
+                }
 
-        responseOrException(response).body<String>()
-        return true
+            responseOrException(response).body<String>()
+            true
+        }
     }
 
     override suspend fun delete(id: Int): Boolean {
-        val response: HttpResponse =
-            httpClient.delete("${networkConfig.baseUrl}/$resourceName/$id") {
-                getHeader(this)
-            }
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse =
+                httpClient.delete("${networkConfig.baseUrl}/$resourceName/$id") {
+                    getHeader(this)
+                }
 
-        responseOrException(response).body<String>()
-        return true
+            responseOrException(response).body<String>()
+            true
+        }
     }
 
     override suspend fun readAll(): List<RS> {
-        val response: HttpResponse = httpClient.get("${networkConfig.baseUrl}/$resourceName/") {
-            getHeader(this)
-        }
-        val responseBody = responseOrException(response).body<String>()
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = httpClient.get("${networkConfig.baseUrl}/$resourceName/") {
+                getHeader(this)
+            }
+            val responseBody = responseOrException(response).body<String>()
 
-        return Json.decodeFromString(
-            ListSerializer(responseSerializer),
-            responseBody
-        )
+            Json.decodeFromString(
+                ListSerializer(responseSerializer),
+                responseBody
+            )
+        }
     }
 
     private suspend fun getHeader(

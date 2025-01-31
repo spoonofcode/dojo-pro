@@ -1,4 +1,7 @@
 import com.russhwolf.settings.Settings
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 
 class SessionRepository(private val settings: Settings) {
 
@@ -7,14 +10,20 @@ class SessionRepository(private val settings: Settings) {
     }
 
     suspend fun saveSessionToken(token: String) {
-        settings.putString(SESSION_TOKEN_KEY, token)
+        withContext(Dispatchers.IO) {
+            settings.putString(SESSION_TOKEN_KEY, token)
+        }
     }
 
     suspend fun getSessionToken(): String? {
-        return settings.getStringOrNull(SESSION_TOKEN_KEY)
+        return withContext(Dispatchers.IO) {
+            settings.getStringOrNull(SESSION_TOKEN_KEY)
+        }
     }
 
     suspend fun clearSessionToken() {
-        settings.remove(SESSION_TOKEN_KEY)
+        return withContext(Dispatchers.IO) {
+            settings.remove(SESSION_TOKEN_KEY)
+        }
     }
 }

@@ -3,10 +3,7 @@ package tabs.login
 import androidx.lifecycle.viewModelScope
 import core.ui.BaseViewModel
 import core.ui.ext.launchWithProgress
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import tabs.forgotPassword.ForgotPasswordScreen
 import tabs.mainhost.MainHostScreen
 import tabs.register.RegisterScreen
@@ -50,16 +47,13 @@ internal class LoginViewModel(
             onProgress = ::setLoadingView
         ) {
             runCatching {
-                withContext(Dispatchers.IO) {
-                    loginUseCase.signIn(
-                        email = viewState.value.email,
-                        password = viewState.value.password,
-                    )
-                }
+                loginUseCase.signIn(
+                    email = viewState.value.email,
+                    password = viewState.value.password,
+                )
             }.onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             }.onFailure {
-                println("BARTEK Error")
                 showSnackbar("ERROR: $it")
             }
         }
@@ -70,9 +64,7 @@ internal class LoginViewModel(
             onProgress = ::setLoadingView
         ) {
             runCatching {
-                withContext(Dispatchers.IO) {
-                    loginUseCase.signInWithGoogle(googleIdToken)
-                }
+                loginUseCase.signInWithGoogle(googleIdToken)
             }.onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             }.onFailure {
