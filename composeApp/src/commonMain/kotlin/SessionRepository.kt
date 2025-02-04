@@ -1,29 +1,32 @@
 import com.russhwolf.settings.Settings
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.withContext
 
 class SessionRepository(private val settings: Settings) {
+    fun saveSessionAccessToken(token: String) {
+        settings.putString(SESSION_ACCESS_TOKEN, token)
+    }
+
+    fun getSessionAccessToken(): String? {
+        return settings.getStringOrNull(SESSION_ACCESS_TOKEN)
+    }
+
+    fun clearSessionAccessToken() {
+        settings.remove(SESSION_ACCESS_TOKEN)
+    }
+
+    fun saveSessionRefreshToken(token: String) {
+        settings.putString(SESSION_REFRESH_TOKEN, token)
+    }
+
+    fun getSessionRefreshToken(): String? {
+        return settings.getStringOrNull(SESSION_REFRESH_TOKEN)
+    }
+
+    fun clearSessionRefreshToken() {
+        settings.remove(SESSION_REFRESH_TOKEN)
+    }
 
     companion object {
-        private const val SESSION_TOKEN_KEY = "session_token"
-    }
-
-    suspend fun saveSessionToken(token: String) {
-        withContext(Dispatchers.IO) {
-            settings.putString(SESSION_TOKEN_KEY, token)
-        }
-    }
-
-    suspend fun getSessionToken(): String? {
-        return withContext(Dispatchers.IO) {
-            settings.getStringOrNull(SESSION_TOKEN_KEY)
-        }
-    }
-
-    suspend fun clearSessionToken() {
-        return withContext(Dispatchers.IO) {
-            settings.remove(SESSION_TOKEN_KEY)
-        }
+        private const val SESSION_ACCESS_TOKEN = "session_access_token"
+        private const val SESSION_REFRESH_TOKEN = "session_refresh_token"
     }
 }

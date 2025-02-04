@@ -19,7 +19,8 @@ internal class LoginUseCase(
             )
         )
 
-        sessionRepository.saveSessionToken(token = loginResponse.jwtToken)
+        sessionRepository.saveSessionAccessToken(token = loginResponse.jwtAccessToken)
+        sessionRepository.saveSessionRefreshToken(token = loginResponse.jwtRefreshToken)
     }
 
     suspend fun signInWithGoogle(googleIdToken: String) {
@@ -29,6 +30,7 @@ internal class LoginUseCase(
             )
         )
 
-        sessionRepository.saveSessionToken(token = loginGoogleResponse.jwtToken)
+        sessionRepository.saveSessionAccessToken(token = loginGoogleResponse.jwtAccessToken)
+        sessionRepository.saveSessionRefreshToken(token = loginGoogleResponse.jwtRefreshToken)
     }
 }

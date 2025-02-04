@@ -73,7 +73,7 @@ internal class RegisterViewModel(
             }.onSuccess { token ->
                 runCatching {
                     withContext(Dispatchers.IO) {
-                        sessionRepository.saveSessionToken(token = token.jwtToken)
+                        sessionRepository.saveSessionAccessToken(token = token.jwtAccessToken)
                     }
                 }.onSuccess {
                     viewModelNavigator.replaceAll(listOf(MainHostScreen()))
