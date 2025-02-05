@@ -1,6 +1,8 @@
 import com.russhwolf.settings.Settings
 
 class SessionRepository(private val settings: Settings) {
+    fun isSessionInitialized(): Boolean = getSessionAccessToken() != null
+
     fun saveSessionAccessToken(token: String) {
         settings.putString(SESSION_ACCESS_TOKEN, token)
     }
