@@ -10,12 +10,14 @@ internal class TokenUseCase(
     suspend fun refreshAccessToken(): Boolean {
         val jwtRefreshToken = sessionRepository.getSessionRefreshToken() ?: return false
         val login = loginRepository.refreshToken(jwtRefreshToken)
+
+        println("BARTEK jwtAccessToken =  ${login.jwtAccessToken}")
+        println("BARTEK jwtRefreshToken = ${login.jwtRefreshToken}")
+
+//        sessionRepository.clearSessionAccessToken()
+//        sessionRepository.clearSessionRefreshToken()
         sessionRepository.saveSessionAccessToken(login.jwtAccessToken)
         sessionRepository.saveSessionRefreshToken(login.jwtRefreshToken)
         return true
-    }
-
-    suspend fun getSessionAccessToken(): String? {
-        return sessionRepository.getSessionAccessToken()
     }
 }

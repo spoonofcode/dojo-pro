@@ -19,6 +19,8 @@ internal class LoginUseCase(
             )
         )
 
+//        sessionRepository.clearSessionAccessToken()
+//        sessionRepository.clearSessionRefreshToken()
         sessionRepository.saveSessionAccessToken(token = loginResponse.jwtAccessToken)
         sessionRepository.saveSessionRefreshToken(token = loginResponse.jwtRefreshToken)
     }
@@ -29,7 +31,8 @@ internal class LoginUseCase(
                 googleUserToken = googleIdToken,
             )
         )
-
+//        sessionRepository.clearSessionAccessToken()
+//        sessionRepository.clearSessionRefreshToken()
         sessionRepository.saveSessionAccessToken(token = loginGoogleResponse.jwtAccessToken)
         sessionRepository.saveSessionRefreshToken(token = loginGoogleResponse.jwtRefreshToken)
     }

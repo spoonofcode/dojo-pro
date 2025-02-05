@@ -14,8 +14,8 @@ import kotlinx.serialization.json.Json
 import model.Login
 import model.LoginRequest
 import network.HttpStatusCodes
+import network.NetworkConfig
 import org.koin.mp.KoinPlatform.getKoin
-import kotlin.math.log
 
 class LoginRepository : GenericCrudRepository<LoginRequest, Login>(
     resourceName = "login",
@@ -25,14 +25,17 @@ class LoginRepository : GenericCrudRepository<LoginRequest, Login>(
 ) {
 
     private val httpClient: HttpClient by getKoin().inject()
+    private val networkConfig: NetworkConfig by getKoin().inject()
 
     suspend fun refreshToken(jwtRefreshToken: String): Login {
         return withContext(Dispatchers.IO) {
-                val response: HttpResponse = httpClient.post("/refresh") {
-                    header(HttpHeaders.Authorization, "Bearer $jwtRefreshToken")
-                }
+            val response: HttpResponse = httpClient.post("${networkConfig.baseUrl}/refresh/") {
+                header(HttpHeaders.Authorization, "Bearer $jwtRefreshToken")
+            }
 
-                val responseBody = responseOrException(response).body<String>()
+            println("BARTEK response.status = ${response.status}")
+
+            val responseBody = responseOrException(response).body<String>()
             Json.decodeFromString(Login.serializer(), responseBody)
         }
     }

@@ -127,20 +127,15 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         }
     }
 
-    private fun getHeader(
-        httpRequestBuilder: HttpRequestBuilder,
-    ) {
-        httpRequestBuilder.header(
-            "Authorization",
-            "Bearer ${getJwtAccessToken()}"
-        )
-    }
-
     private fun responseOrException(response: HttpResponse): HttpResponse {
         return when (response.status) {
             in HttpStatusCodes.HTTP_SUCCESS_CODES -> return response
-            in HttpStatusCodes.HTTP_CLIENT_ERROR_CODES -> throw Exception("Client Error")
-            in HttpStatusCodes.HTTP_SERVER_ERROR_CODES -> throw Exception("Server Error")
+            in HttpStatusCodes.HTTP_CLIENT_ERROR_CODES ->
+                throw Exception("Client Error ${response.status}")
+
+            in HttpStatusCodes.HTTP_SERVER_ERROR_CODES ->
+                throw Exception("Server Error ${response.status}")
+
             else -> unhandledException(response)
         }
     }
@@ -150,6 +145,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     }
 
     private fun getJwtAccessToken(): String {
+        println("BARTEK TOKEN = ${sessionRepository.getSessionAccessToken()}")
         return sessionRepository.getSessionAccessToken() ?: "TOKEN_NOT_FOUND"
     }
 
@@ -164,9 +160,11 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         block: HttpRequestBuilder.() -> Unit
     ): HttpResponse {
         // 1) First attempt
+        println("BARTEK accessToken 1 = ${sessionRepository.getSessionAccessToken()}")
+
         var response: HttpResponse = client.request {
             block()
-            header(HttpHeaders.Authorization, "Bearer ${tokenUseCase.getSessionAccessToken()}")
+            header(HttpHeaders.Authorization, "Bearer ${sessionRepository.getSessionAccessToken()}")
         }
 
         // 2) If 401, try refresh once
@@ -178,9 +176,12 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
             }
 
             // If refresh succeeded => try the same request again
+
+            println("BARTEK accessToken 2 = ${sessionRepository.getSessionAccessToken()}")
+
             response = client.request {
                 block()
-                header(HttpHeaders.Authorization, "Bearer ${tokenUseCase.getSessionAccessToken()}")
+                header(HttpHeaders.Authorization, "Bearer ${sessionRepository.getSessionAccessToken()}")
             }
 
             // If still 401 => forced to log out
@@ -203,7 +204,6 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
             safeApiCall(httpClient) {
                 url("${networkConfig.baseUrl}/$urlPath")
                 this.method = method
-                getHeader(this)
                 block()
             }
         } else {
