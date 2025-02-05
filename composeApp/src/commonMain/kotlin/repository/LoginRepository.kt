@@ -33,8 +33,6 @@ class LoginRepository : GenericCrudRepository<LoginRequest, Login>(
                 header(HttpHeaders.Authorization, "Bearer $jwtRefreshToken")
             }
 
-            println("BARTEK response.status = ${response.status}")
-
             val responseBody = responseOrException(response).body<String>()
             Json.decodeFromString(Login.serializer(), responseBody)
         }

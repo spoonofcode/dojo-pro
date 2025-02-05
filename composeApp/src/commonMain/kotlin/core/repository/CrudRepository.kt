@@ -145,7 +145,6 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     }
 
     private fun getJwtAccessToken(): String {
-        println("BARTEK TOKEN = ${sessionRepository.getSessionAccessToken()}")
         return sessionRepository.getSessionAccessToken() ?: "TOKEN_NOT_FOUND"
     }
 
@@ -160,8 +159,6 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         block: HttpRequestBuilder.() -> Unit
     ): HttpResponse {
         // 1) First attempt
-        println("BARTEK accessToken 1 = ${sessionRepository.getSessionAccessToken()}")
-
         var response: HttpResponse = client.request {
             block()
             header(HttpHeaders.Authorization, "Bearer ${sessionRepository.getSessionAccessToken()}")
@@ -176,9 +173,6 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
             }
 
             // If refresh succeeded => try the same request again
-
-            println("BARTEK accessToken 2 = ${sessionRepository.getSessionAccessToken()}")
-
             response = client.request {
                 block()
                 header(HttpHeaders.Authorization, "Bearer ${sessionRepository.getSessionAccessToken()}")
