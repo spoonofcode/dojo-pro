@@ -49,14 +49,11 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
             val response: HttpResponse = doRequest(
                 urlPath = "$resourceName/",
                 method = HttpMethod.Post,
-                sessionTokenRequired = sessionTokenRequired
-            ) {
-                contentType(ContentType.Application.Json)
-                setBody(Json.encodeToString(requestSerializer, request))
-            }
+                sessionTokenRequired = sessionTokenRequired,
+                requestBody = request,
+            )
 
             val responseBody = responseOrException(response).body<String>()
-
             Json.decodeFromString(responseSerializer, responseBody)
         }
     }
@@ -67,12 +64,9 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
                 urlPath = "$resourceName/$id",
                 method = HttpMethod.Get,
                 sessionTokenRequired = sessionTokenRequired
-            ) {
-                contentType(ContentType.Application.Json)
-            }
+            )
 
             val responseBody = responseOrException(response).body<String>()
-
             Json.decodeFromString(responseSerializer, responseBody)
         }
     }
@@ -82,11 +76,9 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
             val response: HttpResponse = doRequest(
                 urlPath = "$resourceName/$id",
                 method = HttpMethod.Put,
-                sessionTokenRequired = sessionTokenRequired
-            ) {
-                contentType(ContentType.Application.Json)
-                setBody(Json.encodeToString(requestSerializer, request))
-            }
+                sessionTokenRequired = sessionTokenRequired,
+                requestBody = request
+            )
 
             responseOrException(response).body<String>()
             true
@@ -99,9 +91,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
                 urlPath = "$resourceName/$id",
                 method = HttpMethod.Delete,
                 sessionTokenRequired = sessionTokenRequired
-            ) {
-                contentType(ContentType.Application.Json)
-            }
+            )
 
             responseOrException(response).body<String>()
             true
@@ -114,16 +104,10 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
                 urlPath = "$resourceName/",
                 method = HttpMethod.Get,
                 sessionTokenRequired = sessionTokenRequired
-            ) {
-                contentType(ContentType.Application.Json)
-            }
+            )
 
             val responseBody = responseOrException(response).body<String>()
-
-            Json.decodeFromString(
-                ListSerializer(responseSerializer),
-                responseBody
-            )
+            Json.decodeFromString(ListSerializer(responseSerializer), responseBody)
         }
     }
 
@@ -158,30 +142,30 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         client: HttpClient,
         block: HttpRequestBuilder.() -> Unit
     ): HttpResponse {
-        // 1) First attempt
-        var response: HttpResponse = client.request {
-            block()
-            header(HttpHeaders.Authorization, "Bearer ${sessionRepository.getSessionAccessToken()}")
+        // Local helper to execute the same request with the current (possibly refreshed) token
+        suspend fun executeRequest(): HttpResponse {
+            return client.request {
+                block()
+                header(
+                    HttpHeaders.Authorization,
+                    "Bearer ${getJwtAccessToken()}"
+                )
+            }
         }
+
+        // 1) First attempt
+        var response = executeRequest()
 
         // 2) If 401, try refresh once
         if (response.status == Unauthorized) {
-            val refreshed = tokenUseCase.refreshAccessToken() // your refresh function
+            val refreshed = tokenUseCase.refreshAccessToken()
             if (!refreshed) {
                 // Refresh failed => no valid session
                 throw Exception("Client Error")
             }
 
             // If refresh succeeded => try the same request again
-            response = client.request {
-                block()
-                header(HttpHeaders.Authorization, "Bearer ${sessionRepository.getSessionAccessToken()}")
-            }
-
-            // If still 401 => forced to log out
-            if (response.status == Unauthorized) {
-                throw Exception("Client Error")
-            }
+            response = executeRequest()
         }
 
         return response
@@ -191,22 +175,23 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         urlPath: String,
         method: HttpMethod,
         sessionTokenRequired: Boolean,
-        block: HttpRequestBuilder.() -> Unit
+        requestBody: RQ? = null,
     ): HttpResponse {
+        // Common request-setup block
+        val requestBuilder: HttpRequestBuilder.() -> Unit = {
+            contentType(ContentType.Application.Json)
+            url("${networkConfig.baseUrl}/$urlPath")
+            this.method = method
+            requestBody?.let { body ->
+                setBody(Json.encodeToString(requestSerializer, body))
+            }
+        }
+
+        // Use safeApiCall if token is required, otherwise call the client directly
         return if (sessionTokenRequired) {
-            // Authenticated request with safeApiCall
-            safeApiCall(httpClient) {
-                url("${networkConfig.baseUrl}/$urlPath")
-                this.method = method
-                block()
-            }
+            safeApiCall(httpClient, requestBuilder)
         } else {
-            // Unauthenticated direct request
-            httpClient.request {
-                url("${networkConfig.baseUrl}/$urlPath")
-                this.method = method
-                block()
-            }
+            httpClient.request(requestBuilder)
         }
     }
 }
