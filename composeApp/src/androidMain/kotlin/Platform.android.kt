@@ -1,3 +1,5 @@
+package com.spoonofcode.dojopro
+
 import android.os.Build
 
 class AndroidPlatform : Platform {

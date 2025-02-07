@@ -1,13 +1,12 @@
 package com.spoonofcode.dojopro
 
-import app.App
+import com.spoonofcode.dojopro.app.App
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import appContext
-import core.base.ui.theme.AppTheme
+import com.spoonofcode.dojopro.core.base.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
 

@@ -1,16 +1,18 @@
+package com.spoonofcode.dojopro
+
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
-import feature.calendar.CalendarViewModel
-import feature.login.forgotPassword.ForgotPasswordViewModel
-import feature.home.HomeViewModel
-import feature.login.login.LoginViewModel
-import feature.profile.ProfileViewModel
-import feature.login.register.RegisterViewModel
-import feature.search.SearchViewModel
-import feature.settings.SettingsViewModel
-import feature.shop.ShopViewModel
-import feature.sportevent.create.SportEventCreateViewModel
-import feature.sportevent.details.SportEventDetailsViewModel
+import com.spoonofcode.dojopro.feature.calendar.CalendarViewModel
+import com.spoonofcode.dojopro.feature.login.forgotPassword.ForgotPasswordViewModel
+import com.spoonofcode.dojopro.feature.home.HomeViewModel
+import com.spoonofcode.dojopro.feature.login.login.LoginViewModel
+import com.spoonofcode.dojopro.feature.profile.ProfileViewModel
+import com.spoonofcode.dojopro.feature.login.register.RegisterViewModel
+import com.spoonofcode.dojopro.feature.search.SearchViewModel
+import com.spoonofcode.dojopro.feature.settings.SettingsViewModel
+import com.spoonofcode.dojopro.feature.shop.ShopViewModel
+import com.spoonofcode.dojopro.feature.sportevent.create.SportEventCreateViewModel
+import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsViewModel
 
 actual val viewModelModule = module {
     viewModelOf(::CalendarViewModel)
