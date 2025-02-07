@@ -1,6 +1,6 @@
 package com.spoonofcode.dojopro.core.domain
 
-import com.spoonofcode.dojopro.core.network.SessionRepository
+import com.spoonofcode.dojopro.core.network.SessionManager
 import com.spoonofcode.dojopro.core.model.LoginGoogleRequest
 import com.spoonofcode.dojopro.core.model.LoginRequest
 import com.spoonofcode.dojopro.core.data.repository.LoginGoogleRepository
@@ -9,7 +9,7 @@ import com.spoonofcode.dojopro.core.data.repository.LoginRepository
 internal class LoginUseCase(
     private val loginRepository: LoginRepository,
     private val loginGoogleRepository: LoginGoogleRepository,
-    private val sessionRepository: SessionRepository,
+    private val sessionManager: SessionManager,
 ) {
     suspend fun signIn(email: String, password: String) {
         val loginResponse = loginRepository.create(
@@ -18,8 +18,8 @@ internal class LoginUseCase(
                 password = password,
             )
         )
-        sessionRepository.saveSessionAccessToken(token = loginResponse.jwtAccessToken)
-        sessionRepository.saveSessionRefreshToken(token = loginResponse.jwtRefreshToken)
+        sessionManager.saveSessionAccessToken(token = loginResponse.jwtAccessToken)
+        sessionManager.saveSessionRefreshToken(token = loginResponse.jwtRefreshToken)
     }
 
     suspend fun signInWithGoogle(googleIdToken: String) {
@@ -28,7 +28,7 @@ internal class LoginUseCase(
                 googleUserToken = googleIdToken,
             )
         )
-        sessionRepository.saveSessionAccessToken(token = loginGoogleResponse.jwtAccessToken)
-        sessionRepository.saveSessionRefreshToken(token = loginGoogleResponse.jwtRefreshToken)
+        sessionManager.saveSessionAccessToken(token = loginGoogleResponse.jwtAccessToken)
+        sessionManager.saveSessionRefreshToken(token = loginGoogleResponse.jwtRefreshToken)
     }
 }

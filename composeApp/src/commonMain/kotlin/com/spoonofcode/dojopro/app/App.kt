@@ -1,10 +1,10 @@
 package com.spoonofcode.dojopro.app
 
-import com.spoonofcode.dojopro.core.network.SessionRepository
+import com.spoonofcode.dojopro.core.network.SessionManager
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
-import com.spoonofcode.dojopro.core.base.ui.theme.AppTheme
+import com.spoonofcode.dojopro.core.ui.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.getKoin
 import com.spoonofcode.dojopro.feature.login.login.LoginScreen
@@ -12,10 +12,10 @@ import com.spoonofcode.dojopro.feature.login.login.LoginScreen
 @Composable
 @Preview
 fun App() {
-    val sessionRepository: SessionRepository = getKoin().get()
+    val sessionManager: SessionManager = getKoin().get()
 
     AppTheme {
-        Navigator(getStartScreen(sessionRepository.isSessionInitialized()))
+        Navigator(getStartScreen(sessionManager.isSessionInitialized()))
     }
 }
 

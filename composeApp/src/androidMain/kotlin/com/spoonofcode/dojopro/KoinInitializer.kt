@@ -2,7 +2,7 @@ package com.spoonofcode.dojopro
 
 import android.content.Context
 import com.spoonofcode.dojopro.app.di.appModule
-import com.spoonofcode.dojopro.core.settings.di.encryptedSettingsModule
+import com.spoonofcode.dojopro.core.settings.di.settingsModule
 import com.spoonofcode.dojopro.core.network.di.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -20,7 +20,7 @@ actual class KoinInitializer(
                 viewModelModule,
                 networkModule,
                 authModule,
-                encryptedSettingsModule,
+                settingsModule,
             )
         }
     }

@@ -29,8 +29,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.spoonofcode.dojopro.core.base.ext.formatedLocalDateTime
-import com.spoonofcode.dojopro.core.base.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.core.ext.formatedLocalDateTime
+import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsScreen
 

@@ -22,7 +22,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.settings
-import com.spoonofcode.dojopro.core.base.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import com.spoonofcode.dojopro.feature.settings.SettingsScreen

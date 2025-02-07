@@ -27,15 +27,15 @@ import com.spoonofcode.dojopro.resources.sport_event
 import com.spoonofcode.dojopro.resources.start
 import com.spoonofcode.dojopro.resources.submit
 import com.spoonofcode.dojopro.resources.title
-import com.spoonofcode.dojopro.core.base.ui.Dimens
-import com.spoonofcode.dojopro.core.base.ui.compose.Buttons
-import com.spoonofcode.dojopro.core.base.ui.compose.DatePickers
-import com.spoonofcode.dojopro.core.base.ui.compose.DropDownMenus
-import com.spoonofcode.dojopro.core.base.ui.compose.LoadingView
-import com.spoonofcode.dojopro.core.base.ui.compose.Sliders
-import com.spoonofcode.dojopro.core.base.ui.compose.Spacers
-import com.spoonofcode.dojopro.core.base.ui.compose.TextFields
-import com.spoonofcode.dojopro.core.base.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.compose.Buttons
+import com.spoonofcode.dojopro.core.ui.compose.DatePickers
+import com.spoonofcode.dojopro.core.ui.compose.DropDownMenus
+import com.spoonofcode.dojopro.core.ui.compose.LoadingView
+import com.spoonofcode.dojopro.core.ui.compose.Sliders
+import com.spoonofcode.dojopro.core.ui.compose.Spacers
+import com.spoonofcode.dojopro.core.ui.compose.TextFields
+import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 

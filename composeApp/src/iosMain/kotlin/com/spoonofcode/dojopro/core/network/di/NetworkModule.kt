@@ -1,6 +1,8 @@
 package com.spoonofcode.dojopro.core.network.di
 
 import com.spoonofcode.dojopro.core.network.NetworkConfig
+import com.spoonofcode.dojopro.core.network.SessionManager
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -11,5 +13,6 @@ data class NetworkConfigIOS(
 ) : NetworkConfig
 
 actual val networkModule = module {
+    singleOf(::SessionManager)
     single { NetworkConfigIOS() } bind NetworkConfig::class
 }

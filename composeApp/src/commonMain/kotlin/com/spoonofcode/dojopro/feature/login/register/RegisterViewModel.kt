@@ -1,9 +1,9 @@
 package com.spoonofcode.dojopro.feature.login.register
 
-import com.spoonofcode.dojopro.core.network.SessionRepository
+import com.spoonofcode.dojopro.core.network.SessionManager
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.dojopro.core.base.ui.BaseViewModel
-import com.spoonofcode.dojopro.core.base.ui.ext.launchWithProgress
+import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import com.spoonofcode.dojopro.app.MainHostScreen
 
 internal class RegisterViewModel(
     private val registerRepository: RegisterRepository,
-    private val sessionRepository: SessionRepository,
+    private val sessionManager: SessionManager,
 ) : BaseViewModel<RegisterViewState>(RegisterViewState()) {
 
     private fun setLoadingView(isLoading: Boolean) {
@@ -73,7 +73,7 @@ internal class RegisterViewModel(
             }.onSuccess { token ->
                 runCatching {
                     withContext(Dispatchers.IO) {
-                        sessionRepository.saveSessionAccessToken(token = token.jwtAccessToken)
+                        sessionManager.saveSessionAccessToken(token = token.jwtAccessToken)
                     }
                 }.onSuccess {
                     viewModelNavigator.replaceAll(listOf(MainHostScreen()))

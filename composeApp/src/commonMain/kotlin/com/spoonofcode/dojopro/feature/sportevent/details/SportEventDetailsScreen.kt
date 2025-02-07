@@ -32,12 +32,12 @@ import com.spoonofcode.dojopro.resources.end
 import com.spoonofcode.dojopro.resources.level
 import com.spoonofcode.dojopro.resources.room
 import com.spoonofcode.dojopro.resources.start
-import com.spoonofcode.dojopro.core.base.ext.formatedLocalDateTime
-import com.spoonofcode.dojopro.core.base.ui.Dimens
-import com.spoonofcode.dojopro.core.base.ui.compose.LoadingView
-import com.spoonofcode.dojopro.core.base.ui.compose.Spacers
-import com.spoonofcode.dojopro.core.base.ui.compose.Texts
-import com.spoonofcode.dojopro.core.base.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.core.ext.formatedLocalDateTime
+import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.compose.LoadingView
+import com.spoonofcode.dojopro.core.ui.compose.Spacers
+import com.spoonofcode.dojopro.core.ui.compose.Texts
+import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

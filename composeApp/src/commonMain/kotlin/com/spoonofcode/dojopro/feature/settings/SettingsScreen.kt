@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.settings
-import com.spoonofcode.dojopro.core.base.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 
 class SettingsScreen : Screen {

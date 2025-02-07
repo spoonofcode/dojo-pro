@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.spoonofcode.dojopro.core.base.ui.theme.AppTheme
+import com.spoonofcode.dojopro.core.ui.theme.AppTheme
 import com.spoonofcode.dojopro.core.settings.appContext
 
 class MainActivity : ComponentActivity() {

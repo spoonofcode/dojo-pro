@@ -2,7 +2,7 @@ package com.spoonofcode.dojopro
 
 import com.spoonofcode.dojopro.app.di.appModule
 import com.spoonofcode.dojopro.core.network.di.networkModule
-import com.spoonofcode.dojopro.core.settings.di.encryptedSettingsModule
+import com.spoonofcode.dojopro.core.settings.di.settingsModule
 import org.koin.core.context.startKoin
 
 actual class KoinInitializer {
@@ -13,7 +13,7 @@ actual class KoinInitializer {
                 viewModelModule,
                 networkModule,
                 authModule,
-                encryptedSettingsModule,
+                settingsModule,
             )
         }
     }

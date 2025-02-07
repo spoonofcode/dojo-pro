@@ -1,26 +1,19 @@
 package com.spoonofcode.dojopro.app.di
 
-import com.spoonofcode.dojopro.core.network.SessionRepository
+import com.spoonofcode.dojopro.core.data.di.dataModule
+import com.spoonofcode.dojopro.core.domain.di.domainModule
+import com.spoonofcode.dojopro.core.ui.di.uiModule
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
-import com.spoonofcode.dojopro.core.navigation.ViewModelNavigator
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
-import com.spoonofcode.dojopro.core.data.repository.CoachRepository
-import com.spoonofcode.dojopro.core.data.repository.LevelRepository
-import com.spoonofcode.dojopro.core.data.repository.LoginGoogleRepository
-import com.spoonofcode.dojopro.core.data.repository.LoginRepository
-import com.spoonofcode.dojopro.core.data.repository.ProfileRepository
-import com.spoonofcode.dojopro.core.data.repository.RegisterRepository
-import com.spoonofcode.dojopro.core.data.repository.RoomRepository
-import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
-import com.spoonofcode.dojopro.core.data.repository.UserRepository
-import com.spoonofcode.dojopro.core.domain.LoginUseCase
-import com.spoonofcode.dojopro.core.domain.TokenUseCase
 
 val appModule = module {
-    singleOf(::TokenUseCase)
+    includes(
+        dataModule,
+        domainModule,
+        uiModule,
+    )
     single {
         HttpClient {
             install(ContentNegotiation) {
@@ -36,17 +29,4 @@ val appModule = module {
 //            }
         }
     }
-    singleOf(::ProfileRepository)
-    singleOf(::CoachRepository)
-    singleOf(::LevelRepository)
-    singleOf(::RoomRepository)
-    singleOf(::SportEventRepository)
-    singleOf(::LoginGoogleRepository)
-    singleOf(::SessionRepository)
-    singleOf(::UserRepository)
-    singleOf(::LoginRepository)
-    singleOf(::RegisterRepository)
-    singleOf(::LoginUseCase)
-
-    singleOf(::ViewModelNavigator)
 }

@@ -2,8 +2,8 @@ package com.spoonofcode.dojopro.feature.login.login
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.domain.LoginUseCase
-import com.spoonofcode.dojopro.core.base.ui.BaseViewModel
-import com.spoonofcode.dojopro.core.base.ui.ext.launchWithProgress
+import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import kotlinx.coroutines.launch
 import com.spoonofcode.dojopro.feature.login.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.dojopro.app.MainHostScreen

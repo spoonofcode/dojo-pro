@@ -25,15 +25,15 @@ import com.spoonofcode.dojopro.resources.forget_password
 import com.spoonofcode.dojopro.resources.password
 import com.spoonofcode.dojopro.resources.sign_in
 import com.spoonofcode.dojopro.resources.sign_up
-import com.spoonofcode.dojopro.core.base.ui.Dimens
-import com.spoonofcode.dojopro.core.base.ui.compose.Buttons
-import com.spoonofcode.dojopro.core.base.ui.compose.Buttons.GoogleSignInButton
-import com.spoonofcode.dojopro.core.base.ui.compose.LoadingView
-import com.spoonofcode.dojopro.core.base.ui.compose.Spacers
-import com.spoonofcode.dojopro.core.base.ui.compose.TextFields
-import com.spoonofcode.dojopro.core.base.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.compose.Buttons
+import com.spoonofcode.dojopro.core.ui.compose.Buttons.GoogleSignInButton
+import com.spoonofcode.dojopro.core.ui.compose.LoadingView
+import com.spoonofcode.dojopro.core.ui.compose.Spacers
+import com.spoonofcode.dojopro.core.ui.compose.TextFields
+import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import kotlinx.coroutines.launch
-import com.spoonofcode.dojopro.core.navigation.NavigationHandler
+import com.spoonofcode.dojopro.core.ui.navigation.NavigationHandler
 import org.jetbrains.compose.resources.stringResource
 
 class LoginScreen : Screen {

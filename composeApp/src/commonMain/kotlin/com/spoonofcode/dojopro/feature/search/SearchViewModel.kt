@@ -1,7 +1,7 @@
 package com.spoonofcode.dojopro.feature.search
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.dojopro.core.base.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
 import com.spoonofcode.dojopro.core.model.SportEventRequest
 import kotlinx.coroutines.launch

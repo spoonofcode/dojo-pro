@@ -1,6 +1,6 @@
 package com.spoonofcode.dojopro.core.datatest.fakeData
 
-import com.spoonofcode.dojopro.core.base.ui.utils.LocalDateTimeUtils
+import com.spoonofcode.dojopro.core.ui.utils.LocalDateTimeUtils
 import com.spoonofcode.dojopro.core.model.SportEvent
 
 fun getFakeSportEvents() = listOf(

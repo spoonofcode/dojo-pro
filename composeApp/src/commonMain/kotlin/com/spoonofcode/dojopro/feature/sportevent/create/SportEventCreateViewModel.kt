@@ -1,8 +1,8 @@
 package com.spoonofcode.dojopro.feature.sportevent.create
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.dojopro.core.base.ui.BaseViewModel
-import com.spoonofcode.dojopro.core.base.ui.ext.launchWithProgress
+import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
