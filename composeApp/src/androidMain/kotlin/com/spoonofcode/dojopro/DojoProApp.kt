@@ -6,6 +6,6 @@ class DojoProApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        com.spoonofcode.dojopro.KoinInitializer(applicationContext).init()
+        KoinInitializer(applicationContext).init()
     }
 }

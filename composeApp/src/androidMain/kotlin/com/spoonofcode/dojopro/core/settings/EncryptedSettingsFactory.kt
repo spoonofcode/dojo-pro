@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro
+package com.spoonofcode.dojopro.core.settings
 
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences

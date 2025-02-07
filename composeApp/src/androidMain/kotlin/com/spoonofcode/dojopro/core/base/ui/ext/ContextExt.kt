@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro
+package com.spoonofcode.dojopro.com.spoonofcode.dojopro.core.base.ui.ext
 
 import android.content.Context
 import java.util.Locale

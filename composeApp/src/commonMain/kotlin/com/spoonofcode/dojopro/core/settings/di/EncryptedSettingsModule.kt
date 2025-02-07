@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro
+package com.spoonofcode.dojopro.core.settings.di
 
 import org.koin.core.module.Module
 
