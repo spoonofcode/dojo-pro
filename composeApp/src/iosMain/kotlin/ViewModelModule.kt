@@ -1,13 +1,16 @@
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import tabs.calendar.CalendarViewModel
+import tabs.forgotPassword.ForgotPasswordViewModel
 import tabs.home.HomeViewModel
+import tabs.login.LoginViewModel
 import tabs.profile.ProfileViewModel
+import tabs.register.RegisterViewModel
 import tabs.search.SearchViewModel
+import tabs.settings.SettingsViewModel
 import tabs.shop.ShopViewModel
 import tabs.sportevent.create.SportEventCreateViewModel
 import tabs.sportevent.details.SportEventDetailsViewModel
-import tabs.settings.SettingsViewModel
 
 actual val viewModelModule = module {
     singleOf(::CalendarViewModel)
@@ -19,4 +22,8 @@ actual val viewModelModule = module {
     singleOf(::SportEventCreateViewModel)
     singleOf(::SportEventDetailsViewModel)
     singleOf(::SettingsViewModel)
+
+    singleOf(::LoginViewModel)
+    singleOf(::RegisterViewModel)
+    singleOf(::ForgotPasswordViewModel)
 }

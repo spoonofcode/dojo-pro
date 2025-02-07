@@ -123,7 +123,6 @@ internal class SportEventCreateViewModel(
     }
 
     fun changeStartDateTime(startDateTime: LocalDateTime) {
-        println("BARTEK startDateTime = ${startDateTime.formatedLocalDateTime()}")
         viewModelScope.launch {
             updateState {
                 copy(startDateTime = startDateTime)

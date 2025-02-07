@@ -5,6 +5,6 @@ import model.Coach
 
 class CoachRepository : GenericCrudRepository<Coach, Coach>(
     resourceName = "coaches",
-    requestSerializer = Coach.serializer(), // Pass serializer for RQ
-    responseSerializer = Coach.serializer() // Pass serializer for RS
+    requestSerializer = Coach.serializer(),
+    responseSerializer = Coach.serializer(),
 )
