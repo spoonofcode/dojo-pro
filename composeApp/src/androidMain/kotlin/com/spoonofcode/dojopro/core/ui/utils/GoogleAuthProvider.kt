@@ -1,9 +1,8 @@
-package com.spoonofcode.dojopro.core.base.ui.utils
+package com.spoonofcode.dojopro.core.ui.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.credentials.CredentialManager
-import com.spoonofcode.dojopro.core.ui.utils.GoogleAuthUiProvider
 
 actual class GoogleAuthProvider(
     private val credentialManager: CredentialManager
@@ -11,7 +10,7 @@ actual class GoogleAuthProvider(
     @Composable
     actual fun getUiProvider(): GoogleAuthUiProvider {
         val activityContext = LocalContext.current
-        return com.spoonofcode.dojopro.core.ui.utils.GoogleAuthUiProvider(
+        return GoogleAuthUiProvider(
             activityContext,
             credentialManager
         )

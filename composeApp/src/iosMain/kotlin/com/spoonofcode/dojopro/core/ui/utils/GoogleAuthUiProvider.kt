@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.core.base.ui.utils
+package com.spoonofcode.dojopro.core.ui.utils
 
 import cocoapods.GoogleSignIn.GIDSignIn
 import com.spoonofcode.dojopro.core.model.GoogleAccount
