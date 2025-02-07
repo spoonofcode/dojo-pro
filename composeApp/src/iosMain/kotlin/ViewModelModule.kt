@@ -1,16 +1,16 @@
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
-import tabs.calendar.CalendarViewModel
-import tabs.forgotPassword.ForgotPasswordViewModel
-import tabs.home.HomeViewModel
-import tabs.login.LoginViewModel
-import tabs.profile.ProfileViewModel
-import tabs.register.RegisterViewModel
-import tabs.search.SearchViewModel
-import tabs.settings.SettingsViewModel
-import tabs.shop.ShopViewModel
-import tabs.sportevent.create.SportEventCreateViewModel
-import tabs.sportevent.details.SportEventDetailsViewModel
+import feature.calendar.CalendarViewModel
+import feature.login.forgotPassword.ForgotPasswordViewModel
+import feature.home.HomeViewModel
+import feature.login.login.LoginViewModel
+import feature.profile.ProfileViewModel
+import feature.login.register.RegisterViewModel
+import feature.search.SearchViewModel
+import feature.settings.SettingsViewModel
+import feature.shop.ShopViewModel
+import feature.sportevent.create.SportEventCreateViewModel
+import feature.sportevent.details.SportEventDetailsViewModel
 
 actual val viewModelModule = module {
     singleOf(::CalendarViewModel)

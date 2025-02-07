@@ -1,6 +1,6 @@
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import network.NetworkConfig
+import core.network.NetworkConfig
 
 data class NetworkConfigAndroid(
     override val host: String = "10.0.2.2",

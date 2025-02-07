@@ -1,24 +1,23 @@
 package di
 
-import SessionRepository
+import core.network.SessionRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
-import navigation.ViewModelNavigator
-import network.AuthPlugin
+import core.navigation.ViewModelNavigator
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
-import repository.CoachRepository
-import repository.LevelRepository
-import repository.LoginGoogleRepository
-import repository.LoginRepository
-import repository.ProfileRepository
-import repository.RegisterRepository
-import repository.RoomRepository
-import repository.SportEventRepository
-import repository.UserRepository
-import tabs.login.LoginUseCase
-import tabs.login.TokenUseCase
+import core.data.repository.CoachRepository
+import core.data.repository.LevelRepository
+import core.data.repository.LoginGoogleRepository
+import core.data.repository.LoginRepository
+import core.data.repository.ProfileRepository
+import core.data.repository.RegisterRepository
+import core.data.repository.RoomRepository
+import core.data.repository.SportEventRepository
+import core.data.repository.UserRepository
+import core.domain.LoginUseCase
+import core.domain.TokenUseCase
 
 val appModule = module {
     singleOf(::TokenUseCase)

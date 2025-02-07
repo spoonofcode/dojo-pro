@@ -1,6 +1,7 @@
 
 import androidx.credentials.CredentialManager
 import androidx.credentials.CredentialManager.Companion.create
+import core.base.ui.utils.GoogleAuthProvider
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind

@@ -1,4 +1,4 @@
-import network.NetworkConfig
+import core.network.NetworkConfig
 import org.koin.dsl.bind
 import org.koin.dsl.module
 

@@ -1,0 +1,92 @@
+package feature.home
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.create_event
+import com.spoonofcode.dojopro.resources.my_events
+import core.base.ui.Dimens
+import core.base.ui.compose.Buttons
+import core.base.ui.compose.CarouselSportEventItem
+import core.base.ui.compose.Carousels
+import core.base.ui.compose.LoadingView
+import core.base.ui.ext.koinViewModel
+import org.jetbrains.compose.resources.stringResource
+import feature.sportevent.create.SportEventCreateScreen
+import feature.sportevent.details.SportEventDetailsScreen
+
+class HomeScreen : Screen {
+
+    @Composable
+    override fun Content() {
+        val navigator: Navigator = LocalNavigator.currentOrThrow
+        val viewModel = koinViewModel<HomeViewModel>()
+        val viewState by viewModel.viewState.collectAsState()
+
+        LaunchedEffect(Unit) {
+            viewModel.initView()
+        }
+
+        ContentView(
+            viewState = viewState,
+            createSportEvent = {
+                navigator.push(SportEventCreateScreen())
+            },
+            goToMyEvent = {
+                navigator.push(SportEventDetailsScreen(it))
+            }
+        )
+    }
+
+    @Composable
+    internal fun ContentView(
+        viewState: HomeViewState,
+        createSportEvent: () -> Unit,
+        goToMyEvent: (Int) -> Unit,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = Dimens.screenPadding)
+        ) {
+            if (viewState.isViewLoading) {
+                LoadingView()
+            } else {
+                val items =
+                    viewState.sportEvents.map { sportEvent ->
+                        CarouselSportEventItem(
+                            sportEventId = sportEvent.id,
+                            title = sportEvent.title,
+                            startEventDateTime = sportEvent.startDateTime
+                        )
+                    }
+
+                Carousels.CustomCarousel(
+                    title = stringResource(resource = Res.string.my_events),
+                    items = items,
+                    onItemClick = { goToMyEvent(it) }
+                )
+
+                Column(
+                    modifier = Modifier.padding(all = Dimens.screenPadding)
+                ) {
+                    Buttons.PrimaryButton(
+                        text = stringResource(resource = Res.string.create_event),
+                        onClick = createSportEvent
+                    )
+                }
+            }
+        }
+    }
+
+}
