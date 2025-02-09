@@ -1,7 +1,6 @@
-package com.spoonofcode.dojopro
+package com.spoonofcode.dojopro.app
 
 import android.app.Application
-import com.spoonofcode.dojopro.app.KoinInitializer
 
 class DojoProApp : Application() {
 

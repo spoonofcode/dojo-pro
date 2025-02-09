@@ -1,6 +1,5 @@
-package com.spoonofcode.dojopro
+package com.spoonofcode.dojopro.app
 
-import com.spoonofcode.dojopro.app.App
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent

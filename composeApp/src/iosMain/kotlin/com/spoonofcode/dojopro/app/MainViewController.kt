@@ -1,8 +1,6 @@
-package com.spoonofcode.dojopro
+package com.spoonofcode.dojopro.app
 
 import androidx.compose.ui.window.ComposeUIViewController
-import com.spoonofcode.dojopro.app.App
-import com.spoonofcode.dojopro.app.KoinInitializer
 
 fun MainViewController() = ComposeUIViewController(
     configure = {
