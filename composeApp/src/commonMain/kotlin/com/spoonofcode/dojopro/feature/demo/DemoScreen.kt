@@ -20,6 +20,8 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,12 +31,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.feature.home.HomeViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 class DemoScreen : Screen {
 
     @Composable
     override fun Content() {
+        val navigator: Navigator = LocalNavigator.currentOrThrow
+        val viewModel = koinViewModel<DemoViewModel>()
+        val viewState by viewModel.viewState.collectAsState()
+
+        LaunchedEffect(Unit) {
+            viewModel.initView()
+        }
+
         var textFieldValue by remember { mutableStateOf("") }
         var switchState by remember { mutableStateOf(false) }
         var checkboxState by remember { mutableStateOf(false) }
