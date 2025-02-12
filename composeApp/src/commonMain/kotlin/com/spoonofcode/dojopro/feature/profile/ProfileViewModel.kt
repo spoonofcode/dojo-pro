@@ -1,17 +1,19 @@
 package com.spoonofcode.dojopro.feature.profile
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.dojopro.core.domain.ProfileUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
-import kotlinx.coroutines.launch
-import com.spoonofcode.dojopro.core.data.repository.ProfileRepository
+import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 
 internal class ProfileViewModel(
-    private val profileRepository: ProfileRepository
+    private val profileUseCase: ProfileUseCase
 ) : BaseViewModel<ProfileViewState>(ProfileViewState()) {
 
-    fun updateTasks() {
-        viewModelScope.launch {
-            val profile = profileRepository.getProfile()
+    fun initView() {
+        viewModelScope.launchWithProgress(
+            onProgress = ::setLoadingView
+        ) {
+            val profile = profileUseCase.getProfile()
             updateState {
                 copy(
                     profile = profile
@@ -20,4 +22,9 @@ internal class ProfileViewModel(
         }
     }
 
+    private fun setLoadingView(isLoading: Boolean) {
+        updateState {
+            copy(isViewLoading = isLoading)
+        }
+    }
 }

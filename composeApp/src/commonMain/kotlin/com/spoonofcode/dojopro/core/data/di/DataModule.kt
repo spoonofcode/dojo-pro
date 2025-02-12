@@ -13,7 +13,6 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val dataModule = module {
-    singleOf(::ProfileRepository)
     singleOf(::CoachRepository)
     singleOf(::LevelRepository)
     singleOf(::RoomRepository)
@@ -22,4 +21,5 @@ val dataModule = module {
     singleOf(::LoginRepository)
     singleOf(::UserRepository)
     singleOf(::RegisterRepository)
+    singleOf(::ProfileRepository)
 }

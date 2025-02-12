@@ -4,7 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Profile(
-    val id: Int,
     val firstName: String,
     val lastName: String,
+    val numberOfEventsIParticipatedIn: Long = 0L,
+    val numberOfCreatedEvents: Long,
+)
+
+@Serializable
+data class ProfileRequest(
+    val userId: Int,
 )

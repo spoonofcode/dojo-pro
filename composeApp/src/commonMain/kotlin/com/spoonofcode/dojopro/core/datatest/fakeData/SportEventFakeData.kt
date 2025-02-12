@@ -1,7 +1,7 @@
 package com.spoonofcode.dojopro.core.datatest.fakeData
 
-import com.spoonofcode.dojopro.core.ui.utils.LocalDateTimeUtils
 import com.spoonofcode.dojopro.core.model.SportEvent
+import com.spoonofcode.dojopro.core.ui.utils.LocalDateTimeUtils
 
 fun getFakeSportEvents() = listOf(
     FAKE_SPORT_EVENT_1,
@@ -24,7 +24,7 @@ val FAKE_SPORT_EVENT_1 = SportEvent(
     cost = "100",
     startDateTime = LocalDateTimeUtils.now(),
     endDateTime = LocalDateTimeUtils.now(),
-    user = FAKE_USER_1,
+    creatorUser = FAKE_USER_1,
 )
 
 val FAKE_SPORT_EVENT_2 = SportEvent(
@@ -42,7 +42,7 @@ val FAKE_SPORT_EVENT_2 = SportEvent(
     cost = "100",
     startDateTime = LocalDateTimeUtils.now(),
     endDateTime = LocalDateTimeUtils.now(),
-    user = FAKE_USER_2,
+    creatorUser = FAKE_USER_2,
 )
 
 val FAKE_SPORT_EVENT_3 = SportEvent(
@@ -60,5 +60,5 @@ val FAKE_SPORT_EVENT_3 = SportEvent(
     cost = "100",
     startDateTime = LocalDateTimeUtils.now(),
     endDateTime = LocalDateTimeUtils.now(),
-    user = FAKE_USER_3,
+    creatorUser = FAKE_USER_3,
 )

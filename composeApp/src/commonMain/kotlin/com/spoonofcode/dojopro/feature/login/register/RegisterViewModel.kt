@@ -1,20 +1,14 @@
 package com.spoonofcode.dojopro.feature.login.register
 
-import com.spoonofcode.dojopro.core.network.SessionManager
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.dojopro.app.MainHostScreen
+import com.spoonofcode.dojopro.core.domain.RegisterUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import com.spoonofcode.dojopro.core.model.RegisterRequest
-import com.spoonofcode.dojopro.core.data.repository.RegisterRepository
-import com.spoonofcode.dojopro.app.MainHostScreen
 
 internal class RegisterViewModel(
-    private val registerRepository: RegisterRepository,
-    private val sessionManager: SessionManager,
+    private val registerUseCase: RegisterUseCase,
 ) : BaseViewModel<RegisterViewState>(RegisterViewState()) {
 
     private fun setLoadingView(isLoading: Boolean) {
@@ -60,24 +54,14 @@ internal class RegisterViewModel(
             onProgress = ::setLoadingView
         ) {
             runCatching {
-                withContext(Dispatchers.IO) {
-                    registerRepository.create(
-                        RegisterRequest(
-                            email = viewState.value.email,
-                            password = viewState.value.password,
-                            firstName = viewState.value.firstName,
-                            lastName = viewState.value.lastName,
-                        )
-                    )
-                }
-            }.onSuccess { token ->
-                runCatching {
-                    withContext(Dispatchers.IO) {
-                        sessionManager.saveSessionAccessToken(token = token.jwtAccessToken)
-                    }
-                }.onSuccess {
-                    viewModelNavigator.replaceAll(listOf(MainHostScreen()))
-                }
+                registerUseCase.signUp(
+                    email = viewState.value.email,
+                    password = viewState.value.password,
+                    firstName = viewState.value.firstName,
+                    lastName = viewState.value.lastName,
+                )
+            }.onSuccess {
+                viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             }
         }
     }

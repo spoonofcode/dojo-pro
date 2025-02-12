@@ -1,10 +1,10 @@
 package com.spoonofcode.dojopro.core.domain
 
-import com.spoonofcode.dojopro.core.network.SessionManager
-import com.spoonofcode.dojopro.core.model.LoginGoogleRequest
-import com.spoonofcode.dojopro.core.model.LoginRequest
 import com.spoonofcode.dojopro.core.data.repository.LoginGoogleRepository
 import com.spoonofcode.dojopro.core.data.repository.LoginRepository
+import com.spoonofcode.dojopro.core.model.LoginGoogleRequest
+import com.spoonofcode.dojopro.core.model.LoginRequest
+import com.spoonofcode.dojopro.core.network.SessionManager
 
 internal class LoginUseCase(
     private val loginRepository: LoginRepository,
@@ -18,6 +18,7 @@ internal class LoginUseCase(
                 password = password,
             )
         )
+        sessionManager.saveSessionUserId(userId = loginResponse.userId)
         sessionManager.saveSessionAccessToken(token = loginResponse.jwtAccessToken)
         sessionManager.saveSessionRefreshToken(token = loginResponse.jwtRefreshToken)
     }
@@ -28,6 +29,7 @@ internal class LoginUseCase(
                 googleUserToken = googleIdToken,
             )
         )
+        sessionManager.saveSessionUserId(userId = loginGoogleResponse.userId)
         sessionManager.saveSessionAccessToken(token = loginGoogleResponse.jwtAccessToken)
         sessionManager.saveSessionRefreshToken(token = loginGoogleResponse.jwtRefreshToken)
     }

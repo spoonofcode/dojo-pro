@@ -22,5 +22,5 @@ data class SportEvent(
     val room: Room,
     val type: Type,
     val level: Level,
-    val user: User,
+    val creatorUser: User,
 )
