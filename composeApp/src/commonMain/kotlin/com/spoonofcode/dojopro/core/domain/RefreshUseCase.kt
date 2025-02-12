@@ -1,17 +1,17 @@
 package com.spoonofcode.dojopro.core.domain
 
+import com.spoonofcode.dojopro.core.data.repository.RefreshRepository
 import com.spoonofcode.dojopro.core.network.SessionManager
-import com.spoonofcode.dojopro.core.data.repository.LoginRepository
 
 internal class RefreshUseCase(
     private val sessionManager: SessionManager,
-    private val loginRepository: LoginRepository,
+    private val refreshRepository: RefreshRepository,
 ) {
     suspend fun refreshAccessToken(): Boolean {
         val jwtRefreshToken = sessionManager.getSessionRefreshToken() ?: return false
-        val login = loginRepository.refreshToken(jwtRefreshToken)
-        sessionManager.saveSessionAccessToken(login.jwtAccessToken)
-        sessionManager.saveSessionRefreshToken(login.jwtRefreshToken)
+        val refresh = refreshRepository.refreshToken(jwtRefreshToken)
+        sessionManager.saveSessionAccessToken(refresh.jwtAccessToken)
+        sessionManager.saveSessionRefreshToken(refresh.jwtRefreshToken)
         return true
     }
 }

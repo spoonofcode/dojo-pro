@@ -37,4 +37,8 @@
     <string name="min_number_of_people">Min Number of People</string>
     <string name="number_of_people">Number of People</string>
     <string name="sport_event">Sport Event</string>
+
+    <!-- SECTION Profile -->
+    <string name="events_i_participated_in">Events I participated in</string>
+    <string name="events_created">Events created</string>
 </resources>
