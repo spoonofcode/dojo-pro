@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.core.data.repository.LevelRepository
 import com.spoonofcode.dojopro.core.data.repository.LoginGoogleRepository
 import com.spoonofcode.dojopro.core.data.repository.LoginRepository
 import com.spoonofcode.dojopro.core.data.repository.ProfileRepository
+import com.spoonofcode.dojopro.core.data.repository.RefreshRepository
 import com.spoonofcode.dojopro.core.data.repository.RegisterRepository
 import com.spoonofcode.dojopro.core.data.repository.RoomRepository
 import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
@@ -19,6 +20,7 @@ val dataModule = module {
     singleOf(::SportEventRepository)
     singleOf(::LoginGoogleRepository)
     singleOf(::LoginRepository)
+    singleOf(::RefreshRepository)
     singleOf(::UserRepository)
     singleOf(::RegisterRepository)
     singleOf(::ProfileRepository)
