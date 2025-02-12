@@ -28,7 +28,9 @@
 
     <!-- SECTION Home -->
     <string name="create_event">Create event</string>
-    <string name="my_events">My events</string>
+    <string name="all_events">All events</string>
+    <string name="events_created_by_me">Events created by me</string>
+    <string name="events_i_participated_in">Events I participated in</string>
 
     <!-- SECTION Event -->
     <string name="group_classes">Group classes</string>
@@ -37,8 +39,4 @@
     <string name="min_number_of_people">Min Number of People</string>
     <string name="number_of_people">Number of People</string>
     <string name="sport_event">Sport Event</string>
-
-    <!-- SECTION Profile -->
-    <string name="events_i_participated_in">Events I participated in</string>
-    <string name="events_created">Events created</string>
 </resources>

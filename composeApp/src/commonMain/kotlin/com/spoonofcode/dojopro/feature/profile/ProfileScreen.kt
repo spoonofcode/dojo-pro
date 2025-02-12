@@ -40,7 +40,7 @@ import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.feature.settings.SettingsScreen
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.dojo_room
-import com.spoonofcode.dojopro.resources.events_created
+import com.spoonofcode.dojopro.resources.events_created_by_me
 import com.spoonofcode.dojopro.resources.events_i_participated_in
 import com.spoonofcode.dojopro.resources.settings
 import org.jetbrains.compose.resources.painterResource
@@ -98,7 +98,7 @@ class ProfileScreen : Screen {
                     Texts.HS(viewState.profile!!.firstName)
                     Spacers.VerticalBetweenFields()
 
-                    Texts.HS(stringResource(Res.string.events_created))
+                    Texts.HS(stringResource(Res.string.events_created_by_me))
                     Texts.BL(viewState.profile.numberOfCreatedEvents.toString())
                     Spacers.VerticalBetweenFields()
 

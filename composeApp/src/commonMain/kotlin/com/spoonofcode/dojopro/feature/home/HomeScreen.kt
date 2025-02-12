@@ -3,6 +3,12 @@ package com.spoonofcode.dojopro.feature.home
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -12,18 +18,21 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.spoonofcode.dojopro.resources.Res
-import com.spoonofcode.dojopro.resources.create_event
-import com.spoonofcode.dojopro.resources.my_events
+import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.ui.Dimens
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.CarouselSportEventItem
 import com.spoonofcode.dojopro.core.ui.compose.Carousels
 import com.spoonofcode.dojopro.core.ui.compose.LoadingView
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
-import org.jetbrains.compose.resources.stringResource
 import com.spoonofcode.dojopro.feature.sportevent.create.SportEventCreateScreen
 import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsScreen
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.all_events
+import com.spoonofcode.dojopro.resources.create_event
+import com.spoonofcode.dojopro.resources.events_created_by_me
+import com.spoonofcode.dojopro.resources.events_i_participated_in
+import org.jetbrains.compose.resources.stringResource
 
 class HomeScreen : Screen {
 
@@ -48,45 +57,73 @@ class HomeScreen : Screen {
         )
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     internal fun ContentView(
         viewState: HomeViewState,
         createSportEvent: () -> Unit,
         goToMyEvent: (Int) -> Unit,
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = Dimens.screenPadding)
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text("Home") },
+                )
+            }
         ) {
-            if (viewState.isViewLoading) {
-                LoadingView()
-            } else {
-                val items =
-                    viewState.sportEvents.map { sportEvent ->
-                        CarouselSportEventItem(
-                            sportEventId = sportEvent.id,
-                            title = sportEvent.title,
-                            startEventDateTime = sportEvent.startDateTime
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(top = Dimens.screenPadding)
+            ) {
+                if (viewState.isViewLoading) {
+                    LoadingView()
+                } else {
+                    val allSportEvents = mapSportEventsToItems(viewState.allSportEvents)
+                    val sportEventsCreatedByMe =
+                        mapSportEventsToItems(viewState.sportEventsCreatedByMe)
+                    val sportEventsIParticipatedIn =
+                        mapSportEventsToItems(viewState.sportEventsIParticipatedIn)
+
+                    Carousels.CustomCarousel(
+                        title = stringResource(resource = Res.string.all_events),
+                        items = allSportEvents,
+                        onItemClick = { goToMyEvent(it) }
+                    )
+
+                    Carousels.CustomCarousel(
+                        title = stringResource(resource = Res.string.events_created_by_me),
+                        items = sportEventsCreatedByMe,
+                        onItemClick = { goToMyEvent(it) }
+                    )
+
+                    Carousels.CustomCarousel(
+                        title = stringResource(resource = Res.string.events_i_participated_in),
+                        items = sportEventsIParticipatedIn,
+                        onItemClick = { goToMyEvent(it) }
+                    )
+
+                    Column(
+                        modifier = Modifier.padding(all = Dimens.screenPadding)
+                    ) {
+                        Buttons.PrimaryButton(
+                            text = stringResource(resource = Res.string.create_event),
+                            onClick = createSportEvent
                         )
                     }
-
-                Carousels.CustomCarousel(
-                    title = stringResource(resource = Res.string.my_events),
-                    items = items,
-                    onItemClick = { goToMyEvent(it) }
-                )
-
-                Column(
-                    modifier = Modifier.padding(all = Dimens.screenPadding)
-                ) {
-                    Buttons.PrimaryButton(
-                        text = stringResource(resource = Res.string.create_event),
-                        onClick = createSportEvent
-                    )
                 }
             }
         }
     }
+
+    private fun mapSportEventsToItems(sportEvents: List<SportEvent>) =
+        sportEvents.map { sportEvent ->
+            CarouselSportEventItem(
+                sportEventId = sportEvent.id,
+                title = sportEvent.title,
+                startEventDateTime = sportEvent.startDateTime
+            )
+        }
 
 }
