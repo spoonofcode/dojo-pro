@@ -99,11 +99,11 @@ class ProfileScreen : Screen {
                     Spacers.VerticalBetweenFields()
 
                     Texts.HS(stringResource(Res.string.events_created_by_me))
-                    Texts.BL(viewState.profile.numberOfCreatedEvents.toString())
+                    Texts.BL(viewState.profile.numberOfEventsCreatedByUser.toString())
                     Spacers.VerticalBetweenFields()
 
                     Texts.HS(stringResource(Res.string.events_i_participated_in))
-                    Texts.BL(viewState.profile.numberOfEventsIParticipatedIn.toString())
+                    Texts.BL(viewState.profile.numberOfEventsUserParticipatedIn.toString())
                     Spacers.VerticalBetweenFields()
 
                     Buttons.PrimaryButton(

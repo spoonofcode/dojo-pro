@@ -14,11 +14,11 @@ internal class HomeUseCase(
         return sportEventRepository.readAll()
     }
 
-//    suspend fun getSportEventsCreatedByMe(): List<SportEvent> {
-//        return sportEventRepository.readSportEventsCreatedByMe(sessionManager.getSessionUserId()!!)
-//    }
+    suspend fun getSportEventsUserParticipatedIn(): List<SportEvent> {
+        return userRepository.readSportEventsUserParticipatedIn(sessionManager.getSessionUserId()!!)
+    }
 
-    suspend fun getSportEventsIParticipatedIn(): List<SportEvent> {
-        return userRepository.readSportEventsIParticipatedIn(sessionManager.getSessionUserId()!!)
+    suspend fun getSportEventsCreatedByUser(): List<SportEvent> {
+        return sportEventRepository.readSportEventsCreatedByUser(sessionManager.getSessionUserId()!!)
     }
 }

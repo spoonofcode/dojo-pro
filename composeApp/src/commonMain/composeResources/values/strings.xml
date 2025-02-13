@@ -28,7 +28,6 @@
 
     <!-- SECTION Home -->
     <string name="create_event">Create event</string>
-    <string name="all_events">All events</string>
     <string name="events_created_by_me">Events created by me</string>
     <string name="events_i_participated_in">Events I participated in</string>
 

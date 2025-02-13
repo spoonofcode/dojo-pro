@@ -8,6 +8,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
+import io.ktor.client.request.parameter
 import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.client.request.url
@@ -174,13 +175,17 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     suspend fun doRequest(
         urlPath: String,
         method: HttpMethod,
-        sessionTokenRequired: Boolean,
+        sessionTokenRequired: Boolean = true,
         requestBody: RQ? = null,
+        queryParams: Map<String, String> = emptyMap(),
     ): HttpResponse {
         // Common request-setup block
         val requestBuilder: HttpRequestBuilder.() -> Unit = {
             contentType(ContentType.Application.Json)
             url("${networkConfig.baseUrl}/$urlPath")
+
+            queryParams.forEach { (key, value) -> parameter(key, value) }
+
             this.method = method
             requestBody?.let { body ->
                 setBody(Json.encodeToString(requestSerializer, body))

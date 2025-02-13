@@ -13,12 +13,12 @@ internal class HomeViewModel(
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView
         ) {
-            val sportEvents = homeUseCase.getAllSportEvents()
-            val sportEventsIParticipatedIn = homeUseCase.getSportEventsIParticipatedIn()
+            val sportEventsUserParticipatedIn = homeUseCase.getSportEventsUserParticipatedIn()
+            val sportEventsCreatedByUser = homeUseCase.getSportEventsCreatedByUser()
             updateState {
                 copy(
-                    allSportEvents = sportEvents,
-                    sportEventsIParticipatedIn = sportEventsIParticipatedIn,
+                    sportEventsUserParticipatedIn = sportEventsUserParticipatedIn,
+                    sportEventsCreatedByUser = sportEventsCreatedByUser,
                 )
             }
         }

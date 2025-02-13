@@ -28,7 +28,6 @@ import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.feature.sportevent.create.SportEventCreateScreen
 import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsScreen
 import com.spoonofcode.dojopro.resources.Res
-import com.spoonofcode.dojopro.resources.all_events
 import com.spoonofcode.dojopro.resources.create_event
 import com.spoonofcode.dojopro.resources.events_created_by_me
 import com.spoonofcode.dojopro.resources.events_i_participated_in
@@ -70,39 +69,35 @@ class HomeScreen : Screen {
                     title = { Text("Home") },
                 )
             }
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(top = Dimens.screenPadding)
-            ) {
-                if (viewState.isViewLoading) {
-                    LoadingView()
-                } else {
-                    val allSportEvents = mapSportEventsToItems(viewState.allSportEvents)
-                    val sportEventsCreatedByMe =
-                        mapSportEventsToItems(viewState.sportEventsCreatedByMe)
-                    val sportEventsIParticipatedIn =
-                        mapSportEventsToItems(viewState.sportEventsIParticipatedIn)
+        ) { innerPadding ->
+            if (viewState.isViewLoading) {
+                LoadingView()
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    val sportEventsUserParticipatedIn =
+                        mapSportEventsToItems(viewState.sportEventsUserParticipatedIn)
 
-                    Carousels.CustomCarousel(
-                        title = stringResource(resource = Res.string.all_events),
-                        items = allSportEvents,
-                        onItemClick = { goToMyEvent(it) }
-                    )
-
-                    Carousels.CustomCarousel(
-                        title = stringResource(resource = Res.string.events_created_by_me),
-                        items = sportEventsCreatedByMe,
-                        onItemClick = { goToMyEvent(it) }
-                    )
+                    val sportEventsCreatedByUser =
+                        mapSportEventsToItems(viewState.sportEventsCreatedByUser)
 
                     Carousels.CustomCarousel(
                         title = stringResource(resource = Res.string.events_i_participated_in),
-                        items = sportEventsIParticipatedIn,
+                        items = sportEventsUserParticipatedIn,
                         onItemClick = { goToMyEvent(it) }
                     )
+
+                    if (sportEventsCreatedByUser.isNotEmpty()) {
+                        Carousels.CustomCarousel(
+                            title = stringResource(resource = Res.string.events_created_by_me),
+                            items = sportEventsCreatedByUser,
+                            onItemClick = { goToMyEvent(it) }
+                        )
+                    }
 
                     Column(
                         modifier = Modifier.padding(all = Dimens.screenPadding)
