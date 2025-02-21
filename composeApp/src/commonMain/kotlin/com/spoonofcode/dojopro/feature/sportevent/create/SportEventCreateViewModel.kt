@@ -1,25 +1,23 @@
 package com.spoonofcode.dojopro.feature.sportevent.create
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.dojopro.core.data.repository.CoachRepository
+import com.spoonofcode.dojopro.core.data.repository.LevelRepository
+import com.spoonofcode.dojopro.core.data.repository.RoomRepository
+import com.spoonofcode.dojopro.core.domain.SportEventUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
-import com.spoonofcode.dojopro.core.model.SportEventRequest
-import com.spoonofcode.dojopro.core.data.repository.CoachRepository
-import com.spoonofcode.dojopro.core.data.repository.LevelRepository
-import com.spoonofcode.dojopro.core.data.repository.RoomRepository
-import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
 
 internal class SportEventCreateViewModel(
     private val coachRepository: CoachRepository,
     private val roomRepository: RoomRepository,
     private val levelRepository: LevelRepository,
-    private val sportEventRepository: SportEventRepository,
+    private val sportEventUseCase: SportEventUseCase
 ) : BaseViewModel<SportEventCreateViewState>(SportEventCreateViewState()) {
 
     fun initView() {
@@ -142,25 +140,23 @@ internal class SportEventCreateViewModel(
             onProgress = ::setLoadingView
         ) {
             runCatching {
-                withContext(Dispatchers.IO) {
-                    val currentState = currentState()
-                    sportEventRepository.create(
-                        request = SportEventRequest(
-                            title = currentState.title,
-                            description = currentState.description,
-                            minNumberOfPeople = currentState.selectedMinNumberOfPeople,
-                            maxNumberOfPeople = currentState.selectedMaxNumberOfPeople,
-                            cost = currentState.cost,
-                            startDateTime = currentState.startDateTime,
-                            endDateTime = currentState.endDateTime,
-                            coachId = currentState.selectedCoachId!!,
-                            roomId = currentState.selectedRoomId!!,
-                            typeId = 1,
-                            levelId = currentState.selectedLevelId!!,
-                            userId = 1,
-                        )
-                    )
-                }
+                val currentState = currentState()
+                sportEventUseCase.createSportEvent(
+                    title = currentState.title,
+                    description = currentState.description,
+                    minNumberOfPeople = currentState.selectedMinNumberOfPeople,
+                    maxNumberOfPeople = currentState.selectedMaxNumberOfPeople,
+                    cost = currentState.cost,
+                    startDateTime = currentState.startDateTime,
+                    endDateTime = currentState.endDateTime,
+                    selectedCoachId = currentState.selectedCoachId!!,
+                    selectedRoomId = currentState.selectedRoomId!!,
+                    selectedLevelId = currentState.selectedLevelId!!,
+                )
+            }.onSuccess {
+                viewModelNavigator.pop()
+            }.onFailure {
+                showSnackbar("ERROR: $it")
             }
         }
     }

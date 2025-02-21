@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.core.domain.LoginUseCase
 import com.spoonofcode.dojopro.core.domain.ProfileUseCase
 import com.spoonofcode.dojopro.core.domain.RefreshUseCase
 import com.spoonofcode.dojopro.core.domain.RegisterUseCase
+import com.spoonofcode.dojopro.core.domain.SportEventUseCase
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
@@ -14,4 +15,5 @@ val domainModule = module {
     singleOf(::RefreshUseCase)
     singleOf(::ProfileUseCase)
     singleOf(::HomeUseCase)
+    singleOf(::SportEventUseCase)
 }

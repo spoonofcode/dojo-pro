@@ -15,6 +15,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.compose.Buttons
+import com.spoonofcode.dojopro.core.ui.compose.DatePickers
+import com.spoonofcode.dojopro.core.ui.compose.DropDownMenus
+import com.spoonofcode.dojopro.core.ui.compose.LoadingView
+import com.spoonofcode.dojopro.core.ui.compose.Sliders
+import com.spoonofcode.dojopro.core.ui.compose.Spacers
+import com.spoonofcode.dojopro.core.ui.compose.TextFields
+import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.core.ui.navigation.NavigationHandler
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.coach
 import com.spoonofcode.dojopro.resources.cost
@@ -27,15 +40,6 @@ import com.spoonofcode.dojopro.resources.sport_event
 import com.spoonofcode.dojopro.resources.start
 import com.spoonofcode.dojopro.resources.submit
 import com.spoonofcode.dojopro.resources.title
-import com.spoonofcode.dojopro.core.ui.Dimens
-import com.spoonofcode.dojopro.core.ui.compose.Buttons
-import com.spoonofcode.dojopro.core.ui.compose.DatePickers
-import com.spoonofcode.dojopro.core.ui.compose.DropDownMenus
-import com.spoonofcode.dojopro.core.ui.compose.LoadingView
-import com.spoonofcode.dojopro.core.ui.compose.Sliders
-import com.spoonofcode.dojopro.core.ui.compose.Spacers
-import com.spoonofcode.dojopro.core.ui.compose.TextFields
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
@@ -49,8 +53,14 @@ class SportEventCreateScreen : Screen {
 
     @Composable
     override fun Content() {
+        val navigator: Navigator = LocalNavigator.currentOrThrow
         val viewModel = koinViewModel<SportEventCreateViewModel>()
         val viewState by viewModel.viewState.collectAsState()
+
+        NavigationHandler(
+            navigationFlow = viewModel.navigationFlow,
+            navigator = navigator
+        )
 
         LaunchedEffect(Unit) {
             viewModel.initView()
