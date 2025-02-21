@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.feature.sportevent.create
+package com.spoonofcode.dojopro.feature.sportevent.edit
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,7 +43,9 @@ import com.spoonofcode.dojopro.resources.title
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
-class SportEventCreateScreen : Screen {
+class SportEventEditScreen(
+    private val screenMode: ScreenMode = ScreenMode.Create,
+) : Screen {
 
     companion object {
         private const val PEOPLE_RANGE_MIN_VALUE = 1f
@@ -54,7 +56,7 @@ class SportEventCreateScreen : Screen {
     @Composable
     override fun Content() {
         val navigator: Navigator = LocalNavigator.currentOrThrow
-        val viewModel = koinViewModel<SportEventCreateViewModel>()
+        val viewModel = koinViewModel<SportEventEditViewModel>()
         val viewState by viewModel.viewState.collectAsState()
 
         NavigationHandler(
@@ -63,7 +65,7 @@ class SportEventCreateScreen : Screen {
         )
 
         LaunchedEffect(Unit) {
-            viewModel.initView()
+            viewModel.initView(screenMode = screenMode)
         }
 
         ContentView(
@@ -78,14 +80,14 @@ class SportEventCreateScreen : Screen {
             changeCost = { viewModel.changeCost(it) },
             changeStartDateTime = { viewModel.changeStartDateTime(it) },
             changeEndDateTime = { viewModel.changeEndDateTime(it) },
-            createSportEvent = { viewModel.createSportEvent() },
+            submitSportEvent = { viewModel.submitSportEvent() },
         )
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     internal fun ContentView(
-        viewState: SportEventCreateViewState,
+        viewState: SportEventEditViewState,
         changeTitle: (String) -> Unit,
         changeDescription: (String) -> Unit,
         changeCoach: (Int) -> Unit,
@@ -96,7 +98,7 @@ class SportEventCreateScreen : Screen {
         changeCost: (String) -> Unit,
         changeStartDateTime: (LocalDateTime) -> Unit,
         changeEndDateTime: (LocalDateTime) -> Unit,
-        createSportEvent: () -> Unit,
+        submitSportEvent: () -> Unit,
     ) {
         Scaffold(
             topBar = {
@@ -183,9 +185,10 @@ class SportEventCreateScreen : Screen {
                     Spacers.Weight1(this)
 
                     Spacers.VerticalBetweenFields()
+
                     Buttons.PrimaryButton(
                         text = stringResource(resource = Res.string.submit),
-                        onClick = createSportEvent
+                        onClick = submitSportEvent
                     )
                     Spacers.BottomSpace()
                 }

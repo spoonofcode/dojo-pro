@@ -23,21 +23,28 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import com.spoonofcode.dojopro.resources.Res
-import com.spoonofcode.dojopro.resources.coach
-import com.spoonofcode.dojopro.resources.cost
-import com.spoonofcode.dojopro.resources.description
-import com.spoonofcode.dojopro.resources.dojo_room
-import com.spoonofcode.dojopro.resources.end
-import com.spoonofcode.dojopro.resources.level
-import com.spoonofcode.dojopro.resources.room
-import com.spoonofcode.dojopro.resources.start
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.spoonofcode.dojopro.core.ext.formatedLocalDateTime
 import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.LoadingView
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.Texts
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.core.ui.navigation.NavigationHandler
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.coach
+import com.spoonofcode.dojopro.resources.cost
+import com.spoonofcode.dojopro.resources.delete
+import com.spoonofcode.dojopro.resources.description
+import com.spoonofcode.dojopro.resources.dojo_room
+import com.spoonofcode.dojopro.resources.edit
+import com.spoonofcode.dojopro.resources.end
+import com.spoonofcode.dojopro.resources.level
+import com.spoonofcode.dojopro.resources.room
+import com.spoonofcode.dojopro.resources.start
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -47,8 +54,14 @@ data class SportEventDetailsScreen(
 
     @Composable
     override fun Content() {
+        val navigator: Navigator = LocalNavigator.currentOrThrow
         val viewModel = koinViewModel<SportEventDetailsViewModel>()
         val viewState by viewModel.viewState.collectAsState()
+
+        NavigationHandler(
+            navigationFlow = viewModel.navigationFlow,
+            navigator = navigator
+        )
 
         LaunchedEffect(Unit) {
             viewModel.initView(sportEventId = sportEventId)
@@ -56,6 +69,8 @@ data class SportEventDetailsScreen(
 
         ContentView(
             viewState = viewState,
+            editSportEvent = { viewModel.editSportEvent() },
+            deleteSportEvent = { viewModel.deleteSportEvent() },
         )
     }
 
@@ -63,6 +78,8 @@ data class SportEventDetailsScreen(
     @Composable
     internal fun ContentView(
         viewState: SportEventDetailsViewState,
+        editSportEvent: () -> Unit,
+        deleteSportEvent: () -> Unit,
     ) {
         Scaffold(
             topBar = {
@@ -122,6 +139,20 @@ data class SportEventDetailsScreen(
                     Texts.HS(stringResource(Res.string.level))
                     Texts.BL(viewState.sportEvent.level.name)
                     Spacers.VerticalBetweenFields()
+
+                    Spacers.Weight1(this)
+
+                    Spacers.VerticalBetweenFields()
+                    Buttons.PrimaryButton(
+                        text = stringResource(resource = Res.string.edit),
+                        onClick = editSportEvent
+                    )
+
+                    Spacers.VerticalBetweenFields()
+                    Buttons.PrimaryButton(
+                        text = stringResource(resource = Res.string.delete),
+                        onClick = deleteSportEvent
+                    )
 
                     Spacers.BottomSpace()
                 }

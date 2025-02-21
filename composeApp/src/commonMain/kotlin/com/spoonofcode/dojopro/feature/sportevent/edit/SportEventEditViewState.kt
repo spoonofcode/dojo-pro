@@ -1,13 +1,14 @@
-package com.spoonofcode.dojopro.feature.sportevent.create
+package com.spoonofcode.dojopro.feature.sportevent.edit
 
 import com.spoonofcode.dojopro.core.ext.plus
 import com.spoonofcode.dojopro.core.ext.roundToNextHour
 import com.spoonofcode.dojopro.core.ui.utils.LocalDateTimeUtils
 import kotlinx.datetime.LocalDateTime
 
-internal data class SportEventCreateViewState(
+internal data class SportEventEditViewState(
     val isViewEnable: Boolean = true,
     val isViewLoading: Boolean = true,
+    val screenMode: ScreenMode = ScreenMode.Create,
     val title: String = "",
     val description: String = "",
 

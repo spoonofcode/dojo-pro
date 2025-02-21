@@ -25,8 +25,8 @@ import com.spoonofcode.dojopro.core.ui.compose.CarouselSportEventItem
 import com.spoonofcode.dojopro.core.ui.compose.Carousels
 import com.spoonofcode.dojopro.core.ui.compose.LoadingView
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
-import com.spoonofcode.dojopro.feature.sportevent.create.SportEventCreateScreen
 import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsScreen
+import com.spoonofcode.dojopro.feature.sportevent.edit.SportEventEditScreen
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.create_event
 import com.spoonofcode.dojopro.resources.events_created_by_me
@@ -48,7 +48,7 @@ class HomeScreen : Screen {
         ContentView(
             viewState = viewState,
             createSportEvent = {
-                navigator.push(SportEventCreateScreen())
+                navigator.push(SportEventEditScreen())
             },
             goToMyEvent = {
                 navigator.push(SportEventDetailsScreen(it))
