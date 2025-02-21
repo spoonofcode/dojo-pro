@@ -1,7 +1,6 @@
 package com.spoonofcode.dojopro.feature.sportevent.details
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
 import com.spoonofcode.dojopro.core.domain.SportEventUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
@@ -9,7 +8,6 @@ import com.spoonofcode.dojopro.feature.sportevent.edit.ScreenMode
 import com.spoonofcode.dojopro.feature.sportevent.edit.SportEventEditScreen
 
 internal class SportEventDetailsViewModel(
-    private val sportEventRepository: SportEventRepository,
     private val sportEventUseCase: SportEventUseCase,
 ) : BaseViewModel<SportEventDetailsViewState>(SportEventDetailsViewState()) {
 
@@ -17,7 +15,7 @@ internal class SportEventDetailsViewModel(
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView
         ) {
-            val sportEvent = sportEventRepository.read(id = sportEventId)
+            val sportEvent = sportEventUseCase.getSportEventById(sportEventId = sportEventId)
             updateState {
                 copy(
                     sportEvent = sportEvent

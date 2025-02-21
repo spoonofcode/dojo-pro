@@ -1,22 +1,13 @@
 package com.spoonofcode.dojopro.feature.sportevent.edit
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.dojopro.core.data.repository.CoachRepository
-import com.spoonofcode.dojopro.core.data.repository.LevelRepository
-import com.spoonofcode.dojopro.core.data.repository.RoomRepository
 import com.spoonofcode.dojopro.core.domain.SportEventUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 
 internal class SportEventEditViewModel(
-    private val coachRepository: CoachRepository,
-    private val roomRepository: RoomRepository,
-    private val levelRepository: LevelRepository,
     private val sportEventUseCase: SportEventUseCase
 ) : BaseViewModel<SportEventEditViewState>(SportEventEditViewState()) {
 
@@ -25,57 +16,40 @@ internal class SportEventEditViewModel(
             onProgress = ::setLoadingView
         ) {
             runCatching {
-                val coachesAsync = async(Dispatchers.IO) { coachRepository.readAll() }
-                val roomsAsync = async(Dispatchers.IO) { roomRepository.readAll() }
-                val levelsAsync = async(Dispatchers.IO) { levelRepository.readAll() }
-
-                val coaches = coachesAsync.await()
-                val rooms = roomsAsync.await()
-                val levels = levelsAsync.await()
-
-                Triple(coaches, rooms, levels)
-            }.onSuccess { (coaches, rooms, levels) ->
-                when (screenMode) {
-                    is ScreenMode.Edit -> {
-                        val sportEvent =
-                            sportEventUseCase.getSportEventById(sportEventId = screenMode.sportEventId)
-
-                        updateState {
-                            copy(
-                                screenMode = screenMode,
-                                coaches = coaches.associate { it.id to it.fullName },
-                                rooms = rooms.associate { it.id to it.name },
-                                levels = levels.associate { it.id to it.name },
-                                selectedCoachId = sportEvent.coach.id,
-                                selectedRoomId = sportEvent.room.id,
-                                selectedLevelId = sportEvent.level.id,
-                                title = sportEvent.title,
-                                description = sportEvent.description,
-                                selectedMinNumberOfPeople = sportEvent.minNumberOfPeople,
-                                selectedMaxNumberOfPeople = sportEvent.maxNumberOfPeople,
-                                cost = sportEvent.cost,
-                                startDateTime = sportEvent.startDateTime,
-                                endDateTime = sportEvent.endDateTime,
-                            )
-                        }
+                sportEventUseCase.loadSportEventFormData(screenMode = screenMode)
+            }.onSuccess { sportEventFormData ->
+                if (sportEventFormData.sportEvent == null) {
+                    updateState {
+                        copy(
+                            screenMode = screenMode,
+                            coaches = sportEventFormData.coaches.associate { it.id to it.fullName },
+                            rooms = sportEventFormData.rooms.associate { it.id to it.name },
+                            levels = sportEventFormData.levels.associate { it.id to it.name },
+                            selectedCoachId = sportEventFormData.coaches.first().id,
+                            selectedRoomId = sportEventFormData.rooms.first().id,
+                            selectedLevelId = sportEventFormData.levels.first().id,
+                        )
                     }
-
-                    else -> {
-                        updateState {
-                            copy(
-                                screenMode = screenMode,
-                                coaches = coaches.associate { it.id to it.fullName },
-                                rooms = rooms.associate { it.id to it.name },
-                                levels = levels.associate { it.id to it.name },
-                                selectedCoachId = coaches.first().id,
-                                selectedRoomId = rooms.first().id,
-                                selectedLevelId = levels.first().id,
-                            )
-                        }
+                } else {
+                    updateState {
+                        copy(
+                            screenMode = screenMode,
+                            coaches = sportEventFormData.coaches.associate { it.id to it.fullName },
+                            rooms = sportEventFormData.rooms.associate { it.id to it.name },
+                            levels = sportEventFormData.levels.associate { it.id to it.name },
+                            selectedCoachId = sportEventFormData.sportEvent.coach.id,
+                            selectedRoomId = sportEventFormData.sportEvent.room.id,
+                            selectedLevelId = sportEventFormData.sportEvent.level.id,
+                            title = sportEventFormData.sportEvent.title,
+                            description = sportEventFormData.sportEvent.description,
+                            selectedMinNumberOfPeople = sportEventFormData.sportEvent.minNumberOfPeople,
+                            selectedMaxNumberOfPeople = sportEventFormData.sportEvent.maxNumberOfPeople,
+                            cost = sportEventFormData.sportEvent.cost,
+                            startDateTime = sportEventFormData.sportEvent.startDateTime,
+                            endDateTime = sportEventFormData.sportEvent.endDateTime,
+                        )
                     }
                 }
-
-
             }
         }
     }
