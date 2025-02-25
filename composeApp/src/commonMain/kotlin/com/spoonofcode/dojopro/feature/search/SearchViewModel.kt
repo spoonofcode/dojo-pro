@@ -1,9 +1,9 @@
 package com.spoonofcode.dojopro.feature.search
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
 import com.spoonofcode.dojopro.core.model.SportEventRequest
+import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
@@ -28,7 +28,7 @@ internal class SearchViewModel(
                     roomId = 1,
                     typeId = 1,
                     levelId = 1,
-                    userId = 1
+                    creatorUserId = 1
                 )
             )
         }

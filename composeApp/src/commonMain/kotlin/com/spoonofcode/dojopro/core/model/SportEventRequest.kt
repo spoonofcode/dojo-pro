@@ -16,5 +16,5 @@ data class SportEventRequest(
     val roomId: Int,
     val typeId: Int,
     val levelId: Int,
-    val userId: Int,
+    val creatorUserId: Int,
 )

@@ -1,10 +1,14 @@
 package com.spoonofcode.dojopro.core.data.base
 
+import com.spoonofcode.dojopro.core.domain.RefreshUseCase
+import com.spoonofcode.dojopro.core.network.HttpStatusCodes
+import com.spoonofcode.dojopro.core.network.NetworkConfig
 import com.spoonofcode.dojopro.core.network.SessionManager
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
+import io.ktor.client.request.parameter
 import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.client.request.url
@@ -20,10 +24,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
-import com.spoonofcode.dojopro.core.network.HttpStatusCodes
-import com.spoonofcode.dojopro.core.network.NetworkConfig
 import org.koin.mp.KoinPlatform.getKoin
-import com.spoonofcode.dojopro.core.domain.RefreshUseCase
 
 interface CrudRepository<RQ, RS> {
     suspend fun create(request: RQ): RS
@@ -111,7 +112,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         }
     }
 
-    private fun responseOrException(response: HttpResponse): HttpResponse {
+    fun responseOrException(response: HttpResponse): HttpResponse {
         return when (response.status) {
             in HttpStatusCodes.HTTP_SUCCESS_CODES -> return response
             in HttpStatusCodes.HTTP_CLIENT_ERROR_CODES ->
@@ -124,7 +125,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         }
     }
 
-    private fun unhandledException(response: HttpResponse): HttpResponse {
+    fun unhandledException(response: HttpResponse): HttpResponse {
         throw Exception("Unhandled Error $response")
     }
 
@@ -171,17 +172,27 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         return response
     }
 
-    private suspend fun doRequest(
+    suspend fun doRequest(
         urlPath: String,
         method: HttpMethod,
-        sessionTokenRequired: Boolean,
+        sessionTokenRequired: Boolean = true,
         requestBody: RQ? = null,
+        customRequestBody: String? = null,
+        queryParams: Map<String, String> = emptyMap(),
     ): HttpResponse {
         // Common request-setup block
         val requestBuilder: HttpRequestBuilder.() -> Unit = {
             contentType(ContentType.Application.Json)
             url("${networkConfig.baseUrl}/$urlPath")
+
+            queryParams.forEach { (key, value) -> parameter(key, value) }
+
             this.method = method
+
+            customRequestBody?.let {
+                setBody(customRequestBody)
+            }
+
             requestBody?.let { body ->
                 setBody(Json.encodeToString(requestSerializer, body))
             }
@@ -194,4 +205,5 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
             httpClient.request(requestBuilder)
         }
     }
+
 }
