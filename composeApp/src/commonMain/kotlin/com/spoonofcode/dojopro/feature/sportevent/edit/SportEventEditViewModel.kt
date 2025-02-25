@@ -1,14 +1,18 @@
 package com.spoonofcode.dojopro.feature.sportevent.edit
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.dojopro.core.domain.SportEventUseCase
+import com.spoonofcode.dojopro.core.domain.CreateSportEventUseCase
+import com.spoonofcode.dojopro.core.domain.EditSportEventUseCase
+import com.spoonofcode.dojopro.core.domain.LoadSportEventFormDataUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 
 internal class SportEventEditViewModel(
-    private val sportEventUseCase: SportEventUseCase
+    private val createSportEventUseCase: CreateSportEventUseCase,
+    private val editSportEventUseCase: EditSportEventUseCase,
+    private val loadSportEventFormDataUseCase: LoadSportEventFormDataUseCase,
 ) : BaseViewModel<SportEventEditViewState>(SportEventEditViewState()) {
 
     fun initView(screenMode: ScreenMode) {
@@ -16,7 +20,7 @@ internal class SportEventEditViewModel(
             onProgress = ::setLoadingView
         ) {
             runCatching {
-                sportEventUseCase.loadSportEventFormData(screenMode = screenMode)
+                loadSportEventFormDataUseCase(screenMode = screenMode)
             }.onSuccess { sportEventFormData ->
                 if (sportEventFormData.sportEvent == null) {
                     updateState {
@@ -148,7 +152,7 @@ internal class SportEventEditViewModel(
             runCatching {
                 when (currentState.screenMode) {
                     is ScreenMode.Edit -> {
-                        sportEventUseCase.editSportEvent(
+                        editSportEventUseCase(
                             sportEventId = currentState.screenMode.sportEventId,
                             title = currentState.title,
                             description = currentState.description,
@@ -164,7 +168,7 @@ internal class SportEventEditViewModel(
                     }
 
                     else -> {
-                        sportEventUseCase.createSportEvent(
+                        createSportEventUseCase(
                             title = currentState.title,
                             description = currentState.description,
                             minNumberOfPeople = currentState.selectedMinNumberOfPeople,

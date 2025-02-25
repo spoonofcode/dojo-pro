@@ -1,20 +1,22 @@
 package com.spoonofcode.dojopro.feature.home
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.dojopro.core.domain.HomeUseCase
+import com.spoonofcode.dojopro.core.domain.GetSportEventsCreatedByUserUseCase
+import com.spoonofcode.dojopro.core.domain.GetSportEventsUserParticipatedInUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 
 internal class HomeViewModel(
-    private val homeUseCase: HomeUseCase,
+    private val getSportEventsUserParticipatedInUseCase: GetSportEventsUserParticipatedInUseCase,
+    private val getSportEventsCreatedByUserUseCase: GetSportEventsCreatedByUserUseCase,
 ) : BaseViewModel<HomeViewState>(HomeViewState()) {
 
     fun initView() {
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView
         ) {
-            val sportEventsUserParticipatedIn = homeUseCase.getSportEventsUserParticipatedIn()
-            val sportEventsCreatedByUser = homeUseCase.getSportEventsCreatedByUser()
+            val sportEventsUserParticipatedIn = getSportEventsUserParticipatedInUseCase()
+            val sportEventsCreatedByUser = getSportEventsCreatedByUserUseCase()
             updateState {
                 copy(
                     sportEventsUserParticipatedIn = sportEventsUserParticipatedIn,

@@ -4,13 +4,11 @@ import com.spoonofcode.dojopro.core.data.repository.ProfileRepository
 import com.spoonofcode.dojopro.core.model.Profile
 import com.spoonofcode.dojopro.core.network.SessionManager
 
-internal class ProfileUseCase(
+class GetProfileUseCase(
     private val profileRepository: ProfileRepository,
     private val sessionManager: SessionManager,
 ) {
-    suspend fun getProfile(): Profile {
-        return profileRepository.read(
-            id = sessionManager.getSessionUserId()!!
-        )
-    }
+    suspend operator fun invoke(): Profile = profileRepository.read(
+        id = sessionManager.getSessionUserId()!!
+    )
 }

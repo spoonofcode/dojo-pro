@@ -1,6 +1,6 @@
 package com.spoonofcode.dojopro.core.data.base
 
-import com.spoonofcode.dojopro.core.domain.RefreshUseCase
+import com.spoonofcode.dojopro.core.domain.RefreshAccessTokenUseCase
 import com.spoonofcode.dojopro.core.network.HttpStatusCodes
 import com.spoonofcode.dojopro.core.network.NetworkConfig
 import com.spoonofcode.dojopro.core.network.SessionManager
@@ -43,7 +43,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     private val httpClient: HttpClient by getKoin().inject()
     private val networkConfig: NetworkConfig by getKoin().inject()
     private val sessionManager: SessionManager by getKoin().inject()
-    private val refreshUseCase: RefreshUseCase by getKoin().inject()
+    private val refreshAccessTokenUseCase: RefreshAccessTokenUseCase by getKoin().inject()
 
     override suspend fun create(request: RQ): RS {
         return withContext(Dispatchers.IO) {
@@ -159,7 +159,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
 
         // 2) If 401, try refresh once
         if (response.status == Unauthorized) {
-            val refreshed = refreshUseCase.refreshAccessToken()
+            val refreshed = refreshAccessTokenUseCase()
             if (!refreshed) {
                 // Refresh failed => no valid session
                 throw Exception("Client Error")
