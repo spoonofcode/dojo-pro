@@ -49,6 +49,23 @@ internal class SportEventDetailsViewModel(
         }
     }
 
+    fun joinToSportEvent() {
+        viewModelScope.launchWithProgress(
+            onProgress = ::setLoadingView
+        ) {
+            runCatching {
+                val currentState = currentState()
+                sportEventUseCase.joinToSportEvent(
+                    sportEventId = currentState.sportEvent!!.id,
+                )
+            }.onSuccess {
+                viewModelNavigator.pop()
+            }.onFailure {
+                showSnackbar("ERROR: $it")
+            }
+        }
+    }
+
     private fun setLoadingView(isLoading: Boolean) {
         updateState {
             copy(isViewLoading = isLoading)

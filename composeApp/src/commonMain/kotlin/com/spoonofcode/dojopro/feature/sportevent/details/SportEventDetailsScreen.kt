@@ -42,6 +42,7 @@ import com.spoonofcode.dojopro.resources.description
 import com.spoonofcode.dojopro.resources.dojo_room
 import com.spoonofcode.dojopro.resources.edit
 import com.spoonofcode.dojopro.resources.end
+import com.spoonofcode.dojopro.resources.join_to_sport_event
 import com.spoonofcode.dojopro.resources.level
 import com.spoonofcode.dojopro.resources.room
 import com.spoonofcode.dojopro.resources.start
@@ -71,6 +72,7 @@ data class SportEventDetailsScreen(
             viewState = viewState,
             editSportEvent = { viewModel.editSportEvent() },
             deleteSportEvent = { viewModel.deleteSportEvent() },
+            joinToSportEvent = { viewModel.joinToSportEvent() },
         )
     }
 
@@ -80,6 +82,7 @@ data class SportEventDetailsScreen(
         viewState: SportEventDetailsViewState,
         editSportEvent: () -> Unit,
         deleteSportEvent: () -> Unit,
+        joinToSportEvent: () -> Unit,
     ) {
         Scaffold(
             topBar = {
@@ -152,6 +155,12 @@ data class SportEventDetailsScreen(
                     Buttons.PrimaryButton(
                         text = stringResource(resource = Res.string.delete),
                         onClick = deleteSportEvent
+                    )
+
+                    Spacers.VerticalBetweenFields()
+                    Buttons.PrimaryButton(
+                        text = stringResource(resource = Res.string.join_to_sport_event),
+                        onClick = joinToSportEvent
                     )
 
                     Spacers.BottomSpace()

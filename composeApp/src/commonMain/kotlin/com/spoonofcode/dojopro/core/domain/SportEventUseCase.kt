@@ -120,4 +120,11 @@ internal class SportEventUseCase(
             id = sportEventId,
         )
     }
+
+    suspend fun joinToSportEvent(sportEventId: Int) {
+        sportEventRepository.addUserToSportEvent(
+            userId = sessionManager.getSessionUserId()!!,
+            sportEventId = sportEventId,
+        )
+    }
 }

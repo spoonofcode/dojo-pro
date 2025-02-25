@@ -1,6 +1,7 @@
 package com.spoonofcode.dojopro.core.data.repository
 
 import com.spoonofcode.dojopro.core.data.base.GenericCrudRepository
+import com.spoonofcode.dojopro.core.model.AddUserToSportEventRequest
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.model.User
 import com.spoonofcode.dojopro.core.model.UserRequest
@@ -23,6 +24,10 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/sportEvents",
                 method = HttpMethod.Get,
+                customRequestBody = Json.encodeToString(
+                    AddUserToSportEventRequest.serializer(),
+                    AddUserToSportEventRequest(userId = userId)
+                ),
             )
 
             val responseBody = responseOrException(response).body<String>()

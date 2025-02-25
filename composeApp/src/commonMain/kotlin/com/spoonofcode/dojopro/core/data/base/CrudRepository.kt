@@ -177,6 +177,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         method: HttpMethod,
         sessionTokenRequired: Boolean = true,
         requestBody: RQ? = null,
+        customRequestBody: String? = null,
         queryParams: Map<String, String> = emptyMap(),
     ): HttpResponse {
         // Common request-setup block
@@ -187,6 +188,11 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
             queryParams.forEach { (key, value) -> parameter(key, value) }
 
             this.method = method
+
+            customRequestBody?.let {
+                setBody(customRequestBody)
+            }
+
             requestBody?.let { body ->
                 setBody(Json.encodeToString(requestSerializer, body))
             }
@@ -199,4 +205,5 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
             httpClient.request(requestBuilder)
         }
     }
+
 }

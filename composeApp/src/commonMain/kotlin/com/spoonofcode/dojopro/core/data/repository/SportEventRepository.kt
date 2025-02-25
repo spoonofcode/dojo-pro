@@ -1,6 +1,7 @@
 package com.spoonofcode.dojopro.core.data.repository
 
 import com.spoonofcode.dojopro.core.data.base.GenericCrudRepository
+import com.spoonofcode.dojopro.core.model.AddUserToSportEventRequest
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.model.SportEventRequest
 import io.ktor.client.call.body
@@ -29,4 +30,19 @@ class SportEventRepository : GenericCrudRepository<SportEventRequest, SportEvent
             Json.decodeFromString(ListSerializer(SportEvent.serializer()), responseBody)
         }
     }
+
+    suspend fun addUserToSportEvent(userId: Int, sportEventId: Int) {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "sportEvents/$sportEventId/users",
+                method = HttpMethod.Post,
+                customRequestBody = Json.encodeToString(
+                    AddUserToSportEventRequest.serializer(),
+                    AddUserToSportEventRequest(userId = userId)
+                ),
+            )
+            responseOrException(response).body<String>()
+        }
+    }
+
 }
