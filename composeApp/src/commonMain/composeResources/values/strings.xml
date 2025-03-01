@@ -33,7 +33,7 @@
     <string name="events_created_by_me">Events created by me</string>
     <string name="events_i_participated_in">Events I participated in</string>
 
-    <!-- SECTION Event -->
+    <!-- SECTION Sport Event -->
     <string name="group_classes">Group classes</string>
     <string name="room">Room</string>
     <string name="max_number_of_people">Max Number of People</string>
@@ -41,4 +41,10 @@
     <string name="number_of_people">Number of People</string>
     <string name="sport_event">Sport Event</string>
     <string name="join_to_sport_event">Join to Sport Event</string>
+
+    <!-- SECTION Search Sport Event -->
+    <string name="filter">Filter</string>
+
+    <!-- SECTION Filter Sport Event -->
+    <string name="applyFilter">Apply filter</string>
 </resources>
