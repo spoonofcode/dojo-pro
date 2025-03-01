@@ -4,11 +4,11 @@ import com.spoonofcode.dojopro.core.data.repository.RegisterRepository
 import com.spoonofcode.dojopro.core.model.RegisterRequest
 import com.spoonofcode.dojopro.core.network.SessionManager
 
-internal class RegisterUseCase(
+class RegisterUseCase(
     private val registerRepository: RegisterRepository,
     private val sessionManager: SessionManager,
 ) {
-    suspend fun signUp(
+    suspend operator fun invoke(
         email: String,
         password: String,
         firstName: String,

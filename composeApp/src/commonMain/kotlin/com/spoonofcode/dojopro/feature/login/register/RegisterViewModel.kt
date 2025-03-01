@@ -54,7 +54,7 @@ internal class RegisterViewModel(
             onProgress = ::setLoadingView
         ) {
             runCatching {
-                registerUseCase.signUp(
+                registerUseCase(
                     email = viewState.value.email,
                     password = viewState.value.password,
                     firstName = viewState.value.firstName,

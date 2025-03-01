@@ -1,21 +1,25 @@
 package com.spoonofcode.dojopro.feature.sportevent.details
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.dojopro.core.domain.SportEventUseCase
+import com.spoonofcode.dojopro.core.domain.AddUserToSportEventUseCase
+import com.spoonofcode.dojopro.core.domain.DeleteSportEventUseCase
+import com.spoonofcode.dojopro.core.domain.GetSportEventByIdUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import com.spoonofcode.dojopro.feature.sportevent.edit.ScreenMode
 import com.spoonofcode.dojopro.feature.sportevent.edit.SportEventEditScreen
 
 internal class SportEventDetailsViewModel(
-    private val sportEventUseCase: SportEventUseCase,
+    private val getSportEventByIdUseCase: GetSportEventByIdUseCase,
+    private val deleteSportEventUseCase: DeleteSportEventUseCase,
+    private val addUserToSportEventUseCase: AddUserToSportEventUseCase,
 ) : BaseViewModel<SportEventDetailsViewState>(SportEventDetailsViewState()) {
 
     fun initView(sportEventId: Int) {
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView
         ) {
-            val sportEvent = sportEventUseCase.getSportEventById(sportEventId = sportEventId)
+            val sportEvent = getSportEventByIdUseCase(sportEventId = sportEventId)
             updateState {
                 copy(
                     sportEvent = sportEvent
@@ -38,7 +42,7 @@ internal class SportEventDetailsViewModel(
         ) {
             runCatching {
                 val currentState = currentState()
-                sportEventUseCase.deleteSportEvent(
+                deleteSportEventUseCase(
                     sportEventId = currentState.sportEvent!!.id,
                 )
             }.onSuccess {
@@ -55,7 +59,7 @@ internal class SportEventDetailsViewModel(
         ) {
             runCatching {
                 val currentState = currentState()
-                sportEventUseCase.joinToSportEvent(
+                addUserToSportEventUseCase(
                     sportEventId = currentState.sportEvent!!.id,
                 )
             }.onSuccess {

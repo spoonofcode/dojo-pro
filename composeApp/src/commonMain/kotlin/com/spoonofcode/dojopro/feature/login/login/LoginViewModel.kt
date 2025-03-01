@@ -1,16 +1,18 @@
 package com.spoonofcode.dojopro.feature.login.login
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.dojopro.app.MainHostScreen
+import com.spoonofcode.dojopro.core.domain.LoginGoogleUseCase
 import com.spoonofcode.dojopro.core.domain.LoginUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
-import kotlinx.coroutines.launch
 import com.spoonofcode.dojopro.feature.login.forgotPassword.ForgotPasswordScreen
-import com.spoonofcode.dojopro.app.MainHostScreen
 import com.spoonofcode.dojopro.feature.login.register.RegisterScreen
+import kotlinx.coroutines.launch
 
 internal class LoginViewModel(
     private val loginUseCase: LoginUseCase,
+    private val loginGoogleUseCase: LoginGoogleUseCase,
 ) : BaseViewModel<LoginViewState>(LoginViewState()) {
 
     private fun setLoadingView(isLoading: Boolean) {
@@ -48,7 +50,7 @@ internal class LoginViewModel(
             onProgress = ::setLoadingView
         ) {
             runCatching {
-                loginUseCase.signIn(
+                loginUseCase(
                     email = viewState.value.email,
                     password = viewState.value.password,
                 )
@@ -65,7 +67,7 @@ internal class LoginViewModel(
             onProgress = ::setLoadingView
         ) {
             runCatching {
-                loginUseCase.signInWithGoogle(googleIdToken)
+                loginGoogleUseCase(googleIdToken)
             }.onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             }.onFailure {

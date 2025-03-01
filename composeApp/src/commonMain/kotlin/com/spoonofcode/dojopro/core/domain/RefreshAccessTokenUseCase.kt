@@ -3,11 +3,11 @@ package com.spoonofcode.dojopro.core.domain
 import com.spoonofcode.dojopro.core.data.repository.RefreshRepository
 import com.spoonofcode.dojopro.core.network.SessionManager
 
-internal class RefreshUseCase(
-    private val sessionManager: SessionManager,
+class RefreshAccessTokenUseCase(
     private val refreshRepository: RefreshRepository,
+    private val sessionManager: SessionManager,
 ) {
-    suspend fun refreshAccessToken(): Boolean {
+    suspend operator fun invoke() : Boolean {
         val jwtRefreshToken = sessionManager.getSessionRefreshToken() ?: return false
         val refresh = refreshRepository.refreshToken(jwtRefreshToken)
         sessionManager.saveSessionAccessToken(refresh.jwtAccessToken)
