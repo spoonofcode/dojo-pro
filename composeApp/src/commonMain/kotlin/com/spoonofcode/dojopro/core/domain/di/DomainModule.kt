@@ -10,8 +10,8 @@ import com.spoonofcode.dojopro.core.domain.GetSportEventByIdUseCase
 import com.spoonofcode.dojopro.core.domain.GetSportEventsCreatedByUserUseCase
 import com.spoonofcode.dojopro.core.domain.GetSportEventsUserParticipatedInUseCase
 import com.spoonofcode.dojopro.core.domain.LoadSportEventFormDataUseCase
+import com.spoonofcode.dojopro.core.domain.LoginGoogleUseCase
 import com.spoonofcode.dojopro.core.domain.LoginUseCase
-import com.spoonofcode.dojopro.core.domain.LoginWithGoogleUseCase
 import com.spoonofcode.dojopro.core.domain.RefreshAccessTokenUseCase
 import com.spoonofcode.dojopro.core.domain.RegisterUseCase
 import org.koin.core.module.dsl.singleOf
@@ -19,7 +19,7 @@ import org.koin.dsl.module
 
 val domainModule = module {
     singleOf(::LoginUseCase)
-    singleOf(::LoginWithGoogleUseCase)
+    singleOf(::LoginGoogleUseCase)
     singleOf(::RegisterUseCase)
     singleOf(::RefreshAccessTokenUseCase)
     singleOf(::GetProfileUseCase)

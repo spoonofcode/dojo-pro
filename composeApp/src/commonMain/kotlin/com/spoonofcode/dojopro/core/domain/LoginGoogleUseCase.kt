@@ -4,7 +4,7 @@ import com.spoonofcode.dojopro.core.data.repository.LoginGoogleRepository
 import com.spoonofcode.dojopro.core.model.LoginGoogleRequest
 import com.spoonofcode.dojopro.core.network.SessionManager
 
-class LoginWithGoogleUseCase(
+class LoginGoogleUseCase(
     private val loginGoogleRepository: LoginGoogleRepository,
     private val sessionManager: SessionManager,
 ) {
