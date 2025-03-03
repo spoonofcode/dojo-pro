@@ -1,6 +1,7 @@
 package com.spoonofcode.dojopro.core.data.di
 
 import com.spoonofcode.dojopro.core.data.repository.CoachRepository
+import com.spoonofcode.dojopro.core.data.repository.FilterRepository
 import com.spoonofcode.dojopro.core.data.repository.LevelRepository
 import com.spoonofcode.dojopro.core.data.repository.LoginGoogleRepository
 import com.spoonofcode.dojopro.core.data.repository.LoginRepository
@@ -24,4 +25,5 @@ val dataModule = module {
     singleOf(::UserRepository)
     singleOf(::RegisterRepository)
     singleOf(::ProfileRepository)
+    singleOf(::FilterRepository)
 }

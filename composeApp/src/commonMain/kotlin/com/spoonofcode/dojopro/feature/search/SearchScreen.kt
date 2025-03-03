@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -30,47 +30,87 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.spoonofcode.dojopro.core.ext.formatedLocalDateTime
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.core.model.SportEvent
-import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsScreen
+import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.compose.Buttons
+import com.spoonofcode.dojopro.core.ui.compose.Spacers
+import com.spoonofcode.dojopro.core.ui.compose.TextFields
+import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.core.ui.navigation.NavigationHandler
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.filter
+import com.spoonofcode.dojopro.resources.search
+import com.spoonofcode.dojopro.resources.search_sport_event
+import org.jetbrains.compose.resources.stringResource
 
 class SearchScreen : Screen {
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
+        val navigator: Navigator = LocalNavigator.currentOrThrow
         val viewModel = koinViewModel<SearchViewModel>()
         val viewState by viewModel.viewState.collectAsState()
-        val navigator: Navigator = LocalNavigator.currentOrThrow
+
+        NavigationHandler(
+            navigationFlow = viewModel.navigationFlow,
+            navigator = navigator
+        )
 
         LaunchedEffect(Unit) {
-            viewModel.getSportEvents()
+            viewModel.initView()
         }
 
+        ContentView(
+            viewState = viewState,
+            changeSearchText = { viewModel.changeSearchText(it) },
+            navigateToFilter = { viewModel.navigateToFilter() },
+            selectSportEvent = { viewModel.selectSportEvent(it) },
+        )
+
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    internal fun ContentView(
+        viewState: SearchViewState,
+        changeSearchText: (String) -> Unit,
+        navigateToFilter: () -> Unit,
+        selectSportEvent: (Int) -> Unit,
+    ) {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Search") },
+                    title = { Text(stringResource(resource = Res.string.search_sport_event)) },
                 )
             }
         ) { innerPadding ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
+                    .padding(Dimens.screenPadding)
                     .padding(innerPadding)
             ) {
-                viewState.sportEvents.let {
-                    LazyColumn(
-                        content = {
-                            itemsIndexed(it) { index: Int, item: SportEvent ->
-                                SportEventItem(
-                                    item = item,
-                                    onClick = { navigator.push(SportEventDetailsScreen(sportEventId = 1)) }
-                                )
-                            }
-                        }
-                    )
+
+                TextFields.Outlined(
+                    value = viewState.searchText,
+                    onValueChange = { changeSearchText(it) },
+                    innerLabel = stringResource(resource = Res.string.search),
+                )
+
+                Spacers.VerticalBetweenFields()
+
+                Buttons.PrimaryButton(
+                    text = stringResource(resource = Res.string.filter),
+                    onClick = { navigateToFilter() }
+                )
+
+                LazyColumn {
+                    items(viewState.filteredSportEvents) { sportEvent ->
+                        SportEventItem(
+                            item = sportEvent,
+                            onClick = { selectSportEvent(sportEvent.id) }
+                        )
+                    }
                 }
             }
         }
