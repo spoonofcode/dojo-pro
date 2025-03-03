@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -20,14 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
@@ -36,17 +31,20 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.spoonofcode.dojopro.core.ext.formatedLocalDateTime
 import com.spoonofcode.dojopro.core.model.SportEvent
+import com.spoonofcode.dojopro.core.ui.Dimens
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
+import com.spoonofcode.dojopro.core.ui.compose.TextFields
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.core.ui.navigation.NavigationHandler
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.filter
+import com.spoonofcode.dojopro.resources.search
+import com.spoonofcode.dojopro.resources.search_sport_event
 import org.jetbrains.compose.resources.stringResource
 
 class SearchScreen : Screen {
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
         val navigator: Navigator = LocalNavigator.currentOrThrow
@@ -58,58 +56,59 @@ class SearchScreen : Screen {
             navigator = navigator
         )
 
-        // Search text state
-        var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
-        // Selected filter
-        var selectedFilter = viewState.filterData
-
-        // Filter the list based on searchQuery and selectedFilter
-        val filteredSportEvents = remember(searchQuery.text, viewState.filterData) {
-            viewState.sportEvents.filter { sportEvent ->
-                val matchesSearch = sportEvent.title.contains(searchQuery.text, ignoreCase = true)
-                val matchesCoachFilter = sportEvent.coach.id == selectedFilter.selectedCoachId
-                val matchesLevelFilter = sportEvent.coach.id == selectedFilter.selectedLevelId
-                matchesSearch && matchesCoachFilter && matchesLevelFilter
-            }
-        }
-
         LaunchedEffect(Unit) {
             viewModel.initView()
         }
 
+        ContentView(
+            viewState = viewState,
+            changeSearchText = { viewModel.changeSearchText(it) },
+            navigateToFilter = { viewModel.navigateToFilter() },
+            selectSportEvent = { viewModel.selectSportEvent(it) },
+        )
+
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    internal fun ContentView(
+        viewState: SearchViewState,
+        changeSearchText: (String) -> Unit,
+        navigateToFilter: () -> Unit,
+        selectSportEvent: (Int) -> Unit,
+    ) {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Search") },
+                    title = { Text(stringResource(resource = Res.string.search_sport_event)) },
                 )
             }
         ) { innerPadding ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(Dimens.screenPadding)
                     .padding(innerPadding)
             ) {
 
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { newValue -> searchQuery = newValue },
-                    label = { Text("Search sport events...") },
-                    modifier = Modifier
-                        .fillMaxWidth()
+                TextFields.Outlined(
+                    value = viewState.searchText,
+                    onValueChange = { changeSearchText(it) },
+                    innerLabel = stringResource(resource = Res.string.search),
                 )
 
                 Spacers.VerticalBetweenFields()
 
                 Buttons.PrimaryButton(
                     text = stringResource(resource = Res.string.filter),
-                    onClick = { viewModel.navigateToFilter() }
+                    onClick = { navigateToFilter() }
                 )
 
                 LazyColumn {
-                    items(filteredSportEvents) { sportEvent ->
+                    items(viewState.filteredSportEvents) { sportEvent ->
                         SportEventItem(
                             item = sportEvent,
-                            onClick = { viewModel.selectSportEvent(sportEvent.id) }
+                            onClick = { selectSportEvent(sportEvent.id) }
                         )
                     }
                 }

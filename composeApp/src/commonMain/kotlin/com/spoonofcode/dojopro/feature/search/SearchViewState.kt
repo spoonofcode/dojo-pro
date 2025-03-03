@@ -1,11 +1,11 @@
 package com.spoonofcode.dojopro.feature.search
 
-import com.spoonofcode.dojopro.core.data.repository.FilterData
 import com.spoonofcode.dojopro.core.model.SportEvent
 
 internal data class SearchViewState(
     val isViewEnable: Boolean = true,
     val isViewLoading: Boolean = true,
-    val sportEvents: List<SportEvent> = emptyList(),
-    val filterData: FilterData = FilterData(),
+    val searchText: String = "",
+    val allSportEvents: List<SportEvent> = emptyList(),
+    val filteredSportEvents: List<SportEvent> = emptyList(),
 )
