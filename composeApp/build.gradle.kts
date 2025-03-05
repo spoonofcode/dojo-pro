@@ -66,6 +66,8 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
+            implementation(libs.connectivity.core)
+            implementation(libs.connectivity.device)
             implementation(libs.koin.compose)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)

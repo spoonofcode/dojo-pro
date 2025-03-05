@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.core.domain.CreateSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.EditSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.LoadSportEventFormDataUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
@@ -194,7 +195,7 @@ internal class SportEventEditViewModel(
                 }
                 viewModelNavigator.pop()
             }.onFailure {
-                showSnackbar("ERROR: $it")
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
             }
         }
     }

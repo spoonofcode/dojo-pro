@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -19,21 +18,23 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.compose.Buttons
+import com.spoonofcode.dojopro.core.ui.compose.Buttons.GoogleSignInButton
+import com.spoonofcode.dojopro.core.ui.compose.LoadingView
+import com.spoonofcode.dojopro.core.ui.compose.Snackbar
+import com.spoonofcode.dojopro.core.ui.compose.Spacers
+import com.spoonofcode.dojopro.core.ui.compose.TextFields
+import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.core.ui.ext.showSnackbar
+import com.spoonofcode.dojopro.core.ui.navigation.NavigationHandler
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.email
 import com.spoonofcode.dojopro.resources.forget_password
 import com.spoonofcode.dojopro.resources.password
 import com.spoonofcode.dojopro.resources.sign_in
 import com.spoonofcode.dojopro.resources.sign_up
-import com.spoonofcode.dojopro.core.ui.Dimens
-import com.spoonofcode.dojopro.core.ui.compose.Buttons
-import com.spoonofcode.dojopro.core.ui.compose.Buttons.GoogleSignInButton
-import com.spoonofcode.dojopro.core.ui.compose.LoadingView
-import com.spoonofcode.dojopro.core.ui.compose.Spacers
-import com.spoonofcode.dojopro.core.ui.compose.TextFields
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import kotlinx.coroutines.launch
-import com.spoonofcode.dojopro.core.ui.navigation.NavigationHandler
 import org.jetbrains.compose.resources.stringResource
 
 class LoginScreen : Screen {
@@ -52,12 +53,10 @@ class LoginScreen : Screen {
         )
 
         LaunchedEffect(viewModel.snackbarEvent) {
-            viewModel.snackbarEvent.collect { message ->
+            viewModel.snackbarEvent.collect { snackbarEvent ->
                 coroutineScope.launch {
                     snackbarHostState.showSnackbar(
-                        message = message,
-                        actionLabel = "OK",
-                        duration = SnackbarDuration.Indefinite
+                        snackbarEvent
                     )
                 }
             }
@@ -87,7 +86,13 @@ class LoginScreen : Screen {
         signUp: () -> Unit,
     ) {
         Scaffold(
-            snackbarHost = { SnackbarHost(snackbarHostState) }
+            snackbarHost = {
+                SnackbarHost(
+                    hostState = snackbarHostState,
+                    snackbar = { snackbarData -> Snackbar(snackbarData)
+                    }
+                )
+            }
         ) {
             Column(
                 modifier = Modifier.fillMaxSize()
