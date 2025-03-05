@@ -8,11 +8,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -25,8 +23,8 @@ import com.spoonofcode.dojopro.core.ui.compose.LoadingView
 import com.spoonofcode.dojopro.core.ui.compose.Snackbar
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
+import com.spoonofcode.dojopro.core.ui.compose.setSnackbarHostState
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
-import com.spoonofcode.dojopro.core.ui.ext.showSnackbar
 import com.spoonofcode.dojopro.core.ui.navigation.NavigationHandler
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.email
@@ -34,7 +32,6 @@ import com.spoonofcode.dojopro.resources.forget_password
 import com.spoonofcode.dojopro.resources.password
 import com.spoonofcode.dojopro.resources.sign_in
 import com.spoonofcode.dojopro.resources.sign_up
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
 class LoginScreen : Screen {
@@ -42,7 +39,6 @@ class LoginScreen : Screen {
     @Composable
     override fun Content() {
         val snackbarHostState = remember { SnackbarHostState() }
-        val coroutineScope = rememberCoroutineScope()
         val navigator: Navigator = LocalNavigator.currentOrThrow
         val viewModel = koinViewModel<LoginViewModel>()
         val viewState by viewModel.viewState.collectAsState()
@@ -52,15 +48,7 @@ class LoginScreen : Screen {
             navigator = navigator
         )
 
-        LaunchedEffect(viewModel.snackbarEvent) {
-            viewModel.snackbarEvent.collect { snackbarEvent ->
-                coroutineScope.launch {
-                    snackbarHostState.showSnackbar(
-                        snackbarEvent
-                    )
-                }
-            }
-        }
+        setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
 
         ContentView(
             snackbarHostState = snackbarHostState,
@@ -89,8 +77,7 @@ class LoginScreen : Screen {
             snackbarHost = {
                 SnackbarHost(
                     hostState = snackbarHostState,
-                    snackbar = { snackbarData -> Snackbar(snackbarData)
-                    }
+                    snackbar = { snackbarData -> Snackbar(snackbarData) }
                 )
             }
         ) {
