@@ -6,15 +6,22 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import com.spoonofcode.dojopro.core.ui.compose.Snackbar
+import com.spoonofcode.dojopro.core.ui.compose.setSnackbarHostState
+import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.feature.calendar.CalendarTab
+import com.spoonofcode.dojopro.feature.calendar.CalendarViewModel
 import com.spoonofcode.dojopro.feature.home.HomeTab
 import com.spoonofcode.dojopro.feature.profile.ProfileTab
 import com.spoonofcode.dojopro.feature.search.SearchTab
@@ -24,10 +31,21 @@ class MainHostScreen : Screen {
 
     @Composable
     override fun Content() {
+        val snackbarHostState = remember { SnackbarHostState() }
+        val viewModel = koinViewModel<CalendarViewModel>()
+
+        setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
+
         TabNavigator(
             tab = HomeTab
         ) {
             Scaffold(
+                snackbarHost = {
+                    SnackbarHost(
+                        hostState = snackbarHostState,
+                        snackbar = { snackbarData -> Snackbar(snackbarData) }
+                    )
+                },
                 modifier = Modifier.fillMaxSize(),
                 bottomBar = {
                     NavigationBar {
