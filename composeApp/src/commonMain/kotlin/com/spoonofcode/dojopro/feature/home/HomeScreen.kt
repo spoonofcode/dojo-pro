@@ -15,9 +15,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.ui.Dimens
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
@@ -25,8 +22,6 @@ import com.spoonofcode.dojopro.core.ui.compose.CarouselSportEventItem
 import com.spoonofcode.dojopro.core.ui.compose.Carousels
 import com.spoonofcode.dojopro.core.ui.compose.LoadingView
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
-import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsScreen
-import com.spoonofcode.dojopro.feature.sportevent.edit.SportEventEditScreen
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.create_event
 import com.spoonofcode.dojopro.resources.events_created_by_me
@@ -37,7 +32,6 @@ class HomeScreen : Screen {
 
     @Composable
     override fun Content() {
-        val navigator: Navigator = LocalNavigator.currentOrThrow
         val viewModel = koinViewModel<HomeViewModel>()
         val viewState by viewModel.viewState.collectAsState()
 
@@ -47,12 +41,8 @@ class HomeScreen : Screen {
 
         ContentView(
             viewState = viewState,
-            createSportEvent = {
-                navigator.push(SportEventEditScreen())
-            },
-            goToMyEvent = {
-                navigator.push(SportEventDetailsScreen(it))
-            }
+            createSportEvent = { viewModel.goToCreateSportEvent() },
+            goToMyEvent = { viewModel.goToMyEvent(it) },
         )
     }
 
