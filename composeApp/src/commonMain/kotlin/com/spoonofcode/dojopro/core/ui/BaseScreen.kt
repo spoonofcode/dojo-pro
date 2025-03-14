@@ -76,7 +76,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                 }
             },
             modifier = Modifier.viewEnable(isEnableView && isLoadingView.not())
-        ) {
+        ) { innerPadding ->
             if (isLoadingView) {
                 LoadingView()
             } else {
@@ -84,6 +84,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
+                        .padding(innerPadding)
                         .padding(all = Dimens.screenPadding),
                     content = content
                 )

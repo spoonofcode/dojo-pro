@@ -33,7 +33,6 @@ internal class CalendarScreen(
         testMethod: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            Text(text = viewState.title)
             Text(text = "SD")
             Text(text = "SBB")
             Buttons.PrimaryButton(
@@ -44,7 +43,6 @@ internal class CalendarScreen(
                 text = "TEST METHOD2",
                 onClick = testMethod
             )
-
         }
     }
 
@@ -55,7 +53,7 @@ internal class CalendarScreen(
     fun InitializedCalendarScreenPreview() {
         ContentView(
             content = ContentView(
-                viewState = CalendarViewState(title = "TEST"),
+                viewState = CalendarViewState(),
                 testMethod = {},
             )
         )
