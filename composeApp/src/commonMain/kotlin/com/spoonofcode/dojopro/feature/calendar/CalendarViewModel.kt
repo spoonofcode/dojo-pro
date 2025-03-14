@@ -7,5 +7,9 @@ internal class CalendarViewModel : BaseViewModel<CalendarViewState>(CalendarView
 
     fun testMethod(){
         showSnackbar(SnackbarEvent.Error(message = "TEST BARTEK"))
+
+        updateState {
+            copy(isLoadingView = true)
+        }
     }
 }

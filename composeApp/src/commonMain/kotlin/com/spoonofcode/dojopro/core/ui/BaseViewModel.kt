@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.mp.KoinPlatform.getKoin
 
-abstract class BaseViewModel<ViewState>(
-    initialViewState: ViewState
+abstract class BaseViewModel<VS : BaseViewState>(
+    initialViewState: VS
 ) : ViewModel() {
 
     protected val viewModelNavigator: ViewModelNavigator by getKoin().inject()
@@ -35,10 +35,10 @@ abstract class BaseViewModel<ViewState>(
         observeNetworkState()
     }
 
-    fun currentState(): ViewState = viewState.value
+    fun currentState(): VS = viewState.value
 
     fun updateState(
-        transformation: ViewState.() -> ViewState,
+        transformation: VS.() -> VS,
     ) {
         val currentState = currentState()
         val newState = currentState.transformation()

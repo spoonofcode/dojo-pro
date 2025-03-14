@@ -3,11 +3,16 @@ package com.spoonofcode.dojopro.feature.calendar
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.spoonofcode.dojopro.core.ui.TabScreen
+import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.calendar
+import org.jetbrains.compose.resources.StringResource
 
-internal class CalendarScreen : TabScreen<CalendarViewModel, CalendarViewState>() {
+internal class CalendarScreen(
+    override val screenTopAppBarTitle: StringResource = Res.string.calendar
+) : BaseScreen<CalendarViewModel, CalendarViewState>() {
     @Composable
     override fun provideViewModel(): CalendarViewModel = koinViewModel<CalendarViewModel>()
 
@@ -16,14 +21,14 @@ internal class CalendarScreen : TabScreen<CalendarViewModel, CalendarViewState>(
         viewModel: CalendarViewModel,
         viewState: CalendarViewState
     ): @Composable (ColumnScope.() -> Unit) {
-        return InternalContentView(
+        return ContentView(
             viewState = viewState,
             testMethod = { viewModel.testMethod() },
         )
     }
 
     @Composable
-    private fun InternalContentView(
+    private fun ContentView(
         viewState: CalendarViewState,
         testMethod: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
@@ -43,13 +48,17 @@ internal class CalendarScreen : TabScreen<CalendarViewModel, CalendarViewState>(
         }
     }
 
+    // region previews
+    // TODO This functions should be private and with @Preview annotation but now
+    //  Android Studio will be support previews in commonMain
     @Composable
     fun InitializedCalendarScreenPreview() {
         ContentView(
-            content = InternalContentView(
-                viewState = CalendarViewState("TEST"),
+            content = ContentView(
+                viewState = CalendarViewState(title = "TEST"),
                 testMethod = {},
             )
         )
     }
+    // endregion
 }
