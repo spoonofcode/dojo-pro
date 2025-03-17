@@ -47,7 +47,9 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
 
     @Composable
     override fun Content() {
-        val navigator: Navigator = LocalNavigator.currentOrThrow
+        val navigator: Navigator =
+            LocalNavigator.currentOrThrow.parent ?: LocalNavigator.currentOrThrow
+
         val viewModel = provideViewModel()
         val viewState by viewModel.viewState.collectAsState()
 
