@@ -14,6 +14,10 @@ internal class HomeViewModel(
     private val getSportEventsCreatedByUserUseCase: GetSportEventsCreatedByUserUseCase,
 ) : BaseViewModel<HomeViewState>(HomeViewState()) {
 
+    init {
+        initView()
+    }
+
     fun initView() {
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView

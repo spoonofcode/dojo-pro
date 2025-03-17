@@ -2,6 +2,7 @@ package com.spoonofcode.dojopro.core.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -25,7 +26,14 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
-    open val screenTopAppBarTitle: StringResource? = null
+    open val screenTopAppBarTitle: StringResource? = null,
+    open val showBottomNavigationBar: Boolean = true,
+    open val contentPadding: PaddingValues = PaddingValues(
+        start = Dimens.screenPadding,
+        end = Dimens.screenPadding,
+        top = Dimens.screenPadding,
+        bottom = Dimens.bottomSpace,
+    )
 ) : Screen {
 
     @Composable
@@ -85,7 +93,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
                         .padding(innerPadding)
-                        .padding(all = Dimens.screenPadding),
+                        .padding(contentPadding),
                     content = content
                 )
             }

@@ -30,6 +30,7 @@
     <string name="last_name">Last Name</string>
 
     <!-- SECTION Home -->
+    <string name="home">Home</string>
     <string name="create_event">Create event</string>
     <string name="events_created_by_me">Events created by me</string>
     <string name="events_i_participated_in">Events I participated in</string>
@@ -49,6 +50,9 @@
 
     <!-- SECTION Calendar -->
     <string name="calendar">Calendar</string>
+
+    <!-- SECTION Profile -->
+    <string name="profile">Profile</string>
 
     <!-- SECTION Filter Sport Event -->
     <string name="applyFilter">Apply filter</string>
