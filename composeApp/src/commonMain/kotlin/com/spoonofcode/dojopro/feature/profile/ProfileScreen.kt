@@ -37,7 +37,7 @@ internal class ProfileScreen(
 ) : BaseScreen<ProfileViewModel, ProfileViewState>() {
 
     @Composable
-    override fun provideViewModel(): ProfileViewModel = koinViewModel<ProfileViewModel>()
+    override fun provideViewModel() = koinViewModel<ProfileViewModel>()
 
     @Composable
     override fun provideContentView(

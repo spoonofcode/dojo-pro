@@ -28,12 +28,7 @@ import org.jetbrains.compose.resources.stringResource
 abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     open val screenTopAppBarTitle: StringResource? = null,
     open val showBottomNavigationBar: Boolean = true,
-    open val contentPadding: PaddingValues = PaddingValues(
-        start = Dimens.screenPadding,
-        end = Dimens.screenPadding,
-        top = Dimens.screenPadding,
-        bottom = Dimens.bottomSpace,
-    )
+    open val contentPadding: PaddingValues = PaddingValues(Dimens.screenPadding)
 ) : Screen {
 
     @Composable
