@@ -54,6 +54,9 @@
     <!-- SECTION Profile -->
     <string name="profile">Profile</string>
 
+    <!-- SECTION Shop -->
+    <string name="shop">Shop</string>
+
     <!-- SECTION Filter Sport Event -->
     <string name="applyFilter">Apply filter</string>
 </resources>

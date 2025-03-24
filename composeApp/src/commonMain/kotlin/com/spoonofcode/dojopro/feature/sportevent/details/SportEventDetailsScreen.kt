@@ -162,8 +162,6 @@ data class SportEventDetailsScreen(
                         text = stringResource(resource = Res.string.join_to_sport_event),
                         onClick = joinToSportEvent
                     )
-
-                    Spacers.BottomSpace()
                 }
             }
         }

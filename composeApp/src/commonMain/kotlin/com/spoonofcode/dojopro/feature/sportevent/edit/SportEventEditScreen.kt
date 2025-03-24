@@ -1,33 +1,15 @@
 package com.spoonofcode.dojopro.feature.sportevent.edit
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
-import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.DatePickers
 import com.spoonofcode.dojopro.core.ui.compose.DropDownMenus
-import com.spoonofcode.dojopro.core.ui.compose.LoadingView
 import com.spoonofcode.dojopro.core.ui.compose.Sliders
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
-import com.spoonofcode.dojopro.core.ui.navigation.NavigationHandler
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.coach
 import com.spoonofcode.dojopro.resources.cost
@@ -41,34 +23,23 @@ import com.spoonofcode.dojopro.resources.start
 import com.spoonofcode.dojopro.resources.submit
 import com.spoonofcode.dojopro.resources.title
 import kotlinx.datetime.LocalDateTime
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
-class SportEventEditScreen(
+internal class SportEventEditScreen(
+    override val screenTopAppBarTitle: StringResource = Res.string.sport_event,
     private val screenMode: ScreenMode = ScreenMode.Create,
-) : Screen {
-
-    companion object {
-        private const val PEOPLE_RANGE_MIN_VALUE = 1f
-        private const val PEOPLE_RANGE_MAX_VALUE = 10f
-        private const val PEOPLE_RANGE_NUMBER_OF_STEPS = 8
-    }
+) : BaseScreen<SportEventEditViewModel, SportEventEditViewState>() {
 
     @Composable
-    override fun Content() {
-        val navigator: Navigator = LocalNavigator.currentOrThrow
-        val viewModel = koinViewModel<SportEventEditViewModel>()
-        val viewState by viewModel.viewState.collectAsState()
+    override fun provideViewModel() = koinViewModel<SportEventEditViewModel>()
 
-        NavigationHandler(
-            navigationFlow = viewModel.navigationFlow,
-            navigator = navigator
-        )
-
-        LaunchedEffect(Unit) {
-            viewModel.initView(screenMode = screenMode)
-        }
-
-        ContentView(
+    @Composable
+    override fun provideContentView(
+        viewModel: SportEventEditViewModel,
+        viewState: SportEventEditViewState
+    ): @Composable ColumnScope.() -> Unit {
+        return ContentView(
             viewState = viewState,
             changeTitle = { viewModel.changeTitle(it) },
             changeDescription = { viewModel.changeDescription(it) },
@@ -84,7 +55,6 @@ class SportEventEditScreen(
         )
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     internal fun ContentView(
         viewState: SportEventEditViewState,
@@ -99,100 +69,87 @@ class SportEventEditScreen(
         changeStartDateTime: (LocalDateTime) -> Unit,
         changeEndDateTime: (LocalDateTime) -> Unit,
         submitSportEvent: () -> Unit,
-    ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(stringResource(Res.string.sport_event)) },
-                )
-            }
-        ) { innerPadding ->
-            if (viewState.isViewLoading) {
-                LoadingView()
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(Dimens.screenPadding)
-                        .padding(innerPadding)
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    TextFields.Outlined(
-                        value = viewState.title,
-                        onValueChange = { changeTitle(it) },
-                        label = stringResource(resource = Res.string.title),
-                    )
-                    TextFields.Outlined(
-                        value = viewState.description,
-                        onValueChange = { changeDescription(it) },
-                        label = stringResource(resource = Res.string.description),
-                    )
-                    DropDownMenus.DropdownMenu(
-                        enabled = true,
-                        label = stringResource(resource = Res.string.coach),
-                        value = viewState.coaches.getValue(viewState.selectedCoachId!!),
-                        values = viewState.coaches,
-                        onValueChange = { changeCoach(it) }
-                    )
-                    DropDownMenus.DropdownMenu(
-                        enabled = true,
-                        label = stringResource(resource = Res.string.room),
-                        value = viewState.rooms.getValue(viewState.selectedRoomId!!),
-                        values = viewState.rooms,
-                        onValueChange = { changeRoom(it) }
-                    )
-                    DropDownMenus.DropdownMenu(
-                        enabled = true,
-                        label = stringResource(resource = Res.string.level),
-                        value = viewState.levels.getValue(viewState.selectedLevelId!!),
-                        values = viewState.levels,
-                        onValueChange = { changeLevel(it) }
-                    )
+    ): @Composable (ColumnScope.() -> Unit) {
+        return {
+            TextFields.Outlined(
+                value = viewState.title,
+                onValueChange = { changeTitle(it) },
+                label = stringResource(resource = Res.string.title),
+            )
+            TextFields.Outlined(
+                value = viewState.description,
+                onValueChange = { changeDescription(it) },
+                label = stringResource(resource = Res.string.description),
+            )
+            DropDownMenus.DropdownMenu(
+                enabled = true,
+                label = stringResource(resource = Res.string.coach),
+                value = viewState.coaches.getValue(viewState.selectedCoachId!!),
+                values = viewState.coaches,
+                onValueChange = { changeCoach(it) }
+            )
+            DropDownMenus.DropdownMenu(
+                enabled = true,
+                label = stringResource(resource = Res.string.room),
+                value = viewState.rooms.getValue(viewState.selectedRoomId!!),
+                values = viewState.rooms,
+                onValueChange = { changeRoom(it) }
+            )
+            DropDownMenus.DropdownMenu(
+                enabled = true,
+                label = stringResource(resource = Res.string.level),
+                value = viewState.levels.getValue(viewState.selectedLevelId!!),
+                values = viewState.levels,
+                onValueChange = { changeLevel(it) }
+            )
 
-                    Sliders.RangeSlider(
-                        label = stringResource(resource = Res.string.number_of_people),
-                        minValue = PEOPLE_RANGE_MIN_VALUE,
-                        maxValue = PEOPLE_RANGE_MAX_VALUE,
-                        steps = PEOPLE_RANGE_NUMBER_OF_STEPS,
-                        selectedStartPosition = viewState.selectedMinNumberOfPeople.toFloat(),
-                        selectedEndPosition = viewState.selectedMaxNumberOfPeople.toFloat(),
-                        onStartPositionChange = { changeMinNumberOfPeople(it) },
-                        onEndPositionChange = { changeMaxNumberOfPeople(it) },
-                    )
+            Sliders.RangeSlider(
+                label = stringResource(resource = Res.string.number_of_people),
+                minValue = PEOPLE_RANGE_MIN_VALUE,
+                maxValue = PEOPLE_RANGE_MAX_VALUE,
+                steps = PEOPLE_RANGE_NUMBER_OF_STEPS,
+                selectedStartPosition = viewState.selectedMinNumberOfPeople.toFloat(),
+                selectedEndPosition = viewState.selectedMaxNumberOfPeople.toFloat(),
+                onStartPositionChange = { changeMinNumberOfPeople(it) },
+                onEndPositionChange = { changeMaxNumberOfPeople(it) },
+            )
 
-                    TextFields.Outlined(
-                        label = stringResource(resource = Res.string.cost),
-                        value = viewState.cost,
-                        onValueChange = { changeCost(it) },
-                    )
+            TextFields.Outlined(
+                label = stringResource(resource = Res.string.cost),
+                value = viewState.cost,
+                onValueChange = { changeCost(it) },
+            )
 
-                    DatePickers.DatePickerWithTimer(
-                        label = stringResource(resource = Res.string.start),
-                        value = viewState.startDateTime,
-                        onValueChange = {
-                            changeStartDateTime(it)
-                        },
-                    )
+            DatePickers.DatePickerWithTimer(
+                label = stringResource(resource = Res.string.start),
+                value = viewState.startDateTime,
+                onValueChange = {
+                    changeStartDateTime(it)
+                },
+            )
 
-                    DatePickers.DatePickerWithTimer(
-                        label = stringResource(resource = Res.string.end),
-                        value = viewState.endDateTime,
-                        onValueChange = {
-                            changeEndDateTime(it)
-                        },
-                    )
+            DatePickers.DatePickerWithTimer(
+                label = stringResource(resource = Res.string.end),
+                value = viewState.endDateTime,
+                onValueChange = {
+                    changeEndDateTime(it)
+                },
+            )
 
-                    Spacers.Weight1(this)
+            Spacers.Weight1(this)
 
-                    Spacers.VerticalBetweenFields()
+            Spacers.VerticalBetweenFields()
 
-                    Buttons.PrimaryButton(
-                        text = stringResource(resource = Res.string.submit),
-                        onClick = submitSportEvent
-                    )
-                    Spacers.BottomSpace()
-                }
-            }
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.submit),
+                onClick = submitSportEvent
+            )
         }
+    }
+
+    companion object {
+        private const val PEOPLE_RANGE_MIN_VALUE = 1f
+        private const val PEOPLE_RANGE_MAX_VALUE = 10f
+        private const val PEOPLE_RANGE_NUMBER_OF_STEPS = 8
     }
 }

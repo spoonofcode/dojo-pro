@@ -20,6 +20,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.spoonofcode.dojopro.core.ui.compose.LoadingView
+import com.spoonofcode.dojopro.core.ui.ext.addIf
 import com.spoonofcode.dojopro.core.ui.ext.viewEnable
 import com.spoonofcode.dojopro.core.ui.navigation.NavigationHandler
 import org.jetbrains.compose.resources.StringResource
@@ -27,6 +28,7 @@ import org.jetbrains.compose.resources.stringResource
 
 abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     open val screenTopAppBarTitle: StringResource? = null,
+    open val verticalScrollEnable: Boolean = true,
     open val showBottomNavigationBar: Boolean = true,
     open val contentPadding: PaddingValues = PaddingValues(Dimens.screenPadding)
 ) : Screen {
@@ -80,7 +82,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                     )
                 }
             },
-            modifier = Modifier.viewEnable(isEnableView && isLoadingView.not())
+            modifier = Modifier.viewEnable(isEnableView && isLoadingView.not()).fillMaxSize()
         ) { innerPadding ->
             if (isLoadingView) {
                 LoadingView()
@@ -88,7 +90,9 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
+                        .addIf(verticalScrollEnable) {
+                            verticalScroll(rememberScrollState())
+                        }
                         .padding(innerPadding)
                         .padding(contentPadding),
                     content = content

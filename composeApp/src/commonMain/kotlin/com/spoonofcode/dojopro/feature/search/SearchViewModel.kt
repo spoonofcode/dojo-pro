@@ -16,6 +16,10 @@ internal class SearchViewModel(
     private val getFilteredSportEventsByText: GetFilteredSportEventsByText,
 ) : BaseViewModel<SearchViewState>(SearchViewState()) {
 
+    init {
+        initView()
+    }
+
     fun initView() {
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView
@@ -60,7 +64,7 @@ internal class SearchViewModel(
 
     private fun setLoadingView(isLoading: Boolean) {
         updateState {
-            copy(isViewLoading = isLoading)
+            copy(isLoadingView = isLoading)
         }
     }
 }

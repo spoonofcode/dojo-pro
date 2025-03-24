@@ -38,7 +38,9 @@ class MainHostScreen : Screen {
 
         TabNavigator(
             tab = HomeTab
-        ) {
+        ) { navigator ->
+            val currentScreen = navigator.current
+            println("BARTEK currentScreen = $currentScreen")
             Scaffold(
                 snackbarHost = {
                     SnackbarHost(

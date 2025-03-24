@@ -1,48 +1,38 @@
 package com.spoonofcode.dojopro.feature.shop
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
+import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.shop
+import org.jetbrains.compose.resources.StringResource
 
-class ShopScreen : Screen {
+internal class ShopScreen(
+    override val screenTopAppBarTitle: StringResource = Res.string.shop
+) : BaseScreen<ShopViewModel, ShopViewState>() {
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    override fun Content() {
-        val viewModel = koinViewModel<ShopViewModel>()
-        val viewState by viewModel.viewState.collectAsState()
+    override fun provideViewModel() = koinViewModel<ShopViewModel>()
 
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text("Shop") },
-                )
-            }
-        ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(16.dp)
-                    .padding(innerPadding)
-            ) {
-                Text(
-                    text = viewState.title,
-                )
-            }
+    @Composable
+    override fun provideContentView(
+        viewModel: ShopViewModel,
+        viewState: ShopViewState
+    ): @Composable ColumnScope.() -> Unit {
+        return ContentView(
+            viewState = viewState,
+
+            )
+    }
+
+    @Composable
+    private fun ContentView(
+        viewState: ShopViewState,
+    ): @Composable (ColumnScope.() -> Unit) {
+        return {
+            Text(viewState.title)
         }
     }
 }
