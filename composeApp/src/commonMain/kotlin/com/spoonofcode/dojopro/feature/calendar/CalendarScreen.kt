@@ -11,7 +11,8 @@ import com.spoonofcode.dojopro.resources.calendar
 import org.jetbrains.compose.resources.StringResource
 
 internal class CalendarScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.calendar
+    override val screenTopAppBarTitle: StringResource = Res.string.calendar,
+    override val backNavigationEnable: Boolean = false,
 ) : BaseScreen<CalendarViewModel, CalendarViewState>() {
     @Composable
     override fun provideViewModel(): CalendarViewModel = koinViewModel<CalendarViewModel>()

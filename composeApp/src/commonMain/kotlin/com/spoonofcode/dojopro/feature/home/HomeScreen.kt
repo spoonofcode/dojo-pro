@@ -26,6 +26,7 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class HomeScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.home,
+    override val backNavigationEnable: Boolean = false,
     override val contentPadding: PaddingValues = PaddingValues(
         start = Dimens.screenPadding,
         top = Dimens.screenPadding,

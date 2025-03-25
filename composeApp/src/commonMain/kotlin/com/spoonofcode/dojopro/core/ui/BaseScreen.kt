@@ -7,7 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -28,8 +32,8 @@ import org.jetbrains.compose.resources.stringResource
 
 abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     open val screenTopAppBarTitle: StringResource? = null,
+    open val backNavigationEnable: Boolean = true,
     open val verticalScrollEnable: Boolean = true,
-    open val showBottomNavigationBar: Boolean = true,
     open val contentPadding: PaddingValues = PaddingValues(Dimens.screenPadding)
 ) : Screen {
 
@@ -58,8 +62,10 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
         ContentView(
             content = provideContentView(viewModel, viewState),
             screenTopAppBarTitle = screenTopAppBarTitle,
+            backNavigationEnable = backNavigationEnable,
             isLoadingView = viewState.isLoadingView,
             isEnableView = viewState.isEnableView,
+            onBackClick = { navigator.pop() }
         )
     }
 
@@ -71,6 +77,8 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     fun ContentView(
         content: @Composable ColumnScope.() -> Unit,
         screenTopAppBarTitle: StringResource? = null,
+        backNavigationEnable: Boolean = true,
+        onBackClick: () -> Unit = {},
         isLoadingView: Boolean = false,
         isEnableView: Boolean = false,
     ) {
@@ -78,6 +86,18 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
             topBar = {
                 if (screenTopAppBarTitle != null) {
                     TopAppBar(
+                        navigationIcon = if (backNavigationEnable) {
+                            {
+                                IconButton(onClick = onBackClick) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                        contentDescription = "Back"
+                                    )
+                                }
+                            }
+                        } else {
+                            {}
+                        },
                         title = { Text(stringResource(resource = screenTopAppBarTitle)) },
                     )
                 }

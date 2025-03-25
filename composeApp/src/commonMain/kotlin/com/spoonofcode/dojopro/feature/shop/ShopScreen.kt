@@ -10,7 +10,8 @@ import com.spoonofcode.dojopro.resources.shop
 import org.jetbrains.compose.resources.StringResource
 
 internal class ShopScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.shop
+    override val screenTopAppBarTitle: StringResource = Res.string.shop,
+    override val backNavigationEnable: Boolean = false,
 ) : BaseScreen<ShopViewModel, ShopViewState>() {
 
     @Composable

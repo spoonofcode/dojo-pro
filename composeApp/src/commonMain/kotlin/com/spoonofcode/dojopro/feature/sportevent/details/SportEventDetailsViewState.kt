@@ -4,7 +4,8 @@ import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.ui.BaseViewState
 
 internal data class SportEventDetailsViewState(
-    val isViewEnable:Boolean = true,
-    val isViewLoading:Boolean = true,
+    override val isEnableView: Boolean = true,
+    override val isLoadingView: Boolean = true,
+    override val isErrorView: Boolean = false,
     val sportEvent: SportEvent? = null,
 ): BaseViewState()

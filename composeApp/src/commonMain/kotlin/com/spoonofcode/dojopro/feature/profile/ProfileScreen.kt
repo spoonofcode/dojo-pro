@@ -33,7 +33,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 internal class ProfileScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.profile
+    override val screenTopAppBarTitle: StringResource = Res.string.profile,
+    override val backNavigationEnable: Boolean = false,
 ) : BaseScreen<ProfileViewModel, ProfileViewState>() {
 
     @Composable

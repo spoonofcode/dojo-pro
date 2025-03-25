@@ -19,7 +19,6 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class FilterScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.sport_event,
-    override val showBottomNavigationBar: Boolean = false,
 ) : BaseScreen<FilterViewModel, FilterViewState>() {
 
     @Composable

@@ -73,7 +73,7 @@ internal class SportEventDetailsViewModel(
 
     private fun setLoadingView(isLoading: Boolean) {
         updateState {
-            copy(isViewLoading = isLoading)
+            copy(isLoadingView = isLoading)
         }
     }
 }
