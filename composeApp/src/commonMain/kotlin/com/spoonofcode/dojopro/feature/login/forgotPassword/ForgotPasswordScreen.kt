@@ -9,11 +9,13 @@ import com.spoonofcode.dojopro.core.ui.compose.TextFields
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.email
+import com.spoonofcode.dojopro.resources.forget_password
 import com.spoonofcode.dojopro.resources.sign_up
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 internal class ForgotPasswordScreen(
-    override val backNavigationEnable: Boolean = false,
+    override val screenTopAppBarTitle: StringResource = Res.string.forget_password,
 ) : BaseScreen<ForgotPasswordViewModel, ForgotPasswordViewState>() {
 
     @Composable

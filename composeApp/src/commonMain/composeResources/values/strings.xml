@@ -26,8 +26,12 @@
     <string name="sign_up">Sign up</string>
 
     <!-- SECTION Register -->
+    <string name="register">Register</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
+
+    <!-- SECTION Register -->
+    <string name="forgot_password">Forgot password</string>
 
     <!-- SECTION Home -->
     <string name="home">Home</string>

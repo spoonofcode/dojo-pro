@@ -12,11 +12,13 @@ import com.spoonofcode.dojopro.resources.email
 import com.spoonofcode.dojopro.resources.first_name
 import com.spoonofcode.dojopro.resources.last_name
 import com.spoonofcode.dojopro.resources.password
+import com.spoonofcode.dojopro.resources.register
 import com.spoonofcode.dojopro.resources.sign_up
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 internal class RegisterScreen(
-    override val backNavigationEnable: Boolean = false,
+    override val screenTopAppBarTitle: StringResource = Res.string.register,
 ) : BaseScreen<RegisterViewModel, RegisterViewState>() {
 
     @Composable
