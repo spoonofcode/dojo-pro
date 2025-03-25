@@ -1,11 +1,11 @@
 package com.spoonofcode.dojopro.feature.login.forgotPassword
 
-import com.spoonofcode.dojopro.core.network.SessionManager
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.dojopro.core.data.repository.LoginGoogleRepository
+import com.spoonofcode.dojopro.core.network.SessionManager
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import kotlinx.coroutines.launch
-import com.spoonofcode.dojopro.core.data.repository.LoginGoogleRepository
 
 internal class ForgotPasswordViewModel(
     private val loginGoogleRepository: LoginGoogleRepository,
@@ -14,7 +14,7 @@ internal class ForgotPasswordViewModel(
 
     private fun setLoadingView(isLoading: Boolean) {
         updateState {
-            copy(isViewLoading = isLoading)
+            copy(isLoadingView = isLoading)
         }
     }
 

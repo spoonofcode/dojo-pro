@@ -35,7 +35,7 @@ internal class HomeScreen(
 ) : BaseScreen<HomeViewModel, HomeViewState>() {
 
     @Composable
-    override fun provideViewModel(): HomeViewModel = koinViewModel<HomeViewModel>()
+    override fun provideViewModel() = koinViewModel<HomeViewModel>()
 
     @Composable
     override fun provideContentView(
@@ -78,18 +78,6 @@ internal class HomeScreen(
                 )
             }
 
-            Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.create_event),
-                onClick = createSportEvent
-            )
-            Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.create_event),
-                onClick = createSportEvent
-            )
-            Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.create_event),
-                onClick = createSportEvent
-            )
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.create_event),
                 onClick = createSportEvent

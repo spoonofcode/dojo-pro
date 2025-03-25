@@ -3,7 +3,6 @@ package com.spoonofcode.dojopro.feature.demo
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
-import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
 
 internal class DemoViewModel() : BaseViewModel<DemoViewState>(DemoViewState()) {
 
@@ -16,7 +15,7 @@ internal class DemoViewModel() : BaseViewModel<DemoViewState>(DemoViewState()) {
 
     private fun setLoadingView(isLoading: Boolean) {
         updateState {
-            copy(isViewLoading = isLoading)
+            copy(isLoadingView = isLoading)
         }
     }
 

@@ -1,31 +1,13 @@
 package com.spoonofcode.dojopro.feature.login.login
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
-import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.Buttons.GoogleSignInButton
-import com.spoonofcode.dojopro.core.ui.compose.LoadingView
-import com.spoonofcode.dojopro.core.ui.compose.Snackbar
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
-import com.spoonofcode.dojopro.core.ui.compose.setSnackbarHostState
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
-import com.spoonofcode.dojopro.core.ui.navigation.NavigationHandler
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.email
 import com.spoonofcode.dojopro.resources.forget_password
@@ -34,24 +16,19 @@ import com.spoonofcode.dojopro.resources.sign_in
 import com.spoonofcode.dojopro.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
 
-class LoginScreen : Screen {
+internal class LoginScreen(
+    override val backNavigationEnable: Boolean = false,
+) : BaseScreen<LoginViewModel, LoginViewState>() {
 
     @Composable
-    override fun Content() {
-        val snackbarHostState = remember { SnackbarHostState() }
-        val navigator: Navigator = LocalNavigator.currentOrThrow
-        val viewModel = koinViewModel<LoginViewModel>()
-        val viewState by viewModel.viewState.collectAsState()
+    override fun provideViewModel() = koinViewModel<LoginViewModel>()
 
-        NavigationHandler(
-            navigationFlow = viewModel.navigationFlow,
-            navigator = navigator
-        )
-
-        setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
-
-        ContentView(
-            snackbarHostState = snackbarHostState,
+    @Composable
+    override fun provideContentView(
+        viewModel: LoginViewModel,
+        viewState: LoginViewState
+    ): @Composable ColumnScope.() -> Unit {
+        return ContentView(
             viewState = viewState,
             changeEmail = { viewModel.changeEmail(it) },
             changePassword = { viewModel.changePassword(it) },
@@ -64,7 +41,6 @@ class LoginScreen : Screen {
 
     @Composable
     internal fun ContentView(
-        snackbarHostState: SnackbarHostState,
         viewState: LoginViewState,
         changeEmail: (String) -> Unit,
         changePassword: (String) -> Unit,
@@ -72,65 +48,48 @@ class LoginScreen : Screen {
         signIn: () -> Unit,
         signInWithGoogle: (String) -> Unit,
         signUp: () -> Unit,
-    ) {
-        Scaffold(
-            snackbarHost = {
-                SnackbarHost(
-                    hostState = snackbarHostState,
-                    snackbar = { snackbarData -> Snackbar(snackbarData) }
-                )
-            }
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize()
-                    .padding(all = Dimens.screenPadding),
-                verticalArrangement = Arrangement.Center,
-            ) {
-                if (viewState.isViewLoading) {
-                    LoadingView()
-                } else {
-                    TextFields.Outlined(
-                        value = viewState.email,
-                        onValueChange = { changeEmail(it) },
-                        label = stringResource(resource = Res.string.email),
-                    )
+    ): @Composable (ColumnScope.() -> Unit) {
+        return {
+            TextFields.Outlined(
+                value = viewState.email,
+                onValueChange = { changeEmail(it) },
+                label = stringResource(resource = Res.string.email),
+            )
 
-                    Spacers.VerticalBetweenFields()
+            Spacers.VerticalBetweenFields()
 
-                    TextFields.OutlinedPassword(
-                        value = viewState.password,
-                        onValueChange = { changePassword(it) },
-                        label = stringResource(resource = Res.string.password),
-                    )
+            TextFields.OutlinedPassword(
+                value = viewState.password,
+                onValueChange = { changePassword(it) },
+                label = stringResource(resource = Res.string.password),
+            )
 
-                    Spacers.VerticalBetweenFields()
+            Spacers.VerticalBetweenFields()
 
-                    Buttons.PrimaryButton(
-                        text = stringResource(resource = Res.string.sign_in),
-                        onClick = { signIn() }
-                    )
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.sign_in),
+                onClick = { signIn() }
+            )
 
-                    Buttons.PrimaryButton(
-                        text = stringResource(resource = Res.string.forget_password),
-                        onClick = { forgotPassword() }
-                    )
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.forget_password),
+                onClick = { forgotPassword() }
+            )
 
-                    Spacers.VerticalBetweenFields()
+            Spacers.VerticalBetweenFields()
 
-                    GoogleSignInButton(onGoogleSignInResult = { googleUser ->
-                        // send Google id token to your server
-                        val googleUserToken = requireNotNull(googleUser?.token)
-                        signInWithGoogle(googleUserToken)
-                    })
+            GoogleSignInButton(onGoogleSignInResult = { googleUser ->
+                // send Google id token to your server
+                val googleUserToken = requireNotNull(googleUser?.token)
+                signInWithGoogle(googleUserToken)
+            })
 
-                    Spacers.VerticalBetweenFields()
+            Spacers.VerticalBetweenFields()
 
-                    Buttons.PrimaryButton(
-                        text = stringResource(resource = Res.string.sign_up),
-                        onClick = { signUp() }
-                    )
-                }
-            }
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.sign_up),
+                onClick = { signUp() }
+            )
         }
     }
 }

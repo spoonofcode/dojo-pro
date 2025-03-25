@@ -18,7 +18,7 @@ internal class LoginViewModel(
 
     private fun setLoadingView(isLoading: Boolean) {
         updateState {
-            copy(isViewLoading = isLoading)
+            copy(isLoadingView = isLoading)
         }
     }
 

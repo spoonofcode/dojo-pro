@@ -4,7 +4,7 @@ import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.ui.BaseViewState
 
 internal data class DemoViewState(
-    val isViewEnable:Boolean = true,
-    val isViewLoading:Boolean = true,
+    override val isEnableView: Boolean = true,
+    override val isLoadingView: Boolean = false,
     val sportEvents: List<SportEvent> = emptyList(),
 ): BaseViewState()
