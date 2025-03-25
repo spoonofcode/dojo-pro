@@ -82,6 +82,18 @@ internal class HomeScreen(
                 text = stringResource(resource = Res.string.create_event),
                 onClick = createSportEvent
             )
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.create_event),
+                onClick = createSportEvent
+            )
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.create_event),
+                onClick = createSportEvent
+            )
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.create_event),
+                onClick = createSportEvent
+            )
         }
     }
 

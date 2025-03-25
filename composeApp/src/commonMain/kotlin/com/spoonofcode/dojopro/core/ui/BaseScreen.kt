@@ -13,17 +13,22 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.spoonofcode.dojopro.core.ui.compose.LoadingView
+import com.spoonofcode.dojopro.core.ui.compose.Snackbar
+import com.spoonofcode.dojopro.core.ui.compose.setSnackbarHostState
 import com.spoonofcode.dojopro.core.ui.ext.addIf
 import com.spoonofcode.dojopro.core.ui.ext.viewEnable
 import com.spoonofcode.dojopro.core.ui.navigation.NavigationHandler
@@ -50,7 +55,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     override fun Content() {
         val navigator: Navigator =
             LocalNavigator.currentOrThrow.parent ?: LocalNavigator.currentOrThrow
-
+        val snackbarHostState = remember { SnackbarHostState() }
         val viewModel = provideViewModel()
         val viewState by viewModel.viewState.collectAsState()
 
@@ -59,13 +64,16 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
             navigator = navigator
         )
 
+        setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
+
         ContentView(
-            content = provideContentView(viewModel, viewState),
+            snackbarHostState = snackbarHostState,
             screenTopAppBarTitle = screenTopAppBarTitle,
             backNavigationEnable = backNavigationEnable,
-            isLoadingView = viewState.isLoadingView,
+            onBackClick = { navigator.pop() },
             isEnableView = viewState.isEnableView,
-            onBackClick = { navigator.pop() }
+            isLoadingView = viewState.isLoadingView,
+            content = provideContentView(viewModel, viewState),
         )
     }
 
@@ -75,14 +83,21 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun ContentView(
-        content: @Composable ColumnScope.() -> Unit,
+        snackbarHostState: SnackbarHostState? = null,
         screenTopAppBarTitle: StringResource? = null,
         backNavigationEnable: Boolean = true,
         onBackClick: () -> Unit = {},
-        isLoadingView: Boolean = false,
         isEnableView: Boolean = false,
+        isLoadingView: Boolean = false,
+        content: @Composable ColumnScope.() -> Unit,
     ) {
         Scaffold(
+            snackbarHost = {
+                SnackbarHost(
+                    hostState = snackbarHostState!!,
+                    snackbar = { snackbarData -> Snackbar(snackbarData) }
+                )
+            },
             topBar = {
                 if (screenTopAppBarTitle != null) {
                     TopAppBar(

@@ -35,6 +35,7 @@ import org.jetbrains.compose.resources.stringResource
 internal class SearchScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.search,
     override val verticalScrollEnable: Boolean = false,
+    override val backNavigationEnable: Boolean = false,
 ) : BaseScreen<SearchViewModel, SearchViewState>() {
 
     @Composable
