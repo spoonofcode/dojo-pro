@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.core.domain.AddUserToSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.DeleteSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.GetSportEventByIdUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import com.spoonofcode.dojopro.feature.sportevent.edit.ScreenMode
 import com.spoonofcode.dojopro.feature.sportevent.edit.SportEventEditScreen
@@ -48,7 +49,7 @@ internal class SportEventDetailsViewModel(
             }.onSuccess {
                 viewModelNavigator.pop()
             }.onFailure {
-                showSnackbar("ERROR: $it")
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
             }
         }
     }
@@ -65,14 +66,14 @@ internal class SportEventDetailsViewModel(
             }.onSuccess {
                 viewModelNavigator.pop()
             }.onFailure {
-                showSnackbar("ERROR: $it")
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
             }
         }
     }
 
     private fun setLoadingView(isLoading: Boolean) {
         updateState {
-            copy(isViewLoading = isLoading)
+            copy(isLoadingView = isLoading)
         }
     }
 }

@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.core.domain.CreateSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.EditSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.LoadSportEventFormDataUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
@@ -15,12 +16,16 @@ internal class SportEventEditViewModel(
     private val loadSportEventFormDataUseCase: LoadSportEventFormDataUseCase,
 ) : BaseViewModel<SportEventEditViewState>(SportEventEditViewState()) {
 
-    fun initView(screenMode: ScreenMode) {
+    init {
+        initView()
+    }
+
+    fun initView() {
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView
         ) {
             runCatching {
-                loadSportEventFormDataUseCase(screenMode = screenMode)
+                loadSportEventFormDataUseCase(screenMode = currentState().screenMode)
             }.onSuccess { sportEventFormData ->
                 if (sportEventFormData.sportEvent == null) {
                     updateState {
@@ -60,7 +65,7 @@ internal class SportEventEditViewModel(
 
     private fun setLoadingView(isLoading: Boolean) {
         updateState {
-            copy(isViewLoading = isLoading)
+            copy(isLoadingView = isLoading)
         }
     }
 
@@ -194,7 +199,7 @@ internal class SportEventEditViewModel(
                 }
                 viewModelNavigator.pop()
             }.onFailure {
-                showSnackbar("ERROR: $it")
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
             }
         }
     }

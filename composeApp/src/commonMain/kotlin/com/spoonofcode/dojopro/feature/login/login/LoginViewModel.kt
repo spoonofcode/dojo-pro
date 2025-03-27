@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.app.MainHostScreen
 import com.spoonofcode.dojopro.core.domain.LoginGoogleUseCase
 import com.spoonofcode.dojopro.core.domain.LoginUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import com.spoonofcode.dojopro.feature.login.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.dojopro.feature.login.register.RegisterScreen
@@ -17,7 +18,7 @@ internal class LoginViewModel(
 
     private fun setLoadingView(isLoading: Boolean) {
         updateState {
-            copy(isViewLoading = isLoading)
+            copy(isLoadingView = isLoading)
         }
     }
 
@@ -57,7 +58,7 @@ internal class LoginViewModel(
             }.onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             }.onFailure {
-                showSnackbar("ERROR: $it")
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
             }
         }
     }
@@ -71,7 +72,7 @@ internal class LoginViewModel(
             }.onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             }.onFailure {
-                showSnackbar("ERROR: $it")
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
             }
         }
     }

@@ -1,13 +1,14 @@
 package com.spoonofcode.dojopro.app
 
-import com.spoonofcode.dojopro.core.network.SessionManager
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.SlideTransition
+import com.spoonofcode.dojopro.core.network.SessionManager
 import com.spoonofcode.dojopro.core.ui.theme.AppTheme
+import com.spoonofcode.dojopro.feature.login.login.LoginScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.getKoin
-import com.spoonofcode.dojopro.feature.login.login.LoginScreen
 
 @Composable
 @Preview
@@ -15,7 +16,9 @@ fun App() {
     val sessionManager: SessionManager = getKoin().get()
 
     AppTheme {
-        Navigator(getStartScreen(sessionManager.isSessionInitialized()))
+        Navigator(getStartScreen(sessionManager.isSessionInitialized())) { navigator ->
+            SlideTransition(navigator = navigator)
+        }
     }
 }
 

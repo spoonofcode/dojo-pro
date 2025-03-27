@@ -26,10 +26,15 @@
     <string name="sign_up">Sign up</string>
 
     <!-- SECTION Register -->
+    <string name="register">Register</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
 
+    <!-- SECTION Register -->
+    <string name="forgot_password">Forgot password</string>
+
     <!-- SECTION Home -->
+    <string name="home">Home</string>
     <string name="create_event">Create event</string>
     <string name="events_created_by_me">Events created by me</string>
     <string name="events_i_participated_in">Events I participated in</string>
@@ -46,6 +51,15 @@
     <!-- SECTION Search Sport Event -->
     <string name="filter">Filter</string>
     <string name="search_sport_event">Search Sport Event</string>
+
+    <!-- SECTION Calendar -->
+    <string name="calendar">Calendar</string>
+
+    <!-- SECTION Profile -->
+    <string name="profile">Profile</string>
+
+    <!-- SECTION Shop -->
+    <string name="shop">Shop</string>
 
     <!-- SECTION Filter Sport Event -->
     <string name="applyFilter">Apply filter</string>

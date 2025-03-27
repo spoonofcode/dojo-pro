@@ -1,7 +1,9 @@
 package com.spoonofcode.dojopro.app
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -14,6 +16,7 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import com.spoonofcode.dojopro.core.ui.Dimens.bottomScreenPadding
 import com.spoonofcode.dojopro.feature.calendar.CalendarTab
 import com.spoonofcode.dojopro.feature.home.HomeTab
 import com.spoonofcode.dojopro.feature.profile.ProfileTab
@@ -27,19 +30,21 @@ class MainHostScreen : Screen {
         TabNavigator(
             tab = HomeTab
         ) {
-            Scaffold(
-                modifier = Modifier.fillMaxSize(),
-                bottomBar = {
-                    NavigationBar {
-                        TabNavigationItem(HomeTab)
-                        TabNavigationItem(SearchTab)
-                        TabNavigationItem(CalendarTab)
-                        TabNavigationItem(ShopTab)
-                        TabNavigationItem(ProfileTab)
-                    }
-                },
-                content = { CurrentTab() },
-            )
+            Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
+                NavigationBar {
+                    TabNavigationItem(HomeTab)
+                    TabNavigationItem(SearchTab)
+                    TabNavigationItem(CalendarTab)
+                    TabNavigationItem(ShopTab)
+                    TabNavigationItem(ProfileTab)
+                }
+            }, content = {
+                Box(
+                    modifier = Modifier.padding(bottom = bottomScreenPadding).fillMaxSize()
+                ) {
+                    CurrentTab()
+                }
+            })
         }
     }
 
@@ -53,9 +58,7 @@ class MainHostScreen : Screen {
             icon = {
                 tab.options.icon?.let { icon ->
                     Icon(
-                        painter = icon,
-                        contentDescription =
-                        tab.options.title
+                        painter = icon, contentDescription = tab.options.title
                     )
                 }
             },
@@ -63,7 +66,6 @@ class MainHostScreen : Screen {
                 Text(
                     text = tab.options.title
                 )
-            }
-        )
+            })
     }
 }

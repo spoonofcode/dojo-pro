@@ -12,9 +12,6 @@ import com.spoonofcode.dojopro.core.ui.Dimens
 object Spacers {
 
     @Composable
-    fun BottomSpace(): Unit = Spacer(modifier = Modifier.height(Dimens.bottomSpace))
-
-    @Composable
     fun VerticalBetweenFields(): Unit = Spacer(modifier = Modifier.height(Dimens.fieldsPadding))
 
     @Composable

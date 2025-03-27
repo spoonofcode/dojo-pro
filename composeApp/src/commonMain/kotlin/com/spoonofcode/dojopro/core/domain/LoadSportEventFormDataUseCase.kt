@@ -28,6 +28,7 @@ class LoadSportEventFormDataUseCase(
     suspend operator fun invoke(
         screenMode: ScreenMode
     ): SportEventFormData {
+        println("BARTEK screenMode: $screenMode")
         return coroutineScope {
             val coachesAsync = async { coachRepository.readAll() }
             val roomsAsync = async { roomRepository.readAll() }

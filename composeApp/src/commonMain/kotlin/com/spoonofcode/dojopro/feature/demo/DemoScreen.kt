@@ -1,12 +1,8 @@
 package com.spoonofcode.dojopro.feature.demo
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -21,7 +17,6 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,39 +25,43 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
+import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
-import com.spoonofcode.dojopro.feature.home.HomeViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-class DemoScreen : Screen {
+internal class DemoScreen(
+    override val backNavigationEnable: Boolean = false,
+) : BaseScreen<DemoViewModel, DemoViewState>() {
 
     @Composable
-    override fun Content() {
-        val navigator: Navigator = LocalNavigator.currentOrThrow
-        val viewModel = koinViewModel<DemoViewModel>()
-        val viewState by viewModel.viewState.collectAsState()
+    override fun provideViewModel() = koinViewModel<DemoViewModel>()
+
+    @Composable
+    override fun provideContentView(
+        viewModel: DemoViewModel,
+        viewState: DemoViewState,
+    ): @Composable ColumnScope.() -> Unit {
 
         LaunchedEffect(Unit) {
             viewModel.initView()
         }
+
+        return ContentView(
+            viewState = viewState,
+        )
+    }
+
+    @Composable
+    internal fun ContentView(
+        viewState: DemoViewState,
+    ): @Composable (ColumnScope.() -> Unit) {
 
         var textFieldValue by remember { mutableStateOf("") }
         var switchState by remember { mutableStateOf(false) }
         var checkboxState by remember { mutableStateOf(false) }
         var sliderValue by remember { mutableStateOf(0f) }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .verticalScroll(state = rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
+        return {
             Text(
                 text = "Primary Color",
                 color = MaterialTheme.colorScheme.onPrimary,

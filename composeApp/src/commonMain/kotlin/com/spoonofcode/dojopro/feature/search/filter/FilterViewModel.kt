@@ -17,6 +17,10 @@ internal class FilterViewModel(
     private val getFilterDataUseCase: GetFilterDataUseCase,
 ) : BaseViewModel<FilterViewState>(FilterViewState()) {
 
+    init {
+        initView()
+    }
+
     fun initView() {
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView
@@ -43,7 +47,7 @@ internal class FilterViewModel(
 
     private fun setLoadingView(isLoading: Boolean) {
         updateState {
-            copy(isViewLoading = isLoading)
+            copy(isLoadingView = isLoading)
         }
     }
 
