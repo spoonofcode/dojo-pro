@@ -38,7 +38,6 @@ import org.jetbrains.compose.resources.stringResource
 internal data class SportEventDetailsScreen(
     val sportEventId: Int,
     override val screenTopAppBarTitle: StringResource = Res.string.sport_event,
-    override val backNavigationEnable: Boolean = false,
 ) : BaseScreen<SportEventDetailsViewModel, SportEventDetailsViewState>() {
 
     @Composable
