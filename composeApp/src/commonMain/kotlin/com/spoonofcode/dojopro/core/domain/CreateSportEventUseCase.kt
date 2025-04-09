@@ -19,9 +19,11 @@ class CreateSportEventUseCase(
         cost: String,
         startDateTime: LocalDateTime,
         endDateTime: LocalDateTime,
+        selectedClubId: Int,
         selectedCoachId: Int,
         selectedRoomId: Int,
         selectedLevelId: Int,
+        selectedTypeId: Int,
     ): SportEvent {
         return sportEventRepository.create(
             request = SportEventRequest(
@@ -32,10 +34,11 @@ class CreateSportEventUseCase(
                 cost = cost,
                 startDateTime = startDateTime,
                 endDateTime = endDateTime,
-                coachId = selectedCoachId!!,
-                roomId = selectedRoomId!!,
-                typeId = 1,
-                levelId = selectedLevelId!!,
+                clubId = selectedClubId,
+                coachId = selectedCoachId,
+                roomId = selectedRoomId,
+                levelId = selectedLevelId,
+                typeId = selectedTypeId,
                 creatorUserId = sessionManager.getSessionUserId()!!,
             )
         )

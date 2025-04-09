@@ -11,6 +11,7 @@ import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.club
 import com.spoonofcode.dojopro.resources.coach
 import com.spoonofcode.dojopro.resources.cost
 import com.spoonofcode.dojopro.resources.description
@@ -22,6 +23,7 @@ import com.spoonofcode.dojopro.resources.sport_event
 import com.spoonofcode.dojopro.resources.start
 import com.spoonofcode.dojopro.resources.submit
 import com.spoonofcode.dojopro.resources.title
+import com.spoonofcode.dojopro.resources.type
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -43,9 +45,11 @@ internal class SportEventEditScreen(
             viewState = viewState,
             changeTitle = { viewModel.changeTitle(it) },
             changeDescription = { viewModel.changeDescription(it) },
+            changeClub = { viewModel.changeClub(it) },
             changeCoach = { viewModel.changeCoach(it) },
             changeRoom = { viewModel.changeRoom(it) },
             changeLevel = { viewModel.changeLevel(it) },
+            changeType = { viewModel.changeType(it) },
             changeMinNumberOfPeople = { viewModel.changeMinNumberOfPeople(it) },
             changeMaxNumberOfPeople = { viewModel.changeMaxNumberOfPeople(it) },
             changeCost = { viewModel.changeCost(it) },
@@ -60,9 +64,11 @@ internal class SportEventEditScreen(
         viewState: SportEventEditViewState,
         changeTitle: (String) -> Unit,
         changeDescription: (String) -> Unit,
+        changeClub: (Int) -> Unit,
         changeCoach: (Int) -> Unit,
         changeRoom: (Int) -> Unit,
         changeLevel: (Int) -> Unit,
+        changeType: (Int) -> Unit,
         changeMinNumberOfPeople: (Int) -> Unit,
         changeMaxNumberOfPeople: (Int) -> Unit,
         changeCost: (String) -> Unit,
@@ -80,6 +86,13 @@ internal class SportEventEditScreen(
                 value = viewState.description,
                 onValueChange = { changeDescription(it) },
                 label = stringResource(resource = Res.string.description),
+            )
+            DropDownMenus.DropdownMenu(
+                enabled = true,
+                label = stringResource(resource = Res.string.club),
+                value = viewState.clubs.getValue(viewState.selectedClubId!!),
+                values = viewState.clubs,
+                onValueChange = { changeClub(it) }
             )
             DropDownMenus.DropdownMenu(
                 enabled = true,
@@ -101,6 +114,13 @@ internal class SportEventEditScreen(
                 value = viewState.levels.getValue(viewState.selectedLevelId!!),
                 values = viewState.levels,
                 onValueChange = { changeLevel(it) }
+            )
+            DropDownMenus.DropdownMenu(
+                enabled = true,
+                label = stringResource(resource = Res.string.type),
+                value = viewState.types.getValue(viewState.selectedTypeId!!),
+                values = viewState.types,
+                onValueChange = { changeType(it) }
             )
 
             Sliders.RangeSlider(

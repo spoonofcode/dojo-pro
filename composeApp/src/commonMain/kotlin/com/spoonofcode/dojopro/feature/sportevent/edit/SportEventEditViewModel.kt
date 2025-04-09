@@ -31,24 +31,32 @@ internal class SportEventEditViewModel(
                     updateState {
                         copy(
                             screenMode = screenMode,
+                            clubs = sportEventFormData.clubs.associate { it.id to it.name },
                             coaches = sportEventFormData.coaches.associate { it.id to it.fullName },
                             rooms = sportEventFormData.rooms.associate { it.id to it.name },
                             levels = sportEventFormData.levels.associate { it.id to it.name },
+                            types = sportEventFormData.types.associate { it.id to it.name },
+                            selectedClubId = sportEventFormData.clubs.first().id,
                             selectedCoachId = sportEventFormData.coaches.first().id,
                             selectedRoomId = sportEventFormData.rooms.first().id,
                             selectedLevelId = sportEventFormData.levels.first().id,
+                            selectedTypeId = sportEventFormData.types.first().id,
                         )
                     }
                 } else {
                     updateState {
                         copy(
                             screenMode = screenMode,
+                            clubs = sportEventFormData.clubs.associate { it.id to it.name },
                             coaches = sportEventFormData.coaches.associate { it.id to it.fullName },
                             rooms = sportEventFormData.rooms.associate { it.id to it.name },
                             levels = sportEventFormData.levels.associate { it.id to it.name },
+                            types = sportEventFormData.types.associate { it.id to it.name },
+                            selectedClubId = sportEventFormData.sportEvent.club.id,
                             selectedCoachId = sportEventFormData.sportEvent.coach.id,
                             selectedRoomId = sportEventFormData.sportEvent.room.id,
                             selectedLevelId = sportEventFormData.sportEvent.level.id,
+                            selectedTypeId = sportEventFormData.sportEvent.type.id,
                             title = sportEventFormData.sportEvent.title,
                             description = sportEventFormData.sportEvent.description,
                             selectedMinNumberOfPeople = sportEventFormData.sportEvent.minNumberOfPeople,
@@ -85,6 +93,14 @@ internal class SportEventEditViewModel(
         }
     }
 
+    fun changeClub(selectedClubId: Int) {
+        viewModelScope.launch {
+            updateState {
+                copy(selectedClubId = selectedClubId)
+            }
+        }
+    }
+
     fun changeCoach(selectedCoachId: Int) {
         viewModelScope.launch {
             updateState {
@@ -105,6 +121,14 @@ internal class SportEventEditViewModel(
         viewModelScope.launch {
             updateState {
                 copy(selectedLevelId = selectedLevelId)
+            }
+        }
+    }
+
+    fun changeType(selectedTypeId: Int) {
+        viewModelScope.launch {
+            updateState {
+                copy(selectedTypeId = selectedTypeId)
             }
         }
     }
@@ -166,9 +190,11 @@ internal class SportEventEditViewModel(
                             cost = currentState.cost,
                             startDateTime = currentState.startDateTime,
                             endDateTime = currentState.endDateTime,
+                            selectedClubId = currentState.selectedClubId!!,
                             selectedCoachId = currentState.selectedCoachId!!,
                             selectedRoomId = currentState.selectedRoomId!!,
                             selectedLevelId = currentState.selectedLevelId!!,
+                            selectedTypeId = currentState.selectedTypeId!!,
                         )
                     }
 
@@ -181,9 +207,11 @@ internal class SportEventEditViewModel(
                             cost = currentState.cost,
                             startDateTime = currentState.startDateTime,
                             endDateTime = currentState.endDateTime,
+                            selectedClubId = currentState.selectedClubId!!,
                             selectedCoachId = currentState.selectedCoachId!!,
                             selectedRoomId = currentState.selectedRoomId!!,
                             selectedLevelId = currentState.selectedLevelId!!,
+                            selectedTypeId = currentState.selectedTypeId!!,
                         )
                     }
                 }

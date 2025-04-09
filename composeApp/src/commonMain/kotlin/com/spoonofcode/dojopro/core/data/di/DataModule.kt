@@ -1,5 +1,6 @@
 package com.spoonofcode.dojopro.core.data.di
 
+import com.spoonofcode.dojopro.core.data.repository.ClubRepository
 import com.spoonofcode.dojopro.core.data.repository.CoachRepository
 import com.spoonofcode.dojopro.core.data.repository.FilterRepository
 import com.spoonofcode.dojopro.core.data.repository.LevelRepository
@@ -10,11 +11,13 @@ import com.spoonofcode.dojopro.core.data.repository.RefreshRepository
 import com.spoonofcode.dojopro.core.data.repository.RegisterRepository
 import com.spoonofcode.dojopro.core.data.repository.RoomRepository
 import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
+import com.spoonofcode.dojopro.core.data.repository.TypeRepository
 import com.spoonofcode.dojopro.core.data.repository.UserRepository
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val dataModule = module {
+    singleOf(::ClubRepository)
     singleOf(::CoachRepository)
     singleOf(::LevelRepository)
     singleOf(::RoomRepository)
@@ -26,4 +29,5 @@ val dataModule = module {
     singleOf(::RegisterRepository)
     singleOf(::ProfileRepository)
     singleOf(::FilterRepository)
+    singleOf(::TypeRepository)
 }

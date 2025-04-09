@@ -3,8 +3,10 @@ package com.spoonofcode.dojopro.feature.home
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import com.spoonofcode.dojopro.core.model.Club
 import com.spoonofcode.dojopro.core.model.Coach
 import com.spoonofcode.dojopro.core.model.Level
+import com.spoonofcode.dojopro.core.model.Role
 import com.spoonofcode.dojopro.core.model.Room
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.model.Type
@@ -112,6 +114,52 @@ internal class HomeScreen(
                             cost = "Abbe",
                             startDateTime = LocalDateTime(2023, 1, 1, 1, 1),
                             endDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                            club = Club(
+                                id = 1,
+                                name = "Club 1",
+                                location = "Wroclaw",
+                            ),
+                            coach = Coach(
+                                id = 1,
+                                firstName = "Test",
+                                lastName = "Test",
+                                fullName = "Test",
+                            ),
+                            room = Room(
+                                id = 1,
+                                name = "Test",
+                            ),
+                            type = Type(
+                                id = 1,
+                                name = "Test",
+                            ),
+                            level = Level(
+                                id = 1,
+                                name = "Test",
+                            ),
+                            creatorUser = User(
+                                id = 1,
+                                firstName = "Bartosz",
+                                lastName = "Luczak",
+                                nickName = "Lycha",
+                                email = "Test",
+                                role = Role.ADMIN,
+                            ),
+                        ),
+                        SportEvent(
+                            id = 1,
+                            title = "test 1",
+                            description = "Trenten",
+                            minNumberOfPeople = 4078,
+                            maxNumberOfPeople = 3999,
+                            cost = "Abbe",
+                            startDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                            endDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                            club = Club(
+                                id = 1,
+                                name = "Club 1",
+                                location = "Wroclaw",
+                            ),
                             coach = Coach(
                                 id = 1,
                                 firstName = "Test",
@@ -146,6 +194,11 @@ internal class HomeScreen(
                             cost = "Abbe",
                             startDateTime = LocalDateTime(2023, 1, 1, 1, 1),
                             endDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                            club = Club(
+                                id = 1,
+                                name = "Club 1",
+                                location = "Wroclaw",
+                            ),
                             coach = Coach(
                                 id = 1,
                                 firstName = "Test",
@@ -166,10 +219,12 @@ internal class HomeScreen(
                             ),
                             creatorUser = User(
                                 id = 1,
-                                firstName = "Test",
-                                lastName = "Test",
+                                firstName = "Bartosz",
+                                lastName = "Luczak",
+                                nickName = "Lycha",
                                 email = "Test",
-                            )
+                                role = Role.ADMIN,
+                            ),
                         ),
                         SportEvent(
                             id = 1,
@@ -180,40 +235,11 @@ internal class HomeScreen(
                             cost = "Abbe",
                             startDateTime = LocalDateTime(2023, 1, 1, 1, 1),
                             endDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                            coach = Coach(
+                            club = Club(
                                 id = 1,
-                                firstName = "Test",
-                                lastName = "Test",
-                                fullName = "Test",
+                                name = "Club 1",
+                                location = "Wroclaw",
                             ),
-                            room = Room(
-                                id = 1,
-                                name = "Test",
-                            ),
-                            type = Type(
-                                id = 1,
-                                name = "Test",
-                            ),
-                            level = Level(
-                                id = 1,
-                                name = "Test",
-                            ),
-                            creatorUser = User(
-                                id = 1,
-                                firstName = "Test",
-                                lastName = "Test",
-                                email = "Test",
-                            )
-                        ),
-                        SportEvent(
-                            id = 1,
-                            title = "test 1",
-                            description = "Trenten",
-                            minNumberOfPeople = 4078,
-                            maxNumberOfPeople = 3999,
-                            cost = "Abbe",
-                            startDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                            endDateTime = LocalDateTime(2023, 1, 1, 1, 1),
                             coach = Coach(
                                 id = 1,
                                 firstName = "Test",

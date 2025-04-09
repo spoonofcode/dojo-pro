@@ -7,8 +7,10 @@ class GetFilterDataUseCase(
     private val filterRepository: FilterRepository,
 ) {
     suspend operator fun invoke(
+        selectedClubId: Int? = null,
         selectedCoachId: Int? = null,
         selectedLevelId: Int? = null,
+        selectedTypeId: Int? = null,
     ): FilterData {
         return filterRepository.getSelectedFilters()
     }

@@ -19,6 +19,7 @@ import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.Texts
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.club
 import com.spoonofcode.dojopro.resources.coach
 import com.spoonofcode.dojopro.resources.cost
 import com.spoonofcode.dojopro.resources.delete
@@ -31,6 +32,7 @@ import com.spoonofcode.dojopro.resources.level
 import com.spoonofcode.dojopro.resources.room
 import com.spoonofcode.dojopro.resources.sport_event
 import com.spoonofcode.dojopro.resources.start
+import com.spoonofcode.dojopro.resources.type
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -99,6 +101,10 @@ internal data class SportEventDetailsScreen(
             Texts.BL(viewState.sportEvent.cost)
             Spacers.VerticalBetweenFields()
 
+            Texts.HS(stringResource(Res.string.club))
+            Texts.BL(viewState.sportEvent.club.name)
+            Spacers.VerticalBetweenFields()
+
             Texts.HS(stringResource(Res.string.coach))
             Texts.BL(viewState.sportEvent.coach.fullName)
             Spacers.VerticalBetweenFields()
@@ -109,6 +115,10 @@ internal data class SportEventDetailsScreen(
 
             Texts.HS(stringResource(Res.string.level))
             Texts.BL(viewState.sportEvent.level.name)
+            Spacers.VerticalBetweenFields()
+
+            Texts.HS(stringResource(Res.string.type))
+            Texts.BL(viewState.sportEvent.type.name)
             Spacers.VerticalBetweenFields()
 
             Spacers.Weight1(this)
