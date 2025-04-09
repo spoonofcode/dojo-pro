@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.dojopro.core.model.Profile
+import com.spoonofcode.dojopro.core.model.Role
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
@@ -65,7 +66,10 @@ internal class ProfileScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            Texts.HS(viewState.profile!!.firstName)
+            Texts.HS(viewState.profile!!.name)
+            Spacers.VerticalBetweenFields()
+
+            Texts.HS(viewState.profile.role.toString())
             Spacers.VerticalBetweenFields()
 
             Texts.HS(stringResource(Res.string.events_created_by_me))
@@ -115,8 +119,8 @@ internal class ProfileScreen(
             content = ContentView(
                 viewState = ProfileViewState(
                     profile = Profile(
-                        firstName = "Christiano",
-                        lastName = "Ronaldo",
+                        name = "Bartosz luczak (Lycha)",
+                        role = Role.ADMIN,
                         numberOfEventsCreatedByUser = 1,
                         numberOfEventsUserParticipatedIn = 2
                     )
