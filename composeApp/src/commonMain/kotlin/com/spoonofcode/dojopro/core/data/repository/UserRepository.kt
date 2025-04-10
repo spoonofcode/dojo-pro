@@ -1,7 +1,6 @@
 package com.spoonofcode.dojopro.core.data.repository
 
 import com.spoonofcode.dojopro.core.data.base.GenericCrudRepository
-import com.spoonofcode.dojopro.core.model.Role
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.model.User
 import com.spoonofcode.dojopro.core.model.UserRequest
@@ -19,12 +18,12 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     requestSerializer = UserRequest.serializer(),
     responseSerializer = User.serializer(),
 ) {
-    suspend fun readAllUsersByRole(role: Role): List<User> {
+    suspend fun readAllUsersByRole(roleId: Int): List<User> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "users",
                 method = HttpMethod.Get,
-                queryParams = mapOf("role" to role.toString())
+                queryParams = mapOf("roleId" to roleId.toString())
             )
 
             val responseBody = responseOrException(response).body<String>()

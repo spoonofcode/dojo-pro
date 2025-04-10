@@ -28,7 +28,7 @@ class LoadSportEventFilterFormDataUseCase(
     suspend operator fun invoke(): SportEventFilterFormData {
         return coroutineScope {
             val clubsAsync = async { clubRepository.readAll() }
-            val coachesAsync = async { userRepository.readAllUsersByRole(role = Role.COACH) }
+            val coachesAsync = async { userRepository.readAllUsersByRole(roleId = Role.COACH.id) }
             val levelsAsync = async { levelRepository.readAll() }
             val typesAsync = async { typeRepository.readAll() }
 

@@ -39,7 +39,7 @@ class LoadSportEventFormDataUseCase(
     ): SportEventFormData {
         return coroutineScope {
             val clubsAsync = async { clubRepository.readAll() }
-            val coachesAsync = async { userRepository.readAllUsersByRole(role = Role.COACH) }
+            val coachesAsync = async { userRepository.readAllUsersByRole(roleId = Role.COACH.id) }
             val roomsAsync = async { roomRepository.readAll() }
             val levelsAsync = async { levelRepository.readAll() }
             val typesAsync = async { typeRepository.readAll() }

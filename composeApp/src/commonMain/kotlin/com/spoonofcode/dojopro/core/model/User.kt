@@ -13,7 +13,6 @@ data class User(
         nickName?.let { append(" ($it)") }
     },
     val email: String,
-    val role: Role = Role.USER,
 )
 
 @Serializable

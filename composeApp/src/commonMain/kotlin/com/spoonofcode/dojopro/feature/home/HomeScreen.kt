@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import com.spoonofcode.dojopro.core.model.Club
 import com.spoonofcode.dojopro.core.model.Level
-import com.spoonofcode.dojopro.core.model.Role
 import com.spoonofcode.dojopro.core.model.Room
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.model.Type
@@ -136,7 +135,6 @@ internal class HomeScreen(
                                 lastName = "Luczak",
                                 nickName = "Lycha",
                                 email = "Test",
-                                role = Role.ADMIN,
                             ),
                         ),
                         SportEvent(
@@ -204,7 +202,6 @@ internal class HomeScreen(
                                 lastName = "Luczak",
                                 nickName = "Lycha",
                                 email = "Test",
-                                role = Role.ADMIN,
                             ),
                         ),
                         SportEvent(
