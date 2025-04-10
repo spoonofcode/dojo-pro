@@ -1,24 +1,25 @@
 package com.spoonofcode.dojopro.core.domain
 
 import com.spoonofcode.dojopro.core.data.repository.ClubRepository
-import com.spoonofcode.dojopro.core.data.repository.CoachRepository
 import com.spoonofcode.dojopro.core.data.repository.LevelRepository
 import com.spoonofcode.dojopro.core.data.repository.RoomRepository
 import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
 import com.spoonofcode.dojopro.core.data.repository.TypeRepository
+import com.spoonofcode.dojopro.core.data.repository.UserRepository
 import com.spoonofcode.dojopro.core.model.Club
-import com.spoonofcode.dojopro.core.model.Coach
 import com.spoonofcode.dojopro.core.model.Level
+import com.spoonofcode.dojopro.core.model.Role
 import com.spoonofcode.dojopro.core.model.Room
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.model.Type
+import com.spoonofcode.dojopro.core.model.User
 import com.spoonofcode.dojopro.feature.sportevent.edit.ScreenMode
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 data class SportEventFormData(
     val clubs: List<Club>,
-    val coaches: List<Coach>,
+    val coaches: List<User>,
     val rooms: List<Room>,
     val levels: List<Level>,
     val types: List<Type>,
@@ -27,18 +28,18 @@ data class SportEventFormData(
 
 class LoadSportEventFormDataUseCase(
     private val clubRepository: ClubRepository,
-    private val coachRepository: CoachRepository,
     private val roomRepository: RoomRepository,
     private val levelRepository: LevelRepository,
     private val typeRepository: TypeRepository,
     private val sportEventRepository: SportEventRepository,
+    private val userRepository: UserRepository,
 ) {
     suspend operator fun invoke(
         screenMode: ScreenMode
     ): SportEventFormData {
         return coroutineScope {
             val clubsAsync = async { clubRepository.readAll() }
-            val coachesAsync = async { coachRepository.readAll() }
+            val coachesAsync = async { userRepository.readAllUsersByRole(role = Role.COACH) }
             val roomsAsync = async { roomRepository.readAll() }
             val levelsAsync = async { levelRepository.readAll() }
             val typesAsync = async { typeRepository.readAll() }

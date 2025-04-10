@@ -53,7 +53,7 @@ internal class SportEventEditViewModel(
                             levels = sportEventFormData.levels.associate { it.id to it.name },
                             types = sportEventFormData.types.associate { it.id to it.name },
                             selectedClubId = sportEventFormData.sportEvent.club.id,
-                            selectedCoachId = sportEventFormData.sportEvent.coach.id,
+                            selectedCoachId = sportEventFormData.sportEvent.creatorUser.id,
                             selectedRoomId = sportEventFormData.sportEvent.room.id,
                             selectedLevelId = sportEventFormData.sportEvent.level.id,
                             selectedTypeId = sportEventFormData.sportEvent.type.id,

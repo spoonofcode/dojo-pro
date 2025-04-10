@@ -8,6 +8,10 @@ data class User(
     val firstName: String,
     val lastName: String,
     val nickName: String? = null,
+    val fullName: String = buildString {
+        append("$firstName $lastName")
+        nickName?.let { append(" ($it)") }
+    },
     val email: String,
     val role: Role = Role.USER,
 )

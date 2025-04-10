@@ -1,7 +1,6 @@
 package com.spoonofcode.dojopro.core.data.di
 
 import com.spoonofcode.dojopro.core.data.repository.ClubRepository
-import com.spoonofcode.dojopro.core.data.repository.CoachRepository
 import com.spoonofcode.dojopro.core.data.repository.FilterRepository
 import com.spoonofcode.dojopro.core.data.repository.LevelRepository
 import com.spoonofcode.dojopro.core.data.repository.LoginGoogleRepository
@@ -18,7 +17,6 @@ import org.koin.dsl.module
 
 val dataModule = module {
     singleOf(::ClubRepository)
-    singleOf(::CoachRepository)
     singleOf(::LevelRepository)
     singleOf(::RoomRepository)
     singleOf(::SportEventRepository)

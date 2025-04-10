@@ -106,7 +106,7 @@ internal data class SportEventDetailsScreen(
             Spacers.VerticalBetweenFields()
 
             Texts.HS(stringResource(Res.string.coach))
-            Texts.BL(viewState.sportEvent.coach.fullName)
+            Texts.BL(viewState.sportEvent.creatorUser.fullName)
             Spacers.VerticalBetweenFields()
 
             Texts.HS(stringResource(Res.string.room))

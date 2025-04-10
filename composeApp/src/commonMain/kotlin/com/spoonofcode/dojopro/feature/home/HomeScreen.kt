@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import com.spoonofcode.dojopro.core.model.Club
-import com.spoonofcode.dojopro.core.model.Coach
 import com.spoonofcode.dojopro.core.model.Level
 import com.spoonofcode.dojopro.core.model.Role
 import com.spoonofcode.dojopro.core.model.Room
@@ -119,12 +118,6 @@ internal class HomeScreen(
                                 name = "Club 1",
                                 location = "Wroclaw",
                             ),
-                            coach = Coach(
-                                id = 1,
-                                firstName = "Test",
-                                lastName = "Test",
-                                fullName = "Test",
-                            ),
                             room = Room(
                                 id = 1,
                                 name = "Test",
@@ -159,12 +152,6 @@ internal class HomeScreen(
                                 id = 1,
                                 name = "Club 1",
                                 location = "Wroclaw",
-                            ),
-                            coach = Coach(
-                                id = 1,
-                                firstName = "Test",
-                                lastName = "Test",
-                                fullName = "Test",
                             ),
                             room = Room(
                                 id = 1,
@@ -199,12 +186,6 @@ internal class HomeScreen(
                                 name = "Club 1",
                                 location = "Wroclaw",
                             ),
-                            coach = Coach(
-                                id = 1,
-                                firstName = "Test",
-                                lastName = "Test",
-                                fullName = "Test",
-                            ),
                             room = Room(
                                 id = 1,
                                 name = "Test",
@@ -239,12 +220,6 @@ internal class HomeScreen(
                                 id = 1,
                                 name = "Club 1",
                                 location = "Wroclaw",
-                            ),
-                            coach = Coach(
-                                id = 1,
-                                firstName = "Test",
-                                lastName = "Test",
-                                fullName = "Test",
                             ),
                             room = Room(
                                 id = 1,

@@ -17,7 +17,7 @@ class GetFilteredSportEvents(
                     sportEvent.club.id == selectedFilter.selectedClubId
             val matchesCoachFilter = selectedFilter.selectedCoachId == null ||
                     selectedFilter.selectedCoachId == FilterViewState.ALL_OPTION_ID ||
-                    sportEvent.coach.id == selectedFilter.selectedCoachId
+                    sportEvent.creatorUser.id == selectedFilter.selectedCoachId
             val matchesLevelFilter = selectedFilter.selectedLevelId == null ||
                     selectedFilter.selectedLevelId == FilterViewState.ALL_OPTION_ID ||
                     sportEvent.level.id == selectedFilter.selectedLevelId
