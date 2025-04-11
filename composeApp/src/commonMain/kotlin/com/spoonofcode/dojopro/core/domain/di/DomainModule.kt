@@ -5,9 +5,11 @@ import com.spoonofcode.dojopro.core.domain.CreateSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.DeleteSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.EditSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.GetAllSportEventsUseCase
+import com.spoonofcode.dojopro.core.domain.GetAllUsersUseCase
 import com.spoonofcode.dojopro.core.domain.GetFilterDataUseCase
-import com.spoonofcode.dojopro.core.domain.GetFilteredSportEvents
-import com.spoonofcode.dojopro.core.domain.GetFilteredSportEventsByText
+import com.spoonofcode.dojopro.core.domain.GetFilteredSportEventsByTextUseCase
+import com.spoonofcode.dojopro.core.domain.GetFilteredSportEventsUseCase
+import com.spoonofcode.dojopro.core.domain.GetFilteredUsersByTextUseCase
 import com.spoonofcode.dojopro.core.domain.GetProfileUseCase
 import com.spoonofcode.dojopro.core.domain.GetSportEventByIdUseCase
 import com.spoonofcode.dojopro.core.domain.GetSportEventsCreatedByUserUseCase
@@ -42,6 +44,8 @@ val domainModule = module {
     singleOf(::GetSportEventsCreatedByUserUseCase)
     singleOf(::SetFilterDataUseCase)
     singleOf(::GetFilterDataUseCase)
-    singleOf(::GetFilteredSportEvents)
-    singleOf(::GetFilteredSportEventsByText)
+    singleOf(::GetFilteredSportEventsUseCase)
+    singleOf(::GetFilteredSportEventsByTextUseCase)
+    singleOf(::GetFilteredUsersByTextUseCase)
+    singleOf(::GetAllUsersUseCase)
 }

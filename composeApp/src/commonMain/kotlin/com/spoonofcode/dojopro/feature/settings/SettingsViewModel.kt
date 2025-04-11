@@ -6,7 +6,7 @@ import com.spoonofcode.dojopro.core.model.Role
 import com.spoonofcode.dojopro.core.model.Roles
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
-import com.spoonofcode.dojopro.feature.user.SearchUserScreen
+import com.spoonofcode.dojopro.feature.user.search.SearchUserScreen
 import kotlinx.coroutines.launch
 
 internal class SettingsViewModel(
