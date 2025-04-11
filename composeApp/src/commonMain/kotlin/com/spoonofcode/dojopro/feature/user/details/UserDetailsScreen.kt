@@ -53,7 +53,7 @@ internal class UserDetailsScreen(
             Texts.HS(viewState.user!!.email)
             Spacers.VerticalBetweenFields()
 
-            Texts.HS(viewState.roles.toString())
+            Texts.HS(viewState.roles)
             Spacers.VerticalBetweenFields()
 
             if (viewState.isVisibleAddCoachRoleButton) {
