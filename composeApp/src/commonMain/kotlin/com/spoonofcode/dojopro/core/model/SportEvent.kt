@@ -18,7 +18,7 @@ data class SportEvent(
     val cost: String,
     val startDateTime: LocalDateTime,
     val endDateTime: LocalDateTime,
-    val coach: Coach,
+    val club: Club,
     val room: Room,
     val type: Type,
     val level: Level,

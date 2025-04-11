@@ -18,6 +18,19 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     requestSerializer = UserRequest.serializer(),
     responseSerializer = User.serializer(),
 ) {
+    suspend fun readAllUsersByRole(roleId: Int): List<User> {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users",
+                method = HttpMethod.Get,
+                queryParams = mapOf("roleId" to roleId.toString())
+            )
+
+            val responseBody = responseOrException(response).body<String>()
+            Json.decodeFromString(ListSerializer(User.serializer()), responseBody)
+        }
+    }
+
     suspend fun readSportEventsUserParticipatedIn(userId: Int): List<SportEvent> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(

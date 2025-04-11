@@ -12,6 +12,7 @@ data class SportEventRequest(
     val cost: String,
     val startDateTime: LocalDateTime,
     val endDateTime: LocalDateTime,
+    val clubId: Int,
     val coachId: Int,
     val roomId: Int,
     val typeId: Int,

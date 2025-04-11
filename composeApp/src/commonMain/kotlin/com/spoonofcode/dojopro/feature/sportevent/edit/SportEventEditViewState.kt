@@ -13,15 +13,19 @@ internal data class SportEventEditViewState(
     val title: String = "",
     val description: String = "",
 
+    val clubs: Map<Int, String> = emptyMap(),
     val coaches: Map<Int, String> = emptyMap(),
     val rooms: Map<Int, String> = emptyMap(),
     val levels: Map<Int, String> = emptyMap(),
+    val types: Map<Int, String> = emptyMap(),
 
     val eventTitle: String? = null,
     val eventDescription: String? = null,
+    val selectedClubId: Int? = null,
     val selectedCoachId: Int? = null,
     val selectedRoomId: Int? = null,
     val selectedLevelId: Int? = null,
+    val selectedTypeId: Int? = null,
     val selectedMinNumberOfPeople: Int = DEFAULT_MIN_NUMBER_OF_PEOPLE,
     val selectedMaxNumberOfPeople: Int = DEFAULT_MAX_NUMBER_OF_PEOPLE,
 

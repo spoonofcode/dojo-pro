@@ -65,7 +65,7 @@ internal class ProfileScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            Texts.HS(viewState.profile!!.firstName)
+            Texts.HS(viewState.profile!!.name)
             Spacers.VerticalBetweenFields()
 
             Texts.HS(stringResource(Res.string.events_created_by_me))
@@ -115,8 +115,7 @@ internal class ProfileScreen(
             content = ContentView(
                 viewState = ProfileViewState(
                     profile = Profile(
-                        firstName = "Christiano",
-                        lastName = "Ronaldo",
+                        name = "Bartosz luczak (Lycha)",
                         numberOfEventsCreatedByUser = 1,
                         numberOfEventsUserParticipatedIn = 2
                     )

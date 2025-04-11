@@ -19,9 +19,11 @@ class EditSportEventUseCase(
         cost: String,
         startDateTime: LocalDateTime,
         endDateTime: LocalDateTime,
+        selectedClubId: Int,
         selectedCoachId: Int,
         selectedRoomId: Int,
         selectedLevelId: Int,
+        selectedTypeId: Int,
     ) {
         sportEventRepository.update(
             id = sportEventId,
@@ -33,10 +35,11 @@ class EditSportEventUseCase(
                 cost = cost,
                 startDateTime = startDateTime,
                 endDateTime = endDateTime,
-                coachId = selectedCoachId!!,
-                roomId = selectedRoomId!!,
-                typeId = 1,
-                levelId = selectedLevelId!!,
+                clubId = selectedClubId,
+                coachId = selectedCoachId,
+                roomId = selectedRoomId,
+                typeId = selectedTypeId,
+                levelId = selectedLevelId,
                 creatorUserId = sessionManager.getSessionUserId()!!,
             )
         )

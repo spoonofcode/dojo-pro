@@ -29,14 +29,20 @@ internal class FilterViewModel(
                 loadSportEventFilterFormDataUseCase()
             }.onSuccess { sportEventFilterFormData ->
                 val filterData = getFilterDataUseCase()
+                val selectedClubId = filterData.selectedClubId ?: ALL_OPTION_ID
                 val selectedCoachId = filterData.selectedCoachId ?: ALL_OPTION_ID
                 val selectedLevelId = filterData.selectedLevelId ?: ALL_OPTION_ID
+                val selectedTypeId = filterData.selectedTypeId ?: ALL_OPTION_ID
                 updateState {
                     copy(
+                        selectedClubId = selectedClubId,
                         selectedCoachId = selectedCoachId,
                         selectedLevelId = selectedLevelId,
+                        selectedTypeId = selectedTypeId,
+                        clubs = addAllOption().plus(sportEventFilterFormData.clubs.associate { it.id to it.name }),
                         coaches = addAllOption().plus(sportEventFilterFormData.coaches.associate { it.id to it.fullName }),
                         levels = addAllOption().plus(sportEventFilterFormData.levels.associate { it.id to it.name }),
+                        types = addAllOption().plus(sportEventFilterFormData.types.associate { it.id to it.name }),
                     )
                 }
             }
@@ -48,6 +54,14 @@ internal class FilterViewModel(
     private fun setLoadingView(isLoading: Boolean) {
         updateState {
             copy(isLoadingView = isLoading)
+        }
+    }
+
+    fun changeClub(selectedClubId: Int) {
+        viewModelScope.launch {
+            updateState {
+                copy(selectedClubId = selectedClubId)
+            }
         }
     }
 
@@ -63,6 +77,14 @@ internal class FilterViewModel(
         viewModelScope.launch {
             updateState {
                 copy(selectedLevelId = selectedLevelId)
+            }
+        }
+    }
+
+    fun changeType(selectedTypeId: Int) {
+        viewModelScope.launch {
+            updateState {
+                copy(selectedTypeId = selectedTypeId)
             }
         }
     }
@@ -89,8 +111,10 @@ internal class FilterViewModel(
         ) {
             val currentState = currentState()
             setFilterDataUseCase(
+                selectedClubId = currentState.selectedClubId,
                 selectedCoachId = currentState.selectedCoachId,
                 selectedLevelId = currentState.selectedLevelId,
+                selectedTypeId = currentState.selectedTypeId,
             )
             navigateBack()
         }

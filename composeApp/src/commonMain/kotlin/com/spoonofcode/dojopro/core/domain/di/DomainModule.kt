@@ -4,7 +4,7 @@ import com.spoonofcode.dojopro.core.domain.AddUserToSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.CreateSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.DeleteSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.EditSportEventUseCase
-import com.spoonofcode.dojopro.core.domain.GetAllSportEvents
+import com.spoonofcode.dojopro.core.domain.GetAllSportEventsUseCase
 import com.spoonofcode.dojopro.core.domain.GetFilterDataUseCase
 import com.spoonofcode.dojopro.core.domain.GetFilteredSportEvents
 import com.spoonofcode.dojopro.core.domain.GetFilteredSportEventsByText
@@ -12,6 +12,7 @@ import com.spoonofcode.dojopro.core.domain.GetProfileUseCase
 import com.spoonofcode.dojopro.core.domain.GetSportEventByIdUseCase
 import com.spoonofcode.dojopro.core.domain.GetSportEventsCreatedByUserUseCase
 import com.spoonofcode.dojopro.core.domain.GetSportEventsUserParticipatedInUseCase
+import com.spoonofcode.dojopro.core.domain.GetUserRolesUseCase
 import com.spoonofcode.dojopro.core.domain.LoadSportEventFilterFormDataUseCase
 import com.spoonofcode.dojopro.core.domain.LoadSportEventFormDataUseCase
 import com.spoonofcode.dojopro.core.domain.LoginGoogleUseCase
@@ -28,6 +29,7 @@ val domainModule = module {
     singleOf(::RegisterUseCase)
     singleOf(::RefreshAccessTokenUseCase)
     singleOf(::GetProfileUseCase)
+    singleOf(::GetUserRolesUseCase)
     singleOf(::AddUserToSportEventUseCase)
     singleOf(::CreateSportEventUseCase)
     singleOf(::DeleteSportEventUseCase)
@@ -35,7 +37,7 @@ val domainModule = module {
     singleOf(::GetSportEventByIdUseCase)
     singleOf(::LoadSportEventFormDataUseCase)
     singleOf(::LoadSportEventFilterFormDataUseCase)
-    singleOf(::GetAllSportEvents)
+    singleOf(::GetAllSportEventsUseCase)
     singleOf(::GetSportEventsUserParticipatedInUseCase)
     singleOf(::GetSportEventsCreatedByUserUseCase)
     singleOf(::SetFilterDataUseCase)
