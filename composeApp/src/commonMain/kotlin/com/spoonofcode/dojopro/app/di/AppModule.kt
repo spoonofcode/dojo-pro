@@ -13,6 +13,7 @@ import com.spoonofcode.dojopro.feature.profile.di.profileModule
 import com.spoonofcode.dojopro.feature.search.di.searchModule
 import com.spoonofcode.dojopro.feature.shop.di.shopModule
 import com.spoonofcode.dojopro.feature.sportevent.di.sportEventModule
+import com.spoonofcode.dojopro.feature.user.di.userModule
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
@@ -36,6 +37,7 @@ val appModule = module {
         settingsModule,
         shopModule,
         sportEventModule,
+        userModule,
     )
     single {
         HttpClient {

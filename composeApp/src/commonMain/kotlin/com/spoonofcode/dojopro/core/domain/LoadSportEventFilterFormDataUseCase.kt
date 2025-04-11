@@ -6,7 +6,7 @@ import com.spoonofcode.dojopro.core.data.repository.TypeRepository
 import com.spoonofcode.dojopro.core.data.repository.UserRepository
 import com.spoonofcode.dojopro.core.model.Club
 import com.spoonofcode.dojopro.core.model.Level
-import com.spoonofcode.dojopro.core.model.Role
+import com.spoonofcode.dojopro.core.model.Roles
 import com.spoonofcode.dojopro.core.model.Type
 import com.spoonofcode.dojopro.core.model.User
 import kotlinx.coroutines.async
@@ -28,7 +28,7 @@ class LoadSportEventFilterFormDataUseCase(
     suspend operator fun invoke(): SportEventFilterFormData {
         return coroutineScope {
             val clubsAsync = async { clubRepository.readAll() }
-            val coachesAsync = async { userRepository.readAllUsersByRole(roleId = Role.COACH.id) }
+            val coachesAsync = async { userRepository.readAllUsersByRole(roleId = Roles.COACH.id) }
             val levelsAsync = async { levelRepository.readAll() }
             val typesAsync = async { typeRepository.readAll() }
 

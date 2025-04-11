@@ -64,4 +64,10 @@
 
     <!-- SECTION Filter Sport Event -->
     <string name="applyFilter">Apply filter</string>
+
+    <!-- SECTION Settings -->
+    <string name="update_users">Update Users</string>
+
+    <!-- SECTION Search User -->
+    <string name="search_user">Search user</string>
 </resources>

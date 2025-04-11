@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.feature.settings
+package com.spoonofcode.dojopro.feature.user
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
@@ -7,40 +7,38 @@ import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.search_user
-import com.spoonofcode.dojopro.resources.settings
+import com.spoonofcode.dojopro.resources.update_users
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
-internal class SettingsScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.settings,
-) : BaseScreen<SettingsViewModel, SettingsViewState>() {
+internal class SearchUserScreen(
+    override val screenTopAppBarTitle: StringResource = Res.string.search_user,
+) : BaseScreen<SearchUserViewModel, SearchUserViewState>() {
 
     @Composable
-    override fun provideViewModel() = koinViewModel<SettingsViewModel>()
+    override fun provideViewModel() = koinViewModel<SearchUserViewModel>()
 
     @Composable
     override fun provideContentView(
-        viewModel: SettingsViewModel,
-        viewState: SettingsViewState
+        viewModel: SearchUserViewModel,
+        viewState: SearchUserViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            navigateToUpdateUsers = { viewModel.navigateToSearchUser() },
+            navigateToUpdateUsers = { viewModel.navigateToUpdateUsers() },
         )
     }
 
     @Composable
     internal fun ContentView(
-        viewState: SettingsViewState,
+        viewState: SearchUserViewState,
         navigateToUpdateUsers: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            if (viewState.isSearchUserButtonVisible) {
-                Buttons.PrimaryButton(
-                    text = stringResource(resource = Res.string.search_user),
-                    onClick = navigateToUpdateUsers
-                )
-            }
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.update_users),
+                onClick = navigateToUpdateUsers
+            )
         }
     }
 }
