@@ -70,4 +70,9 @@
 
     <!-- SECTION Search User -->
     <string name="search_user">Search user</string>
+
+    <!-- SECTION User Details -->
+    <string name="user_details">User details</string>
+    <string name="add_coach_role">Add Coach role</string>
+    <string name="add_club_owner_role">Add Club owner role</string>
 </resources>

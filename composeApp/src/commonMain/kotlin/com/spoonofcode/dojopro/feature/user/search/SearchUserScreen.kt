@@ -94,12 +94,12 @@ internal class SearchUserScreen(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = item.fullName,
+                    text = item.email,
                     fontSize = 12.sp,
                     color = Color.LightGray
                 )
                 Text(
-                    text = item.email,
+                    text = item.fullName,
                     fontSize = 20.sp,
                     color = Color.White
                 )

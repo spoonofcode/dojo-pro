@@ -25,6 +25,7 @@ internal class SearchViewModel(
             val filteredSportEvents = getFilteredSportEventsUseCase()
             updateState {
                 copy(
+                    initSportEvents = filteredSportEvents,
                     filteredSportEvents = filteredSportEvents,
                 )
             }
@@ -33,7 +34,7 @@ internal class SearchViewModel(
 
     fun changeSearchText(searchText: String) {
         viewModelScope.launch {
-            val sportEvents = currentState().filteredSportEvents
+            val sportEvents = currentState().initSportEvents
             val filteredSportEvents = getFilteredSportEventsByTextUseCase(
                 searchText = searchText,
                 sportEvents = sportEvents,

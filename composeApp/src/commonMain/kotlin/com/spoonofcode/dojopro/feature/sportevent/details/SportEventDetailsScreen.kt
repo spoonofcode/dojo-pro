@@ -38,8 +38,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 internal data class SportEventDetailsScreen(
-    val sportEventId: Int,
     override val screenTopAppBarTitle: StringResource = Res.string.sport_event,
+    val sportEventId: Int,
 ) : BaseScreen<SportEventDetailsViewModel, SportEventDetailsViewState>() {
 
     @Composable
@@ -123,19 +123,18 @@ internal data class SportEventDetailsScreen(
 
             Spacers.Weight1(this)
 
-            Spacers.VerticalBetweenFields()
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.edit),
                 onClick = editSportEvent
             )
-
             Spacers.VerticalBetweenFields()
+
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.delete),
                 onClick = deleteSportEvent
             )
-
             Spacers.VerticalBetweenFields()
+
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.join_to_sport_event),
                 onClick = joinToSportEvent

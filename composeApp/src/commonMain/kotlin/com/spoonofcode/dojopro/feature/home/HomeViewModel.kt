@@ -41,7 +41,11 @@ internal class HomeViewModel(
 
     fun goToMyEvent(sportEventId: Int) {
         viewModelScope.launch {
-            viewModelNavigator.push(SportEventDetailsScreen(sportEventId))
+            viewModelNavigator.push(
+                SportEventDetailsScreen(
+                    sportEventId = sportEventId
+                )
+            )
         }
     }
 

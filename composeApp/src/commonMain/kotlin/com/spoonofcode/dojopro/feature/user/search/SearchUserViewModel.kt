@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.core.domain.GetAllUsersUseCase
 import com.spoonofcode.dojopro.core.domain.GetFilteredUsersByTextUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
+import com.spoonofcode.dojopro.feature.user.details.UserDetailsScreen
 import kotlinx.coroutines.launch
 
 internal class SearchUserViewModel(
@@ -23,6 +24,7 @@ internal class SearchUserViewModel(
             val users = getAllUsersUseCase()
             updateState {
                 copy(
+                    initUsers = users,
                     filteredUsers = users,
                 )
             }
@@ -31,7 +33,7 @@ internal class SearchUserViewModel(
 
     fun changeSearchText(searchText: String) {
         viewModelScope.launch {
-            val users = currentState().filteredUsers
+            val users = currentState().initUsers
             val filteredUsers = getFilteredUsersByTextUseCase(
                 searchText = searchText,
                 users = users,
@@ -44,7 +46,7 @@ internal class SearchUserViewModel(
 
     fun selectUser(userId: Int) {
         viewModelScope.launch {
-//            viewModelNavigator.push(UserDetailScreen(userId = userId))
+            viewModelNavigator.push(UserDetailsScreen(userId = userId))
         }
     }
 
