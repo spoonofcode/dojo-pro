@@ -16,7 +16,7 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
-import com.spoonofcode.dojopro.core.ui.Dimens.bottomScreenPadding
+import com.spoonofcode.dojopro.core.ui.Paddings.bottomScreenPadding
 import com.spoonofcode.dojopro.feature.calendar.CalendarTab
 import com.spoonofcode.dojopro.feature.home.HomeTab
 import com.spoonofcode.dojopro.feature.profile.ProfileTab

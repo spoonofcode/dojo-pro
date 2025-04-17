@@ -10,7 +10,7 @@ import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.model.Type
 import com.spoonofcode.dojopro.core.model.User
 import com.spoonofcode.dojopro.core.ui.BaseScreen
-import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.Paddings
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.CarouselSportEventItem
 import com.spoonofcode.dojopro.core.ui.compose.Carousels
@@ -28,9 +28,9 @@ internal class HomeScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.home,
     override val backNavigationEnable: Boolean = false,
     override val contentPadding: PaddingValues = PaddingValues(
-        start = Dimens.screenPadding,
-        top = Dimens.screenPadding,
-        bottom = Dimens.screenPadding,
+        start = Paddings.screenPadding,
+        top = Paddings.screenPadding,
+        bottom = Paddings.screenPadding,
     )
 ) : BaseScreen<HomeViewModel, HomeViewState>() {
 

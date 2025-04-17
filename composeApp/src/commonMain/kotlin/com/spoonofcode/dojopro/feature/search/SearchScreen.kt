@@ -1,29 +1,29 @@
 package com.spoonofcode.dojopro.feature.search
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Timer
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.ui.BaseScreen
+import com.spoonofcode.dojopro.core.ui.Paddings.innerElevatedCardPadding
+import com.spoonofcode.dojopro.core.ui.Paddings.spaceBetweenListElements
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
@@ -78,7 +78,9 @@ internal class SearchScreen(
                 onClick = { navigateToFilter() }
             )
 
-            LazyColumn {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
+            ) {
                 items(viewState.filteredSportEvents) { sportEvent ->
                     SportEventItem(
                         item = sportEvent,
@@ -94,20 +96,13 @@ internal class SearchScreen(
         item: SportEvent,
         onClick: () -> Unit,
     ) {
-        Row(
+        ElevatedCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .background(MaterialTheme.colorScheme.primary)
-                .padding(16.dp)
-                .clickable {
-                    onClick()
-                },
-            verticalAlignment = Alignment.CenterVertically
+                .clickable { onClick() },
         ) {
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.fillMaxSize().padding(innerElevatedCardPadding)
             ) {
                 Texts.BLB(
                     text = item.title,
@@ -131,6 +126,44 @@ internal class SearchScreen(
                 )
             }
         }
+
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(8.dp)
+//                .clip(RoundedCornerShape(16.dp))
+//                .background(MaterialTheme.colorScheme.primary)
+//                .padding(16.dp)
+//                .clickable {
+//                    onClick()
+//                },
+//            verticalAlignment = Alignment.CenterVertically
+//        ) {
+//            Column(
+//                modifier = Modifier.weight(1f)
+//            ) {
+//                Texts.BLB(
+//                    text = item.title,
+//                )
+//                getSportEventItemRowElement(
+//                    elementValue = item.formatRangeWithDurationInMinutes(),
+//                    icon = Icons.Default.Timer,
+//                    contentDescription = "Date and time",
+//                )
+//
+//                getSportEventItemRowElement(
+//                    elementValue = item.club.name,
+//                    icon = Icons.Default.LocationOn,
+//                    contentDescription = "Location",
+//                )
+//
+//                getSportEventItemRowElement(
+//                    elementValue = item.creatorUser.fullName,
+//                    icon = Icons.Default.Person,
+//                    contentDescription = "Coach",
+//                )
+//            }
+//        }
     }
 
     @Composable

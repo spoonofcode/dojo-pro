@@ -39,7 +39,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     open val screenTopAppBarTitle: StringResource? = null,
     open val backNavigationEnable: Boolean = true,
     open val verticalScrollEnable: Boolean = true,
-    open val contentPadding: PaddingValues = PaddingValues(Dimens.screenPadding)
+    open val contentPadding: PaddingValues = PaddingValues(Paddings.screenPadding)
 ) : Screen {
 
     @Composable

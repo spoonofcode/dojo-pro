@@ -7,15 +7,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.Paddings
 
 object Spacers {
 
     @Composable
-    fun VerticalBetweenFields(): Unit = Spacer(modifier = Modifier.height(Dimens.fieldsPadding))
+    fun VerticalBetweenFields(): Unit = Spacer(modifier = Modifier.height(Paddings.fieldsPadding))
 
     @Composable
-    fun HorizontalBetweenFields(): Unit = Spacer(modifier = Modifier.width(Dimens.fieldsPadding))
+    fun HorizontalBetweenFields(): Unit = Spacer(modifier = Modifier.width(Paddings.fieldsPadding))
 
     @Composable
     fun Weight1(rowScope: RowScope): Unit =
