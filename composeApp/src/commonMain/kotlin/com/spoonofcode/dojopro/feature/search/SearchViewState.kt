@@ -7,6 +7,6 @@ internal data class SearchViewState(
     override val isEnableView: Boolean = true,
     override val isLoadingView: Boolean = true,
     val searchText: String = "",
-    val allSportEvents: List<SportEvent> = emptyList(),
+    val initSportEvents: List<SportEvent> = emptyList(),
     val filteredSportEvents: List<SportEvent> = emptyList(),
 ): BaseViewState()

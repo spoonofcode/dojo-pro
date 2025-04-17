@@ -1,6 +1,7 @@
 package com.spoonofcode.dojopro.core.data.repository
 
 import com.spoonofcode.dojopro.core.data.base.GenericCrudRepository
+import com.spoonofcode.dojopro.core.model.AddRoleToUserRequest
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.model.User
 import com.spoonofcode.dojopro.core.model.UserRequest
@@ -40,6 +41,20 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
 
             val responseBody = responseOrException(response).body<String>()
             Json.decodeFromString(ListSerializer(SportEvent.serializer()), responseBody)
+        }
+    }
+
+    suspend fun addRoleToUser(roleId: Int, userId: Int) {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/roles",
+                method = HttpMethod.Post,
+                customRequestBody = Json.encodeToString(
+                    AddRoleToUserRequest.serializer(),
+                    AddRoleToUserRequest(roleId = roleId)
+                ),
+            )
+            responseOrException(response).body<String>()
         }
     }
 }

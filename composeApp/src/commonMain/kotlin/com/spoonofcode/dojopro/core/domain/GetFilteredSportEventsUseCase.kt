@@ -1,15 +1,16 @@
 package com.spoonofcode.dojopro.core.domain
 
 import com.spoonofcode.dojopro.core.data.repository.FilterRepository
+import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.feature.search.filter.FilterViewState
 
-class GetFilteredSportEvents(
+class GetFilteredSportEventsUseCase(
+    private val sportEventRepository: SportEventRepository,
     private val filterRepository: FilterRepository,
 ) {
-    suspend operator fun invoke(
-        sportEvents: List<SportEvent>,
-    ): List<SportEvent> {
+    suspend operator fun invoke(): List<SportEvent> {
+        val sportEvents = sportEventRepository.readAll()
         val selectedFilter = filterRepository.getSelectedFilters()
         return sportEvents.filter { sportEvent ->
             val matchesClubFilter = selectedFilter.selectedClubId == null ||

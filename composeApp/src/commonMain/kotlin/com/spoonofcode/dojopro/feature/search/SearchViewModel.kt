@@ -1,9 +1,8 @@
 package com.spoonofcode.dojopro.feature.search
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
-import com.spoonofcode.dojopro.core.domain.GetFilteredSportEvents
-import com.spoonofcode.dojopro.core.domain.GetFilteredSportEventsByText
+import com.spoonofcode.dojopro.core.domain.GetFilteredSportEventsByTextUseCase
+import com.spoonofcode.dojopro.core.domain.GetFilteredSportEventsUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import com.spoonofcode.dojopro.feature.search.filter.FilterScreen
@@ -11,9 +10,8 @@ import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsScree
 import kotlinx.coroutines.launch
 
 internal class SearchViewModel(
-    private val sportEventRepository: SportEventRepository,
-    private val getFilteredSportEvents: GetFilteredSportEvents,
-    private val getFilteredSportEventsByText: GetFilteredSportEventsByText,
+    private val getFilteredSportEventsUseCase: GetFilteredSportEventsUseCase,
+    private val getFilteredSportEventsByTextUseCase: GetFilteredSportEventsByTextUseCase,
 ) : BaseViewModel<SearchViewState>(SearchViewState()) {
 
     init {
@@ -24,13 +22,10 @@ internal class SearchViewModel(
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView
         ) {
-            val sportEvents = sportEventRepository.readAll()
-            val filteredSportEvents = getFilteredSportEvents(
-                sportEvents = sportEvents,
-            )
+            val filteredSportEvents = getFilteredSportEventsUseCase()
             updateState {
                 copy(
-                    allSportEvents = sportEvents,
+                    initSportEvents = filteredSportEvents,
                     filteredSportEvents = filteredSportEvents,
                 )
             }
@@ -39,8 +34,8 @@ internal class SearchViewModel(
 
     fun changeSearchText(searchText: String) {
         viewModelScope.launch {
-            val sportEvents = currentState().allSportEvents
-            val filteredSportEvents = getFilteredSportEventsByText(
+            val sportEvents = currentState().initSportEvents
+            val filteredSportEvents = getFilteredSportEventsByTextUseCase(
                 searchText = searchText,
                 sportEvents = sportEvents,
             )
