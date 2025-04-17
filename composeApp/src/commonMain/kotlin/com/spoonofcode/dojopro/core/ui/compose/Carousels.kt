@@ -14,10 +14,8 @@ import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.dojopro.core.ext.formatedLocalDateTime
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.dojo_room
-import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
@@ -26,7 +24,7 @@ data class CarouselSportEventItem(
     val imageResId: DrawableResource = Res.drawable.dojo_room,
     val sportEventId: Int,
     val title: String,
-    val startEventDateTime: LocalDateTime,
+    val rangeDateTime: String,
 )
 
 object Carousels {
@@ -38,7 +36,7 @@ object Carousels {
         onItemClick: (sportEventId: Int) -> Unit,
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            Texts.HS(
+            Texts.HSB(
                 text = title,
             )
             Spacers.VerticalBetweenFields()
@@ -67,12 +65,12 @@ object Carousels {
                         Column(
                             modifier = Modifier.padding(8.dp)
                         ) {
-                            Texts.BL(
-                                text = item.startEventDateTime.formatedLocalDateTime(),
+                            Texts.BLB(
+                                text = item.title,
                             )
                             Spacers.VerticalBetweenFields()
-                            Texts.BL(
-                                text = item.title,
+                            Texts.BM(
+                                text = item.rangeDateTime,
                             )
                         }
                     }

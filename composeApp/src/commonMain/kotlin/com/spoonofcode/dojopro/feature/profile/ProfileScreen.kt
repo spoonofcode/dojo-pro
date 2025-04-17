@@ -65,15 +65,15 @@ internal class ProfileScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            Texts.HS(viewState.profile!!.name)
+            Texts.HSB(viewState.profile!!.name)
             Spacers.VerticalBetweenFields()
 
-            Texts.HS(stringResource(Res.string.events_created_by_me))
-            Texts.BL(viewState.profile.numberOfEventsCreatedByUser.toString())
+            Texts.HSB(stringResource(Res.string.events_created_by_me))
+            Texts.BLB(viewState.profile.numberOfEventsCreatedByUser.toString())
             Spacers.VerticalBetweenFields()
 
-            Texts.HS(stringResource(Res.string.events_i_participated_in))
-            Texts.BL(viewState.profile.numberOfEventsUserParticipatedIn.toString())
+            Texts.HSB(stringResource(Res.string.events_i_participated_in))
+            Texts.BLB(viewState.profile.numberOfEventsUserParticipatedIn.toString())
             Spacers.VerticalBetweenFields()
 
             Buttons.PrimaryButton(

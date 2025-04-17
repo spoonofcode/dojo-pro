@@ -16,6 +16,18 @@ object Texts {
             text = text,
             modifier = modifier,
             style = MaterialTheme.typography.headlineSmall,
+        )
+    }
+
+    @Composable
+    fun HSB(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold
         )
     }
@@ -51,6 +63,18 @@ object Texts {
     }
 
     @Composable
+    fun BSB(
+        text: String,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodySmall,
+            fontWeight = FontWeight.Bold,
+
+            )
+    }
+
+    @Composable
     fun BM(
         text: String,
     ) {
@@ -62,6 +86,16 @@ object Texts {
 
     @Composable
     fun BL(
+        text: String,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyLarge,
+        )
+    }
+
+    @Composable
+    fun BLB(
         text: String,
     ) {
         Text(

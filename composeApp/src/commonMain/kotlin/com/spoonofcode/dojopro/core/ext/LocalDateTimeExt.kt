@@ -23,7 +23,7 @@ private val DEFAULT_DATE_TIME_FORMAT = LocalDateTime.Format {
             year()
         }
     )
-    chars(" - ")
+    char(' ')
     time(
         LocalTime.Format {
             hour(); char(':'); minute()

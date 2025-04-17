@@ -90,7 +90,7 @@ internal class HomeScreen(
             CarouselSportEventItem(
                 sportEventId = sportEvent.id,
                 title = sportEvent.title,
-                startEventDateTime = sportEvent.startDateTime
+                rangeDateTime = sportEvent.formatRangeWithDurationInMinutes(),
             )
         }
 

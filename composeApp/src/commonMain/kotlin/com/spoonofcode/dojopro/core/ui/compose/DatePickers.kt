@@ -18,12 +18,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.spoonofcode.dojopro.resources.Res
-import com.spoonofcode.dojopro.resources.accept
-import com.spoonofcode.dojopro.resources.cancel
 import com.spoonofcode.dojopro.core.ext.formatedLocalDate
 import com.spoonofcode.dojopro.core.ui.utils.LocalDateTimeUtils
 import com.spoonofcode.dojopro.core.ui.utils.TimeZoneUtils
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.accept
+import com.spoonofcode.dojopro.resources.cancel
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
@@ -87,7 +87,7 @@ object DatePickers {
         onValueChange: (LocalDateTime) -> Unit,
     ) {
         label?.let {
-            Texts.BL(text = it)
+            Texts.BLB(text = it)
         }
 
         Row(

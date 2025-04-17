@@ -10,21 +10,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Timer
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.spoonofcode.dojopro.core.ext.formatedLocalDateTime
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
+import com.spoonofcode.dojopro.core.ui.compose.Texts
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.filter
@@ -106,18 +109,45 @@ internal class SearchScreen(
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Text(
-                    text = item.creationDate.formatedLocalDateTime(),
-                    fontSize = 12.sp,
-                    color = Color.LightGray
+                Texts.BLB(
+                    text = item.title,
                 )
-                Text(
-                    text = item.description,
-                    fontSize = 20.sp,
-                    color = Color.White
+                getSportEventItemRowElement(
+                    elementValue = item.formatRangeWithDurationInMinutes(),
+                    icon = Icons.Default.Timer,
+                    contentDescription = "Date and time",
+                )
+
+                getSportEventItemRowElement(
+                    elementValue = item.club.name,
+                    icon = Icons.Default.LocationOn,
+                    contentDescription = "Location",
+                )
+
+                getSportEventItemRowElement(
+                    elementValue = item.creatorUser.fullName,
+                    icon = Icons.Default.Person,
+                    contentDescription = "Coach",
                 )
             }
         }
     }
 
+    @Composable
+    private fun getSportEventItemRowElement(
+        elementValue: String,
+        icon: ImageVector,
+        contentDescription: String,
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = icon,
+                contentDescription = contentDescription,
+            )
+            Spacers.HorizontalBetweenFields()
+            Texts.BM(
+                text = elementValue,
+            )
+        }
+    }
 }
