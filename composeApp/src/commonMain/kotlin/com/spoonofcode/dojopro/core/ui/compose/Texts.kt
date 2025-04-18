@@ -8,6 +8,42 @@ import androidx.compose.ui.text.font.FontWeight
 
 object Texts {
     @Composable
+    fun TS(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.titleSmall,
+        )
+    }
+
+    @Composable
+    fun TM(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.titleMedium,
+        )
+    }
+
+    @Composable
+    fun TL(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.titleLarge,
+        )
+    }
+
+    @Composable
     fun HS(
         text: String,
         modifier: Modifier = Modifier,

@@ -1,46 +1,33 @@
 package com.spoonofcode.dojopro.feature.demo
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.People
-import androidx.compose.material.icons.filled.Timer
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.spoonofcode.dojopro.core.ext.formatedLocalDate
+import com.spoonofcode.dojopro.core.ext.formatedLocalDateTime
+import com.spoonofcode.dojopro.core.ext.minus
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.core.ui.utils.LocalDateTimeUtils
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class DemoScreen(
     override val backNavigationEnable: Boolean = false,
+    override val verticalScrollEnable: Boolean = false,
 ) : BaseScreen<DemoViewModel, DemoViewState>() {
 
     @Composable
@@ -66,178 +53,129 @@ internal class DemoScreen(
         viewState: DemoViewState,
     ): @Composable (ColumnScope.() -> Unit) {
 
-        var textFieldValue by remember { mutableStateOf("") }
-        var switchState by remember { mutableStateOf(false) }
-        var checkboxState by remember { mutableStateOf(false) }
-        var sliderValue by remember { mutableStateOf(0f) }
-
+        /* ---------- sample data ---------- */
+        val sampleNotes = listOf(
+            Note(
+                id = 1,
+                text = "Buy milk 🥛",
+                createdAt = LocalDateTimeUtils.now()
+            ),
+            Note(
+                id = 2,
+                text = "Send weekly report 📄",
+                createdAt = LocalDateTimeUtils.now().minus(5)
+            ),
+            Note(
+                id = 3,
+                text = "Book summer flights ✈️",
+                createdAt = LocalDateTimeUtils.now().minus(22)
+            ),
+            Note(
+                id = 4,
+                text = "Read Compose tutorial 📚",
+                createdAt = LocalDateTimeUtils.now().minus(45)
+            ),
+            Note(
+                id = 5,
+                text = "Check crypto prices ₿",
+                createdAt = LocalDateTimeUtils.now().minus(44)
+            )
+        )
+        
         return {
-            // Przykładowe dane
-            val pendingPlayers = listOf(
-                "Piotr Nowak",
-                "Łukasz Wróbel",
-                "Aleksander Miodek"
-            )
-            val confirmedPlayers = listOf(
-                "Piotr Nowak (GK M)",
-                "Paweł Kotoniak",
-                "Rafał Stawinoga"
-            )
+            NotesScreen(sampleNotes)
+        }
+    }
 
-// Nagłówek gry
-            Text(
-                text = "Gierka orlikowa",
-                style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+    /* ---------- model ---------- */
+    data class Note(
+        val id: Long,
+        val text: String,
+        val createdAt: LocalDateTime            // or java.time.Instant etc.
+    )
 
-            // Sekcja z detalami (data, adres, liczba graczy, poziom, cena, płatność)
-            Card(
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Default.Timer,
-                            contentDescription = "Data i godzina",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Czwartek, 18.11.2023 | 18:30 - 20:00")
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Default.LocationOn,
-                            contentDescription = "Adres",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Boisko Wanda (Bulwarowa)")
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Default.People,
-                            contentDescription = "Liczba graczy",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Liczba graczy: 12 | Poziom: Normalny / Średni")
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row {
-                        Text("Cena: 13 zł")
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Text("Płatność: Gotówka / BLIK")
-                    }
-                }
+    /* we’ll render one of these two in the LazyColumn */
+    sealed interface ListEntry {
+        data class DateHeader(val date: LocalDate) : ListEntry
+        data class ContentItem(val note: Note) : ListEntry
+    }
+
+    /* ---------- helper to flatten the list ---------- */
+    fun buildEntries(notes: List<Note>): List<ListEntry> =
+        notes
+            .sortedByDescending { it.createdAt }                  // newest first
+            .groupBy { it.createdAt.date }               // bucket per calendar day
+            .flatMap { (date, dayNotes) ->
+                listOf(ListEntry.DateHeader(date)) +              // header first
+                        dayNotes.map { ListEntry.ContentItem(it) }        // then that day’s items
             }
 
-            // Szczegóły gierki
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Szczegóły gierki",
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            Text(
-                text = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-                style = MaterialTheme.typography.bodyMedium
-            )
+    /* ---------- Composables ---------- */
+    @Composable
+    fun NotesScreen(allNotes: List<Note>) {
+        val list = remember(allNotes) { buildEntries(allNotes) }
 
-            // Lista oczekujących
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Oczekujący na akceptację",
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-            Column {
-                pendingPlayers.forEach { playerName ->
-                    PendingPlayerRow(name = playerName)
-                }
-            }
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            /* we can rely on sealed‑class type‑safety */
+            list.forEach { entry ->
+                when (entry) {
+                    is ListEntry.DateHeader -> {
+                        stickyHeader {
+                            DateSeparator(date = entry.date)
+                        }
+                    }
 
-            // Lista graczy
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Lista graczy",
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-            Column {
-                confirmedPlayers.forEach { playerName ->
-                    PlayerRow(name = playerName)
+                    is ListEntry.ContentItem -> {
+                        item(key = entry.note.id) {
+                            NoteRow(note = entry.note)
+                        }
+                    }
                 }
             }
         }
     }
 
-
     @Composable
-    fun PendingPlayerRow(name: String) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 4.dp),
-            verticalAlignment = Alignment.CenterVertically
+    private fun DateSeparator(date: LocalDate) {
+        val today = remember { LocalDateTimeUtils.now() }
+        val label = when (date) {
+            today.date -> "Today"
+            today.minus(24) -> "Yesterday"
+            else -> date.formatedLocalDate()
+        }
+        Surface(
+            Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.error
         ) {
-            // Avatar
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(Color.LightGray)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            // Nazwa gracza
             Text(
-                text = name,
-                style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
-                modifier = Modifier.weight(1f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                text = label,
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp, horizontal = 16.dp)
             )
-            // Ikony akcji (np. accept / reject)
-            IconButton(onClick = { /* obsługa usunięcia */ }) {
-                Text("Usuń")
-            }
-            IconButton(onClick = { /* obsługa akceptacji */ }) {
-                Text("+")
-            }
         }
     }
 
     @Composable
-    fun PlayerRow(name: String) {
+    private fun NoteRow(note: Note) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 4.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .padding(16.dp)
         ) {
-            // Avatar
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(Color.LightGray)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            // Nazwa gracza
             Text(
-                text = name,
-                style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
-                modifier = Modifier.weight(1f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                text = note.text,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.weight(1f)
             )
-            // Ewentualne dodatkowe ikony (np. statystyki gracza)
-            IconButton(onClick = { /* np. statystyki */ }) {
-                Text("S")
-            }
+            Text(
+                text = note.createdAt.formatedLocalDateTime(),
+                style = MaterialTheme.typography.labelSmall,
+                textAlign = TextAlign.End
+            )
         }
     }
 

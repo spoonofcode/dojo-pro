@@ -48,5 +48,10 @@ fun LocalDateTime.plus(hours: Int): LocalDateTime =
         .plus(hours.hours)
         .toLocalDateTime(TimeZoneUtils.DEFAULT_ZONE)
 
+fun LocalDateTime.minus(hours: Int): LocalDateTime =
+    this.toInstant(TimeZoneUtils.DEFAULT_ZONE)
+        .minus(hours.hours)
+        .toLocalDateTime(TimeZoneUtils.DEFAULT_ZONE)
+
 fun LocalDateTime.roundToNextHour(): LocalDateTime =
     LocalDateTime(this.year, this.monthNumber, this.dayOfMonth, this.plus(1).hour, 0, 0, 0)

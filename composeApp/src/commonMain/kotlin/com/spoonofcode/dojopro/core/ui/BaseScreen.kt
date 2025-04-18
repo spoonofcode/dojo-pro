@@ -9,14 +9,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,6 +27,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.spoonofcode.dojopro.core.ui.compose.LoadingView
 import com.spoonofcode.dojopro.core.ui.compose.Snackbar
+import com.spoonofcode.dojopro.core.ui.compose.Texts
 import com.spoonofcode.dojopro.core.ui.compose.setSnackbarHostState
 import com.spoonofcode.dojopro.core.ui.ext.addIf
 import com.spoonofcode.dojopro.core.ui.ext.viewEnable
@@ -100,7 +100,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
             },
             topBar = {
                 if (screenTopAppBarTitle != null) {
-                    TopAppBar(
+                    CenterAlignedTopAppBar(
                         navigationIcon = if (backNavigationEnable) {
                             {
                                 IconButton(onClick = onBackClick) {
@@ -113,7 +113,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                         } else {
                             {}
                         },
-                        title = { Text(stringResource(resource = screenTopAppBarTitle)) },
+                        title = { Texts.TM(stringResource(resource = screenTopAppBarTitle)) },
                     )
                 }
             },
