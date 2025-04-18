@@ -6,7 +6,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.spoonofcode.dojopro.core.network.SessionManager
 import com.spoonofcode.dojopro.core.ui.theme.AppTheme
-import com.spoonofcode.dojopro.feature.login.login.LoginScreen
+import com.spoonofcode.dojopro.feature.demo.DemoScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.getKoin
 
@@ -24,12 +24,12 @@ fun App() {
 
 @Composable
 private fun getStartScreen(sessionInitialized: Boolean): Screen {
-//    return DemoScreen()
+    return DemoScreen()
 
-    return if (sessionInitialized) {
-        MainHostScreen()
-    } else {
-        LoginScreen()
-    }
+//    return if (sessionInitialized) {
+//        MainHostScreen()
+//    } else {
+//        LoginScreen()
+//    }
 
 }

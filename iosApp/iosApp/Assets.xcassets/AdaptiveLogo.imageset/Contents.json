@@ -2,9 +2,17 @@
   "images" : [
     {
       "filename" : "dojo_pro_new.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "size" : "1024x1024"
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "light"
+        }
+      ],
+      "filename" : "dojo_pro_new 1.png",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -13,22 +21,8 @@
           "value" : "dark"
         }
       ],
-      "filename" : "dojo_pro_new 1.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "size" : "1024x1024"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "tinted"
-        }
-      ],
       "filename" : "dojo_pro_new 2.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "size" : "1024x1024"
+      "idiom" : "universal"
     }
   ],
   "info" : {

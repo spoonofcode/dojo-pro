@@ -5,8 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.spoonofcode.dojopro.core.ui.theme.AppTheme
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.spoonofcode.dojopro.core.settings.appContext
+import com.spoonofcode.dojopro.core.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
 
         // TODO #17 Switch language from settings screen
 //        this.applicationContext.setLocale(Locale("pl"))
-
+        installSplashScreen()
         setContent {
             App()
         }
