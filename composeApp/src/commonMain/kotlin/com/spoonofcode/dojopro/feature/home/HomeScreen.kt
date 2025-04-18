@@ -2,21 +2,34 @@ package com.spoonofcode.dojopro.feature.home
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import com.spoonofcode.dojopro.core.model.Club
 import com.spoonofcode.dojopro.core.model.Level
 import com.spoonofcode.dojopro.core.model.Room
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.model.Type
+import com.spoonofcode.dojopro.core.model.Types
 import com.spoonofcode.dojopro.core.model.User
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.Paddings
-import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.CarouselSportEventItem
 import com.spoonofcode.dojopro.core.ui.compose.Carousels
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.create_event
+import com.spoonofcode.dojopro.resources.dojo_advanced_group_training
+import com.spoonofcode.dojopro.resources.dojo_beginners_group_training
+import com.spoonofcode.dojopro.resources.dojo_beginners_training
+import com.spoonofcode.dojopro.resources.dojo_boxing_training
+import com.spoonofcode.dojopro.resources.dojo_grappling_training
+import com.spoonofcode.dojopro.resources.dojo_individual_training
+import com.spoonofcode.dojopro.resources.dojo_mat_training
+import com.spoonofcode.dojopro.resources.dojo_motor_training
+import com.spoonofcode.dojopro.resources.dojo_open_training
+import com.spoonofcode.dojopro.resources.dojo_training
+import com.spoonofcode.dojopro.resources.dojo_youth_training
 import com.spoonofcode.dojopro.resources.events_created_by_me
 import com.spoonofcode.dojopro.resources.events_i_participated_in
 import com.spoonofcode.dojopro.resources.home
@@ -42,9 +55,17 @@ internal class HomeScreen(
         viewModel: HomeViewModel,
         viewState: HomeViewState
     ): @Composable ColumnScope.() -> Unit {
+
+        super.topBarActions = listOf(
+            TopBarAction(
+                icon = Icons.Default.Add,
+                description = stringResource(resource = Res.string.create_event),
+                onClick = { viewModel.goToCreateSportEvent() }
+            ),
+        )
+
         return ContentView(
             viewState = viewState,
-            createSportEvent = { viewModel.goToCreateSportEvent() },
             goToMyEvent = { viewModel.goToMyEvent(it) },
         )
     }
@@ -52,7 +73,6 @@ internal class HomeScreen(
     @Composable
     private fun ContentView(
         viewState: HomeViewState,
-        createSportEvent: () -> Unit,
         goToMyEvent: (Int) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
@@ -77,11 +97,6 @@ internal class HomeScreen(
                     onItemClick = { goToMyEvent(it) }
                 )
             }
-
-            Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.create_event),
-                onClick = createSportEvent
-            )
         }
     }
 
@@ -91,6 +106,19 @@ internal class HomeScreen(
                 sportEventId = sportEvent.id,
                 title = sportEvent.title,
                 rangeDateTime = sportEvent.formatRangeWithDurationInMinutes(),
+                imageResId = when (sportEvent.type.id) {
+                    Types.DOJO_BOXING_TRAINING.id -> Res.drawable.dojo_boxing_training
+                    Types.DOJO_GRAPPLING_TRAINING.id -> Res.drawable.dojo_grappling_training
+                    Types.DOJO_YOUTH_TRAINING.id -> Res.drawable.dojo_youth_training
+                    Types.DOJO_BEGINNERS_GROUP_TRAINING.id -> Res.drawable.dojo_beginners_group_training
+                    Types.DOJO_BEGINNERS_TRAINING.id -> Res.drawable.dojo_beginners_training
+                    Types.DOJO_INDIVIDUAL_TRAINING.id -> Res.drawable.dojo_individual_training
+                    Types.DOJO_MOTOR_TRAINING.id -> Res.drawable.dojo_motor_training
+                    Types.DOJO_OPEN_TRAINING.id -> Res.drawable.dojo_open_training
+                    Types.DOJO_MAT_TRAINING.id -> Res.drawable.dojo_mat_training
+                    Types.DOJO_ADVANCED_GROUP_TRAINING.id -> Res.drawable.dojo_advanced_group_training
+                    else -> Res.drawable.dojo_training
+                }
             )
         }
 
@@ -239,7 +267,6 @@ internal class HomeScreen(
                         ),
                     ),
                 ),
-                createSportEvent = {},
                 goToMyEvent = {},
             )
         )

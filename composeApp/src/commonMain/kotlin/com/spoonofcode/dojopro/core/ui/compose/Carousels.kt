@@ -7,21 +7,36 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.spoonofcode.dojopro.core.model.Type
+import com.spoonofcode.dojopro.core.model.Types
 import com.spoonofcode.dojopro.resources.Res
-import com.spoonofcode.dojopro.resources.dojo_room
+import com.spoonofcode.dojopro.resources.dojo_advanced_group_training
+import com.spoonofcode.dojopro.resources.dojo_beginners_group_training
+import com.spoonofcode.dojopro.resources.dojo_beginners_training
+import com.spoonofcode.dojopro.resources.dojo_boxing_training
+import com.spoonofcode.dojopro.resources.dojo_grappling_training
+import com.spoonofcode.dojopro.resources.dojo_individual_training
+import com.spoonofcode.dojopro.resources.dojo_mat_training
+import com.spoonofcode.dojopro.resources.dojo_motor_training
+import com.spoonofcode.dojopro.resources.dojo_open_training
+import com.spoonofcode.dojopro.resources.dojo_training
+import com.spoonofcode.dojopro.resources.dojo_youth_training
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
 data class CarouselSportEventItem(
     // TODO Now set static image, later change to loaded image from backend
-    val imageResId: DrawableResource = Res.drawable.dojo_room,
+    val imageResId: DrawableResource = Res.drawable.dojo_training,
     val sportEventId: Int,
     val title: String,
     val rangeDateTime: String,
@@ -60,8 +75,12 @@ object Carousels {
                     ) {
                         Image(
                             painter = painterResource(resource = item.imageResId),
-                            contentDescription = item.title,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .fillMaxWidth()
                         )
+
                         Column(
                             modifier = Modifier.padding(8.dp)
                         ) {
@@ -79,5 +98,32 @@ object Carousels {
             Spacers.VerticalBetweenFields()
         }
     }
+}
+
+@Composable
+private fun SportEventImage(type: Type) {
+    val imageTrainingType = when (type.id) {
+        Types.DOJO_BOXING_TRAINING.id -> Res.drawable.dojo_boxing_training
+        Types.DOJO_GRAPPLING_TRAINING.id -> Res.drawable.dojo_grappling_training
+        Types.DOJO_YOUTH_TRAINING.id -> Res.drawable.dojo_youth_training
+        Types.DOJO_BEGINNERS_GROUP_TRAINING.id -> Res.drawable.dojo_beginners_group_training
+        Types.DOJO_BEGINNERS_TRAINING.id -> Res.drawable.dojo_beginners_training
+        Types.DOJO_INDIVIDUAL_TRAINING.id -> Res.drawable.dojo_individual_training
+        Types.DOJO_MOTOR_TRAINING.id -> Res.drawable.dojo_motor_training
+        Types.DOJO_OPEN_TRAINING.id -> Res.drawable.dojo_open_training
+        Types.DOJO_MAT_TRAINING.id -> Res.drawable.dojo_mat_training
+        Types.DOJO_ADVANCED_GROUP_TRAINING.id -> Res.drawable.dojo_advanced_group_training
+        else -> Res.drawable.dojo_training
+    }
+
+    Image(
+        painter = painterResource(resource = imageTrainingType),
+        contentDescription = null,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp)),
+        contentScale = ContentScale.Crop
+    )
+    Spacers.VerticalBetweenFields()
 }
 

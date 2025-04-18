@@ -4,9 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -28,6 +26,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.spoonofcode.dojopro.core.model.Type
+import com.spoonofcode.dojopro.core.model.Types
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
@@ -39,7 +39,17 @@ import com.spoonofcode.dojopro.resources.cost
 import com.spoonofcode.dojopro.resources.date
 import com.spoonofcode.dojopro.resources.delete
 import com.spoonofcode.dojopro.resources.description
-import com.spoonofcode.dojopro.resources.dojo_room
+import com.spoonofcode.dojopro.resources.dojo_advanced_group_training
+import com.spoonofcode.dojopro.resources.dojo_beginners_group_training
+import com.spoonofcode.dojopro.resources.dojo_beginners_training
+import com.spoonofcode.dojopro.resources.dojo_boxing_training
+import com.spoonofcode.dojopro.resources.dojo_grappling_training
+import com.spoonofcode.dojopro.resources.dojo_individual_training
+import com.spoonofcode.dojopro.resources.dojo_mat_training
+import com.spoonofcode.dojopro.resources.dojo_motor_training
+import com.spoonofcode.dojopro.resources.dojo_open_training
+import com.spoonofcode.dojopro.resources.dojo_training
+import com.spoonofcode.dojopro.resources.dojo_youth_training
 import com.spoonofcode.dojopro.resources.edit
 import com.spoonofcode.dojopro.resources.join_to_sport_event
 import com.spoonofcode.dojopro.resources.level
@@ -94,69 +104,60 @@ internal data class SportEventDetailsScreen(
         joinToSportEvent: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            Image(
-                painter = painterResource(resource = Res.drawable.dojo_room),
-                contentDescription = null,
-                modifier = Modifier
-                    .height(200.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp)),
-                contentScale = ContentScale.Crop
-            )
-            Spacer(modifier = Modifier.height(16.dp))
+            SportEventImage(viewState.sportEvent!!.type)
 
             Texts.BLB(viewState.sportEvent!!.title)
 
-            getSportEventItemRowElement(
+            SportEventItemRowElement(
                 label = Res.string.date,
                 elementValue = viewState.sportEvent.formatRangeWithDurationInMinutes(),
                 icon = Icons.Default.Timer,
                 contentDescription = "Date and time",
             )
 
-            getSportEventItemRowElement(
+            SportEventItemRowElement(
                 label = Res.string.location,
                 elementValue = viewState.sportEvent.club.name,
                 icon = Icons.Default.LocationOn,
                 contentDescription = "Location",
             )
 
-            getSportEventItemRowElement(
+            SportEventItemRowElement(
                 label = Res.string.room,
                 elementValue = viewState.sportEvent.room.name,
                 icon = Icons.Default.MeetingRoom,
                 contentDescription = "Room",
             )
 
-            getSportEventItemRowElement(
+            SportEventItemRowElement(
                 label = Res.string.coach,
                 elementValue = viewState.sportEvent.creatorUser.fullName,
                 icon = Icons.Default.Person,
                 contentDescription = "Coach",
             )
 
-            getSportEventItemRowElement(
+            SportEventItemRowElement(
                 label = Res.string.level,
                 elementValue = viewState.sportEvent.level.name,
                 icon = Icons.Default.Leaderboard,
                 contentDescription = "Level",
             )
 
-            getSportEventItemRowElement(
+            SportEventItemRowElement(
                 label = Res.string.type,
                 elementValue = viewState.sportEvent.type.name,
                 icon = Icons.Default.SportsMartialArts,
                 contentDescription = "Type",
             )
 
-            getSportEventItemRowElement(
+            SportEventItemRowElement(
                 label = Res.string.cost,
                 elementValue = viewState.sportEvent.cost,
                 icon = Icons.Default.Paid,
                 contentDescription = "Cost",
             )
 
-            getSportEventItemRowElement(
+            SportEventItemRowElement(
                 label = Res.string.description,
                 elementValue = viewState.sportEvent.description,
                 icon = Icons.Default.Description,
@@ -173,7 +174,34 @@ internal data class SportEventDetailsScreen(
     }
 
     @Composable
-    private fun getSportEventItemRowElement(
+    private fun SportEventImage(type: Type) {
+        val imageTrainingType = when (type.id) {
+            Types.DOJO_BOXING_TRAINING.id -> Res.drawable.dojo_boxing_training
+            Types.DOJO_GRAPPLING_TRAINING.id -> Res.drawable.dojo_grappling_training
+            Types.DOJO_YOUTH_TRAINING.id -> Res.drawable.dojo_youth_training
+            Types.DOJO_BEGINNERS_GROUP_TRAINING.id -> Res.drawable.dojo_beginners_group_training
+            Types.DOJO_BEGINNERS_TRAINING.id -> Res.drawable.dojo_beginners_training
+            Types.DOJO_INDIVIDUAL_TRAINING.id -> Res.drawable.dojo_individual_training
+            Types.DOJO_MOTOR_TRAINING.id -> Res.drawable.dojo_motor_training
+            Types.DOJO_OPEN_TRAINING.id -> Res.drawable.dojo_open_training
+            Types.DOJO_MAT_TRAINING.id -> Res.drawable.dojo_mat_training
+            Types.DOJO_ADVANCED_GROUP_TRAINING.id -> Res.drawable.dojo_advanced_group_training
+            else -> Res.drawable.dojo_training
+        }
+
+        Image(
+            painter = painterResource(resource = imageTrainingType),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(16.dp)),
+            contentScale = ContentScale.Crop
+        )
+        Spacers.VerticalBetweenFields()
+    }
+
+    @Composable
+    private fun SportEventItemRowElement(
         label: StringResource,
         elementValue: String,
         icon: ImageVector,

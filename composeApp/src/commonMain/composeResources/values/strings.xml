@@ -49,6 +49,8 @@
     <string name="min_number_of_people">Min Number of People</string>
     <string name="number_of_people">Number of People</string>
     <string name="sport_event">Sport Event</string>
+    <string name="create_sport_event">Create Sport Event</string>
+    <string name="edit_sport_event">Edit Sport Event</string>
     <string name="join_to_sport_event">Join to Sport Event</string>
 
     <!-- SECTION Search Sport Event -->
