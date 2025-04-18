@@ -6,7 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
-import com.spoonofcode.dojopro.resources.compose_multiplatform
+import com.spoonofcode.dojopro.resources.ic_dojo_pro
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class DemoScreen(
@@ -37,7 +37,7 @@ internal class DemoScreen(
         viewState: DemoViewState,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            AppLoadingOverlay(iconRes = Res.drawable.compose_multiplatform.hashCode())
+            AppLoadingOverlay(iconRes = Res.drawable.ic_dojo_pro.hashCode())
         }
     }
 

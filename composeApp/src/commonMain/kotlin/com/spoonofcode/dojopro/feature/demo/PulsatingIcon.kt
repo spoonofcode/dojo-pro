@@ -10,15 +10,18 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.dojopro.resources.Res
-import com.spoonofcode.dojopro.resources.dojo_training
+import com.spoonofcode.dojopro.resources.dojo_pro
 import org.jetbrains.compose.resources.painterResource
 
 /**
@@ -39,36 +42,42 @@ fun PulsatingIcon(
 
     val scale by infiniteTransition.animateFloat(
         initialValue = 1f,
-        targetValue  = 1.15f,
+        targetValue = 1.15f,
         animationSpec = infiniteRepeatable(
-            animation    = tween(durationMillis = duration, easing = FastOutSlowInEasing),
-            repeatMode   = RepeatMode.Reverse
+            animation = tween(durationMillis = duration, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
         ),
         label = "scaleAnim"
     )
 
     val alpha by infiniteTransition.animateFloat(
         initialValue = 1f,
-        targetValue  = 0.6f,
+        targetValue = 0.6f,
         animationSpec = infiniteRepeatable(
-            animation    = tween(durationMillis = duration, easing = FastOutSlowInEasing),
-            repeatMode   = RepeatMode.Reverse
+            animation = tween(durationMillis = duration, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
         ),
         label = "alphaAnim"
     )
 
-    // 2️⃣  Draw the icon with the animated scale/alpha
-    Image(
-        painter = painterResource(resource = Res.drawable.dojo_training),
-        contentDescription = null,            // decorative
+    Surface(
         modifier = Modifier
-            .size(sizeDp.dp)
-            .graphicsLayer {
-                scaleX = scale
-                scaleY = scale
-            }
-            .alpha(alpha)
-    )
+            .size(120.dp), // adjust to desired size
+        shape = CircleShape,
+    ) {
+        Image(
+            painter = painterResource(resource = Res.drawable.dojo_pro),
+            contentDescription = null,
+            modifier = Modifier
+                .size(120.dp)
+                .graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                }
+                .alpha(alpha),
+            contentScale = ContentScale.Crop
+        )
+    }
 }
 
 /**
