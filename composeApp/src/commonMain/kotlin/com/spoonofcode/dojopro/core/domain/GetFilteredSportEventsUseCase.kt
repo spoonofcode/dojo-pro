@@ -25,7 +25,10 @@ class GetFilteredSportEventsUseCase(
             val matchesTypeFilter = selectedFilter.selectedTypeId == null ||
                     selectedFilter.selectedTypeId == FilterViewState.ALL_OPTION_ID ||
                     sportEvent.type.id == selectedFilter.selectedTypeId
-            matchesClubFilter && matchesCoachFilter && matchesLevelFilter && matchesTypeFilter
+            val matchesDateFilter =
+                (selectedFilter.startDateTime == null || sportEvent.startDateTime >= selectedFilter.startDateTime) &&
+                        (selectedFilter.endDateTime == null || sportEvent.endDateTime <= selectedFilter.endDateTime)
+            matchesClubFilter && matchesCoachFilter && matchesLevelFilter && matchesTypeFilter && matchesDateFilter
         }
     }
 }

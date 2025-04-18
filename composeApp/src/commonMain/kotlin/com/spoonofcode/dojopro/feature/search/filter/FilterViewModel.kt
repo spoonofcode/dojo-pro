@@ -91,17 +91,17 @@ internal class FilterViewModel(
 
     fun changeStartDateTime(startDateTime: LocalDateTime) {
         viewModelScope.launch {
-//            updateState {
-//                copy(startDateTime = startDateTime)
-//            }
+            updateState {
+                copy(startDateTime = startDateTime)
+            }
         }
     }
 
     fun changeEndDateTime(endDateTime: LocalDateTime) {
         viewModelScope.launch {
-//            updateState {
-//                copy(endDateTime = endDateTime)
-//            }
+            updateState {
+                copy(endDateTime = endDateTime)
+            }
         }
     }
 
@@ -110,11 +110,13 @@ internal class FilterViewModel(
             onProgress = ::setLoadingView
         ) {
             val currentState = currentState()
-            setFilterDataUseCase(
+            setFilterDataUseCase.invoke(
                 selectedClubId = currentState.selectedClubId,
                 selectedCoachId = currentState.selectedCoachId,
                 selectedLevelId = currentState.selectedLevelId,
                 selectedTypeId = currentState.selectedTypeId,
+                startDateTime = currentState.startDateTime,
+                endDateTime = currentState.endDateTime,
             )
             navigateBack()
         }
