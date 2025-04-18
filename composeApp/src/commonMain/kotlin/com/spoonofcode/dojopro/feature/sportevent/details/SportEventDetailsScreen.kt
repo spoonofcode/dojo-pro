@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Leaderboard
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MeetingRoom
@@ -67,10 +69,21 @@ internal data class SportEventDetailsScreen(
             viewModel.initView(sportEventId = sportEventId)
         }
 
+        super.topBarActions = listOf(
+            TopBarAction(
+                icon = Icons.Default.Edit,
+                description = stringResource(resource = Res.string.edit),
+                onClick = { viewModel.editSportEvent() }
+            ),
+            TopBarAction(
+                icon = Icons.Default.Delete,
+                description = stringResource(resource = Res.string.delete),
+                onClick = { viewModel.deleteSportEvent() }
+            ),
+        )
+
         return ContentView(
             viewState = viewState,
-            editSportEvent = { viewModel.editSportEvent() },
-            deleteSportEvent = { viewModel.deleteSportEvent() },
             joinToSportEvent = { viewModel.joinToSportEvent() },
         )
     }
@@ -78,8 +91,6 @@ internal data class SportEventDetailsScreen(
     @Composable
     internal fun ContentView(
         viewState: SportEventDetailsViewState,
-        editSportEvent: () -> Unit,
-        deleteSportEvent: () -> Unit,
         joinToSportEvent: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
@@ -155,18 +166,6 @@ internal data class SportEventDetailsScreen(
             Spacers.Weight1(this)
 
             Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.edit),
-                onClick = editSportEvent
-            )
-            Spacers.VerticalBetweenFields()
-
-            Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.delete),
-                onClick = deleteSportEvent
-            )
-            Spacers.VerticalBetweenFields()
-
-            Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.join_to_sport_event),
                 onClick = joinToSportEvent
             )
@@ -186,7 +185,7 @@ internal data class SportEventDetailsScreen(
                 contentDescription = contentDescription,
             )
             Spacers.HorizontalBetweenFields()
-            Column{
+            Column {
                 Texts.BSB(
                     text = stringResource(resource = label),
                 )

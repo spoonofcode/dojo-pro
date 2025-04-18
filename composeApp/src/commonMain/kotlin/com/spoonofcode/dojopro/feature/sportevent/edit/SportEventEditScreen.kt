@@ -2,6 +2,7 @@ package com.spoonofcode.dojopro.feature.sportevent.edit
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.DatePickers
@@ -41,6 +42,11 @@ internal class SportEventEditScreen(
         viewModel: SportEventEditViewModel,
         viewState: SportEventEditViewState
     ): @Composable ColumnScope.() -> Unit {
+
+        LaunchedEffect(Unit) {
+            viewModel.initView(screenMode)
+        }
+
         return ContentView(
             viewState = viewState,
             changeTitle = { viewModel.changeTitle(it) },
