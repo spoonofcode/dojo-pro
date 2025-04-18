@@ -23,7 +23,7 @@ private val DEFAULT_DATE_TIME_FORMAT = LocalDateTime.Format {
             year()
         }
     )
-    chars(" - ")
+    char(' ')
     time(
         LocalTime.Format {
             hour(); char(':'); minute()
@@ -46,6 +46,11 @@ fun LocalDateTime.formatedTime(): String = this.format(DEFAULT_TIME_FORMAT)
 fun LocalDateTime.plus(hours: Int): LocalDateTime =
     this.toInstant(TimeZoneUtils.DEFAULT_ZONE)
         .plus(hours.hours)
+        .toLocalDateTime(TimeZoneUtils.DEFAULT_ZONE)
+
+fun LocalDateTime.minus(hours: Int): LocalDateTime =
+    this.toInstant(TimeZoneUtils.DEFAULT_ZONE)
+        .minus(hours.hours)
         .toLocalDateTime(TimeZoneUtils.DEFAULT_ZONE)
 
 fun LocalDateTime.roundToNextHour(): LocalDateTime =

@@ -2,6 +2,7 @@ package com.spoonofcode.dojopro.core.domain
 
 import com.spoonofcode.dojopro.core.data.repository.FilterData
 import com.spoonofcode.dojopro.core.data.repository.FilterRepository
+import kotlinx.datetime.LocalDateTime
 
 class GetFilterDataUseCase(
     private val filterRepository: FilterRepository,
@@ -11,6 +12,8 @@ class GetFilterDataUseCase(
         selectedCoachId: Int? = null,
         selectedLevelId: Int? = null,
         selectedTypeId: Int? = null,
+        startDateTime: LocalDateTime? = null,
+        endDateTime: LocalDateTime? = null,
     ): FilterData {
         return filterRepository.getSelectedFilters()
     }

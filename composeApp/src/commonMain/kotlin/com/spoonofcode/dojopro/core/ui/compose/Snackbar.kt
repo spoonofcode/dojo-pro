@@ -13,7 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.Paddings
 import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import com.spoonofcode.dojopro.core.ui.ext.showSnackbar
 import kotlinx.coroutines.flow.SharedFlow
@@ -37,7 +37,7 @@ fun Snackbar(
     if (visuals is CustomSnackbarVisuals) {
         // Our custom visuals
         Snackbar(
-            modifier = Modifier.padding(Dimens.screenPadding),
+            modifier = Modifier.padding(Paddings.screenPadding),
             containerColor = visuals.containerColor,
             contentColor = visuals.contentColor,
             action = {

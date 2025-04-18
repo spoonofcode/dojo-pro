@@ -16,16 +16,12 @@ internal class SportEventEditViewModel(
     private val loadSportEventFormDataUseCase: LoadSportEventFormDataUseCase,
 ) : BaseViewModel<SportEventEditViewState>(SportEventEditViewState()) {
 
-    init {
-        initView()
-    }
-
-    fun initView() {
+    fun initView(screenMode: ScreenMode) {
         viewModelScope.launchWithProgress(
             onProgress = ::setLoadingView
         ) {
             runCatching {
-                loadSportEventFormDataUseCase(screenMode = currentState().screenMode)
+                loadSportEventFormDataUseCase(screenMode = screenMode)
             }.onSuccess { sportEventFormData ->
                 if (sportEventFormData.sportEvent == null) {
                     updateState {

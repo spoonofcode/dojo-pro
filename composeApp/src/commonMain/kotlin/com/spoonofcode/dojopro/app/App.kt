@@ -24,6 +24,8 @@ fun App() {
 
 @Composable
 private fun getStartScreen(sessionInitialized: Boolean): Screen {
+//    return DemoScreen()
+
     return if (sessionInitialized) {
         MainHostScreen()
     } else {

@@ -8,26 +8,27 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.spoonofcode.dojopro.core.ui.compose.LoadingView
 import com.spoonofcode.dojopro.core.ui.compose.Snackbar
+import com.spoonofcode.dojopro.core.ui.compose.Texts
 import com.spoonofcode.dojopro.core.ui.compose.setSnackbarHostState
 import com.spoonofcode.dojopro.core.ui.ext.addIf
 import com.spoonofcode.dojopro.core.ui.ext.viewEnable
@@ -39,7 +40,8 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     open val screenTopAppBarTitle: StringResource? = null,
     open val backNavigationEnable: Boolean = true,
     open val verticalScrollEnable: Boolean = true,
-    open val contentPadding: PaddingValues = PaddingValues(Dimens.screenPadding)
+    open val contentPadding: PaddingValues = PaddingValues(Paddings.screenPadding),
+    open var topBarActions: List<TopBarAction> = emptyList(),
 ) : Screen {
 
     @Composable
@@ -100,12 +102,13 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
             },
             topBar = {
                 if (screenTopAppBarTitle != null) {
-                    TopAppBar(
+                    CenterAlignedTopAppBar(
+                        title = { Texts.TM(stringResource(resource = screenTopAppBarTitle)) },
                         navigationIcon = if (backNavigationEnable) {
                             {
                                 IconButton(onClick = onBackClick) {
                                     Icon(
-                                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                        imageVector = Icons.AutoMirrored.Default.ArrowBackIos,
                                         contentDescription = "Back"
                                     )
                                 }
@@ -113,7 +116,16 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                         } else {
                             {}
                         },
-                        title = { Text(stringResource(resource = screenTopAppBarTitle)) },
+                        actions = {
+                            topBarActions.forEach { spec ->
+                                IconButton(onClick = spec.onClick) {
+                                    Icon(
+                                        imageVector = spec.icon,
+                                        contentDescription = spec.description
+                                    )
+                                }
+                            }
+                        }
                     )
                 }
             },
@@ -135,4 +147,10 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
             }
         }
     }
+
+    data class TopBarAction(
+        val icon: ImageVector,
+        val description: String,
+        val onClick: () -> Unit
+    )
 }

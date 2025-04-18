@@ -47,13 +47,13 @@ internal class UserDetailsScreen(
         addClubOwnerRole: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            Texts.HS(viewState.user!!.fullName)
+            Texts.HSB(viewState.user!!.fullName)
             Spacers.VerticalBetweenFields()
 
-            Texts.HS(viewState.user!!.email)
+            Texts.HSB(viewState.user!!.email)
             Spacers.VerticalBetweenFields()
 
-            Texts.HS(viewState.roles)
+            Texts.HSB(viewState.roles)
             Spacers.VerticalBetweenFields()
 
             if (viewState.isVisibleAddCoachRoleButton) {

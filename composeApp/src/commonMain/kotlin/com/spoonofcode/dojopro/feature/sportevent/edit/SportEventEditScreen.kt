@@ -2,6 +2,7 @@ package com.spoonofcode.dojopro.feature.sportevent.edit
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.DatePickers
@@ -14,12 +15,13 @@ import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.club
 import com.spoonofcode.dojopro.resources.coach
 import com.spoonofcode.dojopro.resources.cost
+import com.spoonofcode.dojopro.resources.create_sport_event
 import com.spoonofcode.dojopro.resources.description
+import com.spoonofcode.dojopro.resources.edit_sport_event
 import com.spoonofcode.dojopro.resources.end
 import com.spoonofcode.dojopro.resources.level
 import com.spoonofcode.dojopro.resources.number_of_people
 import com.spoonofcode.dojopro.resources.room
-import com.spoonofcode.dojopro.resources.sport_event
 import com.spoonofcode.dojopro.resources.start
 import com.spoonofcode.dojopro.resources.submit
 import com.spoonofcode.dojopro.resources.title
@@ -29,9 +31,13 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 internal class SportEventEditScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.sport_event,
     private val screenMode: ScreenMode = ScreenMode.Create,
-) : BaseScreen<SportEventEditViewModel, SportEventEditViewState>() {
+    override val screenTopAppBarTitle: StringResource = if(screenMode == ScreenMode.Create){
+        Res.string.create_sport_event
+    } else {
+        Res.string.edit_sport_event
+    },
+    ) : BaseScreen<SportEventEditViewModel, SportEventEditViewState>() {
 
     @Composable
     override fun provideViewModel() = koinViewModel<SportEventEditViewModel>()
@@ -41,6 +47,11 @@ internal class SportEventEditScreen(
         viewModel: SportEventEditViewModel,
         viewState: SportEventEditViewState
     ): @Composable ColumnScope.() -> Unit {
+
+        LaunchedEffect(Unit) {
+            viewModel.initView(screenMode)
+        }
+
         return ContentView(
             viewState = viewState,
             changeTitle = { viewModel.changeTitle(it) },

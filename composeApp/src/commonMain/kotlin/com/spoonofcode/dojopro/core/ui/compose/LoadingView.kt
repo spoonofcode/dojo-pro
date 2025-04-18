@@ -10,14 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.dojopro.core.ui.Dimens
+import com.spoonofcode.dojopro.core.ui.Paddings
 
 @Composable
 fun LoadingView() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(Dimens.screenPadding)
+            .padding(Paddings.screenPadding)
     ) {
         Box(
             contentAlignment = Alignment.Center,

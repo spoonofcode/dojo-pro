@@ -8,7 +8,55 @@ import androidx.compose.ui.text.font.FontWeight
 
 object Texts {
     @Composable
+    fun TS(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.titleSmall,
+        )
+    }
+
+    @Composable
+    fun TM(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.titleMedium,
+        )
+    }
+
+    @Composable
+    fun TL(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.titleLarge,
+        )
+    }
+
+    @Composable
     fun HS(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.headlineSmall,
+        )
+    }
+
+    @Composable
+    fun HSB(
         text: String,
         modifier: Modifier = Modifier,
     ) {
@@ -51,6 +99,18 @@ object Texts {
     }
 
     @Composable
+    fun BSB(
+        text: String,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodySmall,
+            fontWeight = FontWeight.Bold,
+
+            )
+    }
+
+    @Composable
     fun BM(
         text: String,
     ) {
@@ -62,6 +122,16 @@ object Texts {
 
     @Composable
     fun BL(
+        text: String,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyLarge,
+        )
+    }
+
+    @Composable
+    fun BLB(
         text: String,
     ) {
         Text(

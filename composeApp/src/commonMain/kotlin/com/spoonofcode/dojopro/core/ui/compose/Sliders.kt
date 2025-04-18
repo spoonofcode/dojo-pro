@@ -25,7 +25,7 @@ object Sliders {
     ) {
         var sliderPosition by remember { mutableStateOf(selectedStartPosition..selectedEndPosition) }
         Column {
-            Texts.BL(text = label + " ${sliderPosition.start.toInt()} - ${sliderPosition.endInclusive.toInt()}")
+            Texts.BLB(text = label + " ${sliderPosition.start.toInt()} - ${sliderPosition.endInclusive.toInt()}")
 
             RangeSlider(
                 value = sliderPosition,

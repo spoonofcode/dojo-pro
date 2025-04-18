@@ -20,6 +20,8 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="search">Search</string>
+    <string name="date">Date</string>
+    <string name="location">Location</string>
 
     <!-- SECTION Login -->
     <string name="forget_password">Forget password?</string>
@@ -47,14 +49,13 @@
     <string name="min_number_of_people">Min Number of People</string>
     <string name="number_of_people">Number of People</string>
     <string name="sport_event">Sport Event</string>
+    <string name="create_sport_event">Create Sport Event</string>
+    <string name="edit_sport_event">Edit Sport Event</string>
     <string name="join_to_sport_event">Join to Sport Event</string>
 
     <!-- SECTION Search Sport Event -->
     <string name="filter">Filter</string>
     <string name="search_sport_event">Search Sport Event</string>
-
-    <!-- SECTION Calendar -->
-    <string name="calendar">Calendar</string>
 
     <!-- SECTION Profile -->
     <string name="profile">Profile</string>
@@ -63,7 +64,8 @@
     <string name="shop">Shop</string>
 
     <!-- SECTION Filter Sport Event -->
-    <string name="applyFilter">Apply filter</string>
+    <string name="filter_sport_events">Filter Sport Events</string>
+    <string name="apply_filter">Apply filter</string>
 
     <!-- SECTION Settings -->
     <string name="update_users">Update Users</string>
