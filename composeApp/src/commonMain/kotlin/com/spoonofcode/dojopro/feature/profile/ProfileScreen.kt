@@ -4,12 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,7 +19,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.dojopro.core.model.Profile
 import com.spoonofcode.dojopro.core.ui.BaseScreen
-import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.Texts
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
@@ -45,16 +45,22 @@ internal class ProfileScreen(
         viewModel: ProfileViewModel,
         viewState: ProfileViewState
     ): @Composable ColumnScope.() -> Unit {
+        super.topBarActions = listOf(
+            TopBarAction(
+                icon = Icons.Default.Settings,
+                description = stringResource(resource = Res.string.settings),
+                onClick = { viewModel.navigateToSettings() }
+            ),
+        )
+
         return ContentView(
             viewState = viewState,
-            navigateToSettings = { viewModel.navigateToSettings() },
         )
     }
 
     @Composable
     private fun ContentView(
         viewState: ProfileViewState,
-        navigateToSettings: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -62,24 +68,23 @@ internal class ProfileScreen(
                 horizontalArrangement = Arrangement.Center,
             ) {
                 RoundedProfileImage()
+                Spacers.VerticalBetweenFields()
             }
-            Spacer(modifier = Modifier.height(16.dp))
 
-            Texts.HSB(viewState.profile!!.name)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                Texts.HSB(viewState.profile!!.name)
+                Spacers.VerticalBetweenFields()
+            }
+
+            Texts.BLB(stringResource(Res.string.events_created_by_me))
+            Texts.BM(viewState.profile!!.numberOfEventsCreatedByUser.toString())
             Spacers.VerticalBetweenFields()
 
-            Texts.HSB(stringResource(Res.string.events_created_by_me))
-            Texts.BLB(viewState.profile.numberOfEventsCreatedByUser.toString())
-            Spacers.VerticalBetweenFields()
-
-            Texts.HSB(stringResource(Res.string.events_i_participated_in))
-            Texts.BLB(viewState.profile.numberOfEventsUserParticipatedIn.toString())
-            Spacers.VerticalBetweenFields()
-
-            Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.settings),
-                onClick = navigateToSettings
-            )
+            Texts.BLB(stringResource(Res.string.events_i_participated_in))
+            Texts.BM(viewState.profile.numberOfEventsUserParticipatedIn.toString())
         }
     }
 
@@ -120,7 +125,6 @@ internal class ProfileScreen(
                         numberOfEventsUserParticipatedIn = 2
                     )
                 ),
-                navigateToSettings = {},
             )
         )
     }

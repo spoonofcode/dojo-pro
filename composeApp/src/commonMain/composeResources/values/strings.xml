@@ -65,7 +65,8 @@
     <string name="shop">Shop</string>
 
     <!-- SECTION Filter Sport Event -->
-    <string name="applyFilter">Apply filter</string>
+    <string name="filter_sport_events">Filter Sport Events</string>
+    <string name="apply_filter">Apply filter</string>
 
     <!-- SECTION Settings -->
     <string name="update_users">Update Users</string>
