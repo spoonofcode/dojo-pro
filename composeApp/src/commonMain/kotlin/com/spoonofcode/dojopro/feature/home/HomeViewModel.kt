@@ -50,8 +50,8 @@ internal class HomeViewModel(
     }
 
     private fun setLoadingView(isLoading: Boolean) {
-        updateState {
-            copy(isLoadingView = isLoading)
-        }
+//        updateState {
+//            copy(isLoadingView = isLoading)
+//        }
     }
 }
