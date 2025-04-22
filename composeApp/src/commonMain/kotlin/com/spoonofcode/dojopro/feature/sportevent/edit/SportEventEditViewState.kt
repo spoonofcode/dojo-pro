@@ -7,7 +7,6 @@ import com.spoonofcode.dojopro.core.ui.utils.LocalDateTimeUtils
 import kotlinx.datetime.LocalDateTime
 
 internal data class SportEventEditViewState(
-    override val isEnableView: Boolean = true,
     override val isLoadingView: Boolean = true,
     val screenMode: ScreenMode = ScreenMode.Create,
     val title: String = "",

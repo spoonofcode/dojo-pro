@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.domain.GetSportEventsCreatedByUserUseCase
 import com.spoonofcode.dojopro.core.domain.GetSportEventsUserParticipatedInUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
-import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsScreen
 import com.spoonofcode.dojopro.feature.sportevent.edit.SportEventEditScreen
 import kotlinx.coroutines.launch
@@ -19,15 +18,15 @@ internal class HomeViewModel(
     }
 
     fun initView() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             val sportEventsUserParticipatedIn = getSportEventsUserParticipatedInUseCase()
             val sportEventsCreatedByUser = getSportEventsCreatedByUserUseCase()
             updateState {
                 copy(
                     sportEventsUserParticipatedIn = sportEventsUserParticipatedIn,
                     sportEventsCreatedByUser = sportEventsCreatedByUser,
+                    isLoadingView = false,
                 )
             }
         }
@@ -49,9 +48,9 @@ internal class HomeViewModel(
         }
     }
 
-    private fun setLoadingView(isLoading: Boolean) {
-//        updateState {
-//            copy(isLoadingView = isLoading)
-//        }
+    private fun showLoadingView() {
+        updateState {
+            copy(isLoadingView = true)
+        }
     }
 }

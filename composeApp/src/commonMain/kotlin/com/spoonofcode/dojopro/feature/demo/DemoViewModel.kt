@@ -2,20 +2,18 @@ package com.spoonofcode.dojopro.feature.demo
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
-import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
+import kotlinx.coroutines.launch
 
 internal class DemoViewModel() : BaseViewModel<DemoViewState>(DemoViewState()) {
 
     fun initView() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
         }
     }
 
-    private fun setLoadingView(isLoading: Boolean) {
+    private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = isLoading)
+            copy(isLoadingView = true)
         }
     }
 

@@ -6,7 +6,6 @@ import com.spoonofcode.dojopro.core.domain.LoginGoogleUseCase
 import com.spoonofcode.dojopro.core.domain.LoginUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.SnackbarEvent
-import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import com.spoonofcode.dojopro.feature.login.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.dojopro.feature.login.register.RegisterScreen
 import kotlinx.coroutines.launch
@@ -15,12 +14,6 @@ internal class LoginViewModel(
     private val loginUseCase: LoginUseCase,
     private val loginGoogleUseCase: LoginGoogleUseCase,
 ) : BaseViewModel<LoginViewState>(LoginViewState()) {
-
-    private fun setLoadingView(isLoading: Boolean) {
-        updateState {
-            copy(isLoadingView = isLoading)
-        }
-    }
 
     fun changeEmail(email: String) {
         viewModelScope.launch {
@@ -39,18 +32,15 @@ internal class LoginViewModel(
     }
 
     fun forgotPassword() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
             viewModelNavigator.push(ForgotPasswordScreen())
         }
     }
 
     fun signIn() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
             runCatching {
+                showLoadingView()
                 loginUseCase(
                     email = viewState.value.email,
                     password = viewState.value.password,
@@ -64,9 +54,8 @@ internal class LoginViewModel(
     }
 
     fun signInWithGoogle(googleIdToken: String) {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             runCatching {
                 loginGoogleUseCase(googleIdToken)
             }.onSuccess {
@@ -78,10 +67,15 @@ internal class LoginViewModel(
     }
 
     fun signUp() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             viewModelNavigator.push(RegisterScreen())
+        }
+    }
+
+    private fun showLoadingView() {
+        updateState {
+            copy(isLoadingView = true)
         }
     }
 }

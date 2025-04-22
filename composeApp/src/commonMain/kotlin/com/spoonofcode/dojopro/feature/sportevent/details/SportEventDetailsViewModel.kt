@@ -6,9 +6,9 @@ import com.spoonofcode.dojopro.core.domain.DeleteSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.GetSportEventByIdUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.SnackbarEvent
-import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import com.spoonofcode.dojopro.feature.sportevent.edit.ScreenMode
 import com.spoonofcode.dojopro.feature.sportevent.edit.SportEventEditScreen
+import kotlinx.coroutines.launch
 
 internal class SportEventDetailsViewModel(
     private val getSportEventByIdUseCase: GetSportEventByIdUseCase,
@@ -17,12 +17,12 @@ internal class SportEventDetailsViewModel(
 ) : BaseViewModel<SportEventDetailsViewState>(SportEventDetailsViewState()) {
 
     fun initView(sportEventId: Int) {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             val sportEvent = getSportEventByIdUseCase(sportEventId = sportEventId)
             updateState {
                 copy(
+                    isLoadingView = false,
                     sportEvent = sportEvent
                 )
             }
@@ -30,17 +30,15 @@ internal class SportEventDetailsViewModel(
     }
 
     fun editSportEvent() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             viewModelNavigator.push(SportEventEditScreen(screenMode = ScreenMode.Edit(sportEventId = currentState().sportEvent!!.id)))
         }
     }
 
     fun deleteSportEvent() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             runCatching {
                 val currentState = currentState()
                 deleteSportEventUseCase(
@@ -55,9 +53,8 @@ internal class SportEventDetailsViewModel(
     }
 
     fun joinToSportEvent() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             runCatching {
                 val currentState = currentState()
                 addUserToSportEventUseCase(
@@ -71,9 +68,9 @@ internal class SportEventDetailsViewModel(
         }
     }
 
-    private fun setLoadingView(isLoading: Boolean) {
+    private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = isLoading)
+            copy(isLoadingView = true)
         }
     }
 }

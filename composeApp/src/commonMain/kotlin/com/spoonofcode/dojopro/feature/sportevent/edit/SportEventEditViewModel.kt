@@ -6,7 +6,6 @@ import com.spoonofcode.dojopro.core.domain.EditSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.LoadSportEventFormDataUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.SnackbarEvent
-import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 
@@ -17,15 +16,15 @@ internal class SportEventEditViewModel(
 ) : BaseViewModel<SportEventEditViewState>(SportEventEditViewState()) {
 
     fun initView(screenMode: ScreenMode) {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             runCatching {
                 loadSportEventFormDataUseCase(screenMode = screenMode)
             }.onSuccess { sportEventFormData ->
                 if (sportEventFormData.sportEvent == null) {
                     updateState {
                         copy(
+                            isLoadingView = false,
                             screenMode = screenMode,
                             clubs = sportEventFormData.clubs.associate { it.id to it.name },
                             coaches = sportEventFormData.coaches.associate { it.id to it.fullName },
@@ -42,6 +41,7 @@ internal class SportEventEditViewModel(
                 } else {
                     updateState {
                         copy(
+                            isLoadingView = false,
                             screenMode = screenMode,
                             clubs = sportEventFormData.clubs.associate { it.id to it.name },
                             coaches = sportEventFormData.coaches.associate { it.id to it.fullName },
@@ -64,12 +64,6 @@ internal class SportEventEditViewModel(
                     }
                 }
             }
-        }
-    }
-
-    private fun setLoadingView(isLoading: Boolean) {
-        updateState {
-            copy(isLoadingView = isLoading)
         }
     }
 
@@ -170,9 +164,8 @@ internal class SportEventEditViewModel(
     }
 
     fun submitSportEvent() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             val currentState = currentState()
             runCatching {
                 when (currentState.screenMode) {
@@ -225,6 +218,12 @@ internal class SportEventEditViewModel(
             }.onFailure {
                 showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
             }
+        }
+    }
+
+    private fun showLoadingView() {
+        updateState {
+            copy(isLoadingView = true)
         }
     }
 }
