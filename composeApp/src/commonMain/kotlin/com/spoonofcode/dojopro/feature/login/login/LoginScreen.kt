@@ -1,16 +1,25 @@
 package com.spoonofcode.dojopro.feature.login.login
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.Buttons.GoogleSignInButton
+import com.spoonofcode.dojopro.core.ui.compose.RoundedImage
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
+import com.spoonofcode.dojopro.core.ui.compose.Texts
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.dojo_pro
 import com.spoonofcode.dojopro.resources.email
 import com.spoonofcode.dojopro.resources.forget_password
+import com.spoonofcode.dojopro.resources.let_s_get_started
 import com.spoonofcode.dojopro.resources.password
 import com.spoonofcode.dojopro.resources.sign_in
 import com.spoonofcode.dojopro.resources.sign_up
@@ -50,6 +59,18 @@ internal class LoginScreen(
         signUp: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                RoundedImage(imageRes = Res.drawable.dojo_pro)
+                Spacers.VerticalBetweenFields()
+                Texts.HL(stringResource(resource = Res.string.let_s_get_started))
+            }
+
+            Spacers.VerticalBetweenFields()
+
             TextFields.Outlined(
                 value = viewState.email,
                 onValueChange = { changeEmail(it) },

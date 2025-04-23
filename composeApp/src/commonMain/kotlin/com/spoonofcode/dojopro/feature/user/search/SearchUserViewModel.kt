@@ -22,6 +22,7 @@ internal class SearchUserViewModel(
             val users = getAllUsersUseCase()
             updateState {
                 copy(
+                    isLoadingView = false,
                     initUsers = users,
                     filteredUsers = users,
                 )

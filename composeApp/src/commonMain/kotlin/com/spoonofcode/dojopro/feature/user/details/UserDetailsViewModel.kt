@@ -21,6 +21,7 @@ internal class UserDetailsViewModel(
             val roles = getRolesByUserIdUseCase(userId = userId)
             updateState {
                 copy(
+                    isLoadingView = false,
                     user = user,
                     roles = roles.joinToString(separator = ",") { it.name },
                     isVisibleAddCoachRoleButton = roles.none { it.id == Roles.COACH.id },
@@ -51,6 +52,7 @@ internal class UserDetailsViewModel(
             val roles = getRolesByUserIdUseCase(userId = userId)
             updateState {
                 copy(
+                    isLoadingView = false,
                     roles = roles.joinToString(separator = ",") { it.name },
                     isVisibleAddCoachRoleButton = roles.none { it.id == Roles.COACH.id },
                     isVisibleAddClubOwnerRoleButton = roles.none { it.id == Roles.CLUB_OWNER.id },

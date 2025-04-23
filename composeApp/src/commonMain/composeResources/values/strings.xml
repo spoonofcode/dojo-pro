@@ -24,6 +24,7 @@
     <string name="location">Location</string>
 
     <!-- SECTION Login -->
+    <string name="let_s_get_started">Let’s get started</string>
     <string name="forget_password">Forget password?</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>

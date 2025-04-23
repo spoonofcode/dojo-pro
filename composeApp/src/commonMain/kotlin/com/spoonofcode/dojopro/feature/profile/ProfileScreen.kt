@@ -1,24 +1,16 @@
 package com.spoonofcode.dojopro.feature.profile
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
 import com.spoonofcode.dojopro.core.model.Profile
 import com.spoonofcode.dojopro.core.ui.BaseScreen
+import com.spoonofcode.dojopro.core.ui.compose.RoundedImage
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.Texts
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
@@ -29,7 +21,6 @@ import com.spoonofcode.dojopro.resources.events_i_participated_in
 import com.spoonofcode.dojopro.resources.profile
 import com.spoonofcode.dojopro.resources.settings
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 internal class ProfileScreen(
@@ -67,7 +58,7 @@ internal class ProfileScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
             ) {
-                RoundedProfileImage()
+                RoundedImage(imageRes = Res.drawable.dojo_room)
                 Spacers.VerticalBetweenFields()
             }
 
@@ -85,29 +76,6 @@ internal class ProfileScreen(
 
             Texts.BLB(stringResource(Res.string.events_i_participated_in))
             Texts.BM(viewState.profile.numberOfEventsUserParticipatedIn.toString())
-        }
-    }
-
-    @Composable
-    fun RoundedProfileImage(
-        modifier: Modifier = Modifier,
-        contentDescription: String? = null
-    ) {
-        // You can wrap the Image in a Surface with CircleShape
-        Surface(
-            modifier = modifier
-                .size(120.dp), // adjust to desired size
-            shape = CircleShape,
-        ) {
-            Image(
-                painter = painterResource(resource = Res.drawable.dojo_room),
-                contentDescription = null,
-                modifier = Modifier
-                    .height(200.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp)),
-                contentScale = ContentScale.Crop
-            )
         }
     }
 
