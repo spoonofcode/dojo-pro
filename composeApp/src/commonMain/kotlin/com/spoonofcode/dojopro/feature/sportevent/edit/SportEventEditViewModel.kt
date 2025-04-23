@@ -8,6 +8,7 @@ import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class SportEventEditViewModel(
     private val createSportEventUseCase: CreateSportEventUseCase,
@@ -18,9 +19,8 @@ internal class SportEventEditViewModel(
     fun initView(screenMode: ScreenMode) {
         viewModelScope.launch {
             showLoadingView()
-            runCatching {
-                loadSportEventFormDataUseCase(screenMode = screenMode)
-            }.onSuccess { sportEventFormData ->
+            try {
+                val sportEventFormData = loadSportEventFormDataUseCase(screenMode = screenMode)
                 if (sportEventFormData.sportEvent == null) {
                     updateState {
                         copy(
@@ -63,6 +63,10 @@ internal class SportEventEditViewModel(
                         )
                     }
                 }
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorView()
             }
         }
     }
@@ -226,6 +230,15 @@ internal class SportEventEditViewModel(
             copy(
                 isLoadingView = true,
                 isErrorView = false,
+            )
+        }
+    }
+
+    private fun showErrorView() {
+        updateState {
+            copy(
+                isLoadingView = false,
+                isErrorView = true,
             )
         }
     }

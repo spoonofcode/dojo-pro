@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.core.domain.HasSpecialSettingsUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.feature.user.search.SearchUserScreen
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class SettingsViewModel(
     private val hasSpecialSettingsUseCase: HasSpecialSettingsUseCase,
@@ -17,12 +18,18 @@ internal class SettingsViewModel(
     fun initView() {
         viewModelScope.launch {
             showLoadingView()
-            val hasSpecialSettings = hasSpecialSettingsUseCase()
-            updateState {
-                copy(
-                    isLoadingView = false,
-                    isSearchUserButtonVisible = hasSpecialSettings,
-                )
+            try {
+                val hasSpecialSettings = hasSpecialSettingsUseCase()
+                updateState {
+                    copy(
+                        isLoadingView = false,
+                        isSearchUserButtonVisible = hasSpecialSettings,
+                    )
+                }
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorView()
             }
         }
     }
@@ -38,6 +45,15 @@ internal class SettingsViewModel(
             copy(
                 isLoadingView = true,
                 isErrorView = false,
+            )
+        }
+    }
+
+    private fun showErrorView() {
+        updateState {
+            copy(
+                isLoadingView = false,
+                isErrorView = true,
             )
         }
     }

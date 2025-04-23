@@ -79,6 +79,8 @@ internal data class SportEventDetailsScreen(
             viewModel.initView(sportEventId = sportEventId)
         }
 
+        super.reloadScreen = { viewModel.initView(sportEventId = sportEventId) }
+
         super.topBarActions = listOf(
             TopBarAction(
                 icon = Icons.Default.Edit,

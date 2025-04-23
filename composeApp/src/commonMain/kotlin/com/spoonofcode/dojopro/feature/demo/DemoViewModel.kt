@@ -20,4 +20,12 @@ internal class DemoViewModel() : BaseViewModel<DemoViewState>(DemoViewState()) {
         }
     }
 
+    private fun showErrorView() {
+        updateState {
+            copy(
+                isLoadingView = false,
+                isErrorView = true,
+            )
+        }
+    }
 }

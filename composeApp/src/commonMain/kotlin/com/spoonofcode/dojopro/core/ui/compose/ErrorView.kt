@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.dojopro.core.ui.Paddings
 import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.data_could_not_be_loaded
 import com.spoonofcode.dojopro.resources.dojo_pro
 import com.spoonofcode.dojopro.resources.reload
 import org.jetbrains.compose.resources.DrawableResource
@@ -47,7 +48,12 @@ fun ErrorView(
             )
         }
         Spacers.VerticalBetweenFields()
-        Buttons.PrimaryButton(
+
+        Texts.BLB(stringResource(Res.string.data_could_not_be_loaded))
+
+        Spacers.VerticalBetweenFields()
+
+        Buttons.SecondaryButton(
             text = stringResource(resource = Res.string.reload),
             onClick = reload
         )

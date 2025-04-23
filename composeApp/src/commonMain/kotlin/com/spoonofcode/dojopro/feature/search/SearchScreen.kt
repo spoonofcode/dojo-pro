@@ -66,6 +66,8 @@ internal class SearchScreen(
             ),
         )
 
+        super.reloadScreen = { viewModel.initView() }
+
         return ContentView(
             viewState = viewState,
             changeSearchText = { viewModel.changeSearchText(it) },

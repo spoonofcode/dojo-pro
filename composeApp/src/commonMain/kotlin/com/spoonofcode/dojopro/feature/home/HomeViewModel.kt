@@ -36,7 +36,6 @@ internal class HomeViewModel(
             } catch (e: Exception) {
                 showErrorView()
             }
-
         }
     }
 

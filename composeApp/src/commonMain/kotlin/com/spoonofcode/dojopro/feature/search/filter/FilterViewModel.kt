@@ -9,6 +9,7 @@ import com.spoonofcode.dojopro.feature.search.filter.FilterViewState.Companion.A
 import com.spoonofcode.dojopro.feature.search.filter.FilterViewState.Companion.ALL_OPTION_NAME
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class FilterViewModel(
     private val loadSportEventFilterFormDataUseCase: LoadSportEventFilterFormDataUseCase,
@@ -23,9 +24,8 @@ internal class FilterViewModel(
     fun initView() {
         viewModelScope.launch {
             showLoadingView()
-            runCatching {
-                loadSportEventFilterFormDataUseCase()
-            }.onSuccess { sportEventFilterFormData ->
+            try {
+                val sportEventFilterFormData = loadSportEventFilterFormDataUseCase()
                 val filterData = getFilterDataUseCase()
                 val selectedClubId = filterData.selectedClubId ?: ALL_OPTION_ID
                 val selectedCoachId = filterData.selectedCoachId ?: ALL_OPTION_ID
@@ -44,6 +44,10 @@ internal class FilterViewModel(
                         types = addAllOption().plus(sportEventFilterFormData.types.associate { it.id to it.name }),
                     )
                 }
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorView()
             }
         }
     }
@@ -125,6 +129,15 @@ internal class FilterViewModel(
             copy(
                 isLoadingView = true,
                 isErrorView = false,
+            )
+        }
+    }
+
+    private fun showErrorView() {
+        updateState {
+            copy(
+                isLoadingView = false,
+                isErrorView = true,
             )
         }
     }

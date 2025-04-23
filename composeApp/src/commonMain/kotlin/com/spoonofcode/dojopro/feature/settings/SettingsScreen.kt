@@ -23,6 +23,8 @@ internal class SettingsScreen(
         viewModel: SettingsViewModel,
         viewState: SettingsViewState
     ): @Composable ColumnScope.() -> Unit {
+        super.reloadScreen = { viewModel.initView() }
+
         return ContentView(
             viewState = viewState,
             navigateToUpdateUsers = { viewModel.navigateToSearchUser() },

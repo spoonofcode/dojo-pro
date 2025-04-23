@@ -33,6 +33,8 @@ internal class UserDetailsScreen(
             viewModel.initView(userId = userId)
         }
 
+        super.reloadScreen = { viewModel.initView(userId = userId) }
+
         return ContentView(
             viewState = viewState,
             addCoachRole = { viewModel.addCoachRole() },

@@ -1,7 +1,6 @@
 package com.spoonofcode.dojopro.feature.search.filter
 
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
@@ -34,6 +33,8 @@ internal class FilterScreen(
         viewModel: FilterViewModel,
         viewState: FilterViewState
     ): @Composable ColumnScope.() -> Unit {
+        super.reloadScreen = { viewModel.initView() }
+
         return ContentView(
             viewState = viewState,
             changeClub = { viewModel.changeClub(it) },
@@ -46,7 +47,6 @@ internal class FilterScreen(
         )
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     internal fun ContentView(
         viewState: FilterViewState,

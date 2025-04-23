@@ -9,6 +9,7 @@ import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import com.spoonofcode.dojopro.feature.sportevent.edit.ScreenMode
 import com.spoonofcode.dojopro.feature.sportevent.edit.SportEventEditScreen
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class SportEventDetailsViewModel(
     private val getSportEventByIdUseCase: GetSportEventByIdUseCase,
@@ -19,12 +20,18 @@ internal class SportEventDetailsViewModel(
     fun initView(sportEventId: Int) {
         viewModelScope.launch {
             showLoadingView()
-            val sportEvent = getSportEventByIdUseCase(sportEventId = sportEventId)
-            updateState {
-                copy(
-                    isLoadingView = false,
-                    sportEvent = sportEvent
-                )
+            try {
+                val sportEvent = getSportEventByIdUseCase(sportEventId = sportEventId)
+                updateState {
+                    copy(
+                        isLoadingView = false,
+                        sportEvent = sportEvent
+                    )
+                }
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorView()
             }
         }
     }
@@ -73,6 +80,15 @@ internal class SportEventDetailsViewModel(
             copy(
                 isLoadingView = true,
                 isErrorView = false,
+            )
+        }
+    }
+
+    private fun showErrorView() {
+        updateState {
+            copy(
+                isLoadingView = false,
+                isErrorView = true,
             )
         }
     }

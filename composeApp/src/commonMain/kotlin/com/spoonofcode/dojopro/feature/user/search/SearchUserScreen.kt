@@ -42,6 +42,9 @@ internal class SearchUserScreen(
         viewModel: SearchUserViewModel,
         viewState: SearchUserViewState
     ): @Composable ColumnScope.() -> Unit {
+
+        super.reloadScreen = { viewModel.initView() }
+
         return ContentView(
             viewState = viewState,
             changeSearchText = { viewModel.changeSearchText(it) },

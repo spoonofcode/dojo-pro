@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.core.domain.GetProfileUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.feature.settings.SettingsScreen
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class ProfileViewModel(
     private val getProfileUseCase: GetProfileUseCase
@@ -17,12 +18,18 @@ internal class ProfileViewModel(
     fun initView() {
         viewModelScope.launch {
             showLoadingView()
-            val profile = getProfileUseCase()
-            updateState {
-                copy(
-                    profile = profile,
-                    isLoadingView = false,
-                )
+            try {
+                val profile = getProfileUseCase()
+                updateState {
+                    copy(
+                        profile = profile,
+                        isLoadingView = false,
+                    )
+                }
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorView()
             }
         }
     }
@@ -38,6 +45,15 @@ internal class ProfileViewModel(
             copy(
                 isLoadingView = true,
                 isErrorView = false,
+            )
+        }
+    }
+
+    private fun showErrorView() {
+        updateState {
+            copy(
+                isLoadingView = false,
+                isErrorView = true,
             )
         }
     }

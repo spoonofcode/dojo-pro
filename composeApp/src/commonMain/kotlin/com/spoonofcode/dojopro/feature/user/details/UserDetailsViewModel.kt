@@ -6,8 +6,8 @@ import com.spoonofcode.dojopro.core.domain.GetRolesByUserIdUseCase
 import com.spoonofcode.dojopro.core.domain.GetUserByIdUseCase
 import com.spoonofcode.dojopro.core.model.Roles
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
-import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class UserDetailsViewModel(
     private val getUserByIdUseCase: GetUserByIdUseCase,
@@ -17,16 +17,22 @@ internal class UserDetailsViewModel(
 
     fun initView(userId: Int) {
         viewModelScope.launch {
-            val user = getUserByIdUseCase(userId = userId)
-            val roles = getRolesByUserIdUseCase(userId = userId)
-            updateState {
-                copy(
-                    isLoadingView = false,
-                    user = user,
-                    roles = roles.joinToString(separator = ",") { it.name },
-                    isVisibleAddCoachRoleButton = roles.none { it.id == Roles.COACH.id },
-                    isVisibleAddClubOwnerRoleButton = roles.none { it.id == Roles.CLUB_OWNER.id },
-                )
+            try {
+                val user = getUserByIdUseCase(userId = userId)
+                val roles = getRolesByUserIdUseCase(userId = userId)
+                updateState {
+                    copy(
+                        isLoadingView = false,
+                        user = user,
+                        roles = roles.joinToString(separator = ",") { it.name },
+                        isVisibleAddCoachRoleButton = roles.none { it.id == Roles.COACH.id },
+                        isVisibleAddClubOwnerRoleButton = roles.none { it.id == Roles.CLUB_OWNER.id },
+                    )
+                }
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorView()
             }
         }
     }
@@ -45,10 +51,9 @@ internal class UserDetailsViewModel(
 
     private suspend fun addRoleToUser(roleId: Int) {
         showLoadingView()
-        val userId = currentState().user!!.id
-        runCatching {
+        try {
+            val userId = currentState().user!!.id
             addRoleToUserUseCase(roleId = roleId, userId = userId)
-        }.onSuccess {
             val roles = getRolesByUserIdUseCase(userId = userId)
             updateState {
                 copy(
@@ -58,8 +63,10 @@ internal class UserDetailsViewModel(
                     isVisibleAddClubOwnerRoleButton = roles.none { it.id == Roles.CLUB_OWNER.id },
                 )
             }
-        }.onFailure {
-            showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+        } catch (ce: CancellationException) {
+            throw ce
+        } catch (e: Exception) {
+            showErrorView()
         }
     }
 
@@ -68,6 +75,15 @@ internal class UserDetailsViewModel(
             copy(
                 isLoadingView = true,
                 isErrorView = false,
+            )
+        }
+    }
+
+    private fun showErrorView() {
+        updateState {
+            copy(
+                isLoadingView = false,
+                isErrorView = true,
             )
         }
     }
