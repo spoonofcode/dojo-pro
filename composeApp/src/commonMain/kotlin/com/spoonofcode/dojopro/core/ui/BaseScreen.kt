@@ -73,7 +73,6 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
             screenTopAppBarTitle = screenTopAppBarTitle,
             backNavigationEnable = backNavigationEnable,
             onBackClick = { navigator.pop() },
-            isEnableView = viewState.isEnableView,
             isLoadingView = viewState.isLoadingView,
             content = provideContentView(viewModel, viewState),
         )
@@ -89,7 +88,6 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
         screenTopAppBarTitle: StringResource? = null,
         backNavigationEnable: Boolean = true,
         onBackClick: () -> Unit = {},
-        isEnableView: Boolean = false,
         isLoadingView: Boolean = false,
         content: @Composable ColumnScope.() -> Unit,
     ) {
@@ -129,7 +127,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                     )
                 }
             },
-            modifier = Modifier.viewEnable(isEnableView && isLoadingView.not()).fillMaxSize()
+            modifier = Modifier.viewEnable(isLoadingView.not()).fillMaxSize()
         ) { innerPadding ->
             if (isLoadingView) {
                 LoadingView()

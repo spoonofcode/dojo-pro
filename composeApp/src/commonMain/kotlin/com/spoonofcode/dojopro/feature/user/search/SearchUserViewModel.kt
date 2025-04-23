@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.domain.GetAllUsersUseCase
 import com.spoonofcode.dojopro.core.domain.GetFilteredUsersByTextUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
-import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import com.spoonofcode.dojopro.feature.user.details.UserDetailsScreen
 import kotlinx.coroutines.launch
 
@@ -18,12 +17,12 @@ internal class SearchUserViewModel(
     }
 
     fun initView() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             val users = getAllUsersUseCase()
             updateState {
                 copy(
+                    isLoadingView = false,
                     initUsers = users,
                     filteredUsers = users,
                 )
@@ -50,9 +49,9 @@ internal class SearchUserViewModel(
         }
     }
 
-    private fun setLoadingView(isLoading: Boolean) {
+    private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = isLoading)
+            copy(isLoadingView = true)
         }
     }
 }

@@ -3,7 +3,6 @@ package com.spoonofcode.dojopro.feature.settings
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.domain.HasSpecialSettingsUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
-import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import com.spoonofcode.dojopro.feature.user.search.SearchUserScreen
 import kotlinx.coroutines.launch
 
@@ -16,12 +15,12 @@ internal class SettingsViewModel(
     }
 
     fun initView() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             val hasSpecialSettings = hasSpecialSettingsUseCase()
             updateState {
                 copy(
+                    isLoadingView = false,
                     isSearchUserButtonVisible = hasSpecialSettings,
                 )
             }
@@ -34,9 +33,9 @@ internal class SettingsViewModel(
         }
     }
 
-    private fun setLoadingView(isLoading: Boolean) {
+    private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = isLoading)
+            copy(isLoadingView = true)
         }
     }
 }

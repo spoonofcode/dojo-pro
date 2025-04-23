@@ -7,7 +7,7 @@ import com.spoonofcode.dojopro.core.domain.GetUserByIdUseCase
 import com.spoonofcode.dojopro.core.model.Roles
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.SnackbarEvent
-import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
+import kotlinx.coroutines.launch
 
 internal class UserDetailsViewModel(
     private val getUserByIdUseCase: GetUserByIdUseCase,
@@ -16,13 +16,12 @@ internal class UserDetailsViewModel(
 ) : BaseViewModel<UserDetailsViewState>(UserDetailsViewState()) {
 
     fun initView(userId: Int) {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
             val user = getUserByIdUseCase(userId = userId)
             val roles = getRolesByUserIdUseCase(userId = userId)
             updateState {
                 copy(
+                    isLoadingView = false,
                     user = user,
                     roles = roles.joinToString(separator = ",") { it.name },
                     isVisibleAddCoachRoleButton = roles.none { it.id == Roles.COACH.id },
@@ -33,22 +32,19 @@ internal class UserDetailsViewModel(
     }
 
     fun addCoachRole() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
             addRoleToUser(roleId = Roles.COACH.id)
         }
     }
 
     fun addClubOwnerRole() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
             addRoleToUser(roleId = Roles.CLUB_OWNER.id)
         }
     }
 
     private suspend fun addRoleToUser(roleId: Int) {
+        showLoadingView()
         val userId = currentState().user!!.id
         runCatching {
             addRoleToUserUseCase(roleId = roleId, userId = userId)
@@ -56,6 +52,7 @@ internal class UserDetailsViewModel(
             val roles = getRolesByUserIdUseCase(userId = userId)
             updateState {
                 copy(
+                    isLoadingView = false,
                     roles = roles.joinToString(separator = ",") { it.name },
                     isVisibleAddCoachRoleButton = roles.none { it.id == Roles.COACH.id },
                     isVisibleAddClubOwnerRoleButton = roles.none { it.id == Roles.CLUB_OWNER.id },
@@ -66,9 +63,9 @@ internal class UserDetailsViewModel(
         }
     }
 
-    private fun setLoadingView(isLoading: Boolean) {
+    private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = isLoading)
+            copy(isLoadingView = true)
         }
     }
 }

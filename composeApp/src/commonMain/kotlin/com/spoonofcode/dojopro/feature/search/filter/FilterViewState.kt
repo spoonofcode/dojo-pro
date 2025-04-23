@@ -7,7 +7,6 @@ import com.spoonofcode.dojopro.core.ui.utils.LocalDateTimeUtils
 import kotlinx.datetime.LocalDateTime
 
 internal data class FilterViewState(
-    override val isEnableView: Boolean = true,
     override val isLoadingView: Boolean = true,
     val clubs: Map<Int, String> = emptyMap(),
     val coaches: Map<Int, String> = emptyMap(),

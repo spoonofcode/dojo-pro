@@ -6,21 +6,15 @@ import com.spoonofcode.dojopro.core.domain.LoginGoogleUseCase
 import com.spoonofcode.dojopro.core.domain.LoginUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.SnackbarEvent
-import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import com.spoonofcode.dojopro.feature.login.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.dojopro.feature.login.register.RegisterScreen
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class LoginViewModel(
     private val loginUseCase: LoginUseCase,
     private val loginGoogleUseCase: LoginGoogleUseCase,
 ) : BaseViewModel<LoginViewState>(LoginViewState()) {
-
-    private fun setLoadingView(isLoading: Boolean) {
-        updateState {
-            copy(isLoadingView = isLoading)
-        }
-    }
 
     fun changeEmail(email: String) {
         viewModelScope.launch {
@@ -39,34 +33,31 @@ internal class LoginViewModel(
     }
 
     fun forgotPassword() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
             viewModelNavigator.push(ForgotPasswordScreen())
         }
     }
 
     fun signIn() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
-            runCatching {
+        viewModelScope.launch {
+            showLoadingView()
+            try {
                 loginUseCase(
                     email = viewState.value.email,
                     password = viewState.value.password,
                 )
-            }.onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
-            }.onFailure {
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
             }
         }
     }
 
     fun signInWithGoogle(googleIdToken: String) {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             runCatching {
                 loginGoogleUseCase(googleIdToken)
             }.onSuccess {
@@ -78,10 +69,15 @@ internal class LoginViewModel(
     }
 
     fun signUp() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             viewModelNavigator.push(RegisterScreen())
+        }
+    }
+
+    private fun showLoadingView() {
+        updateState {
+            copy(isLoadingView = true)
         }
     }
 }

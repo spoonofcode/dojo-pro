@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.domain.GetFilteredSportEventsByTextUseCase
 import com.spoonofcode.dojopro.core.domain.GetFilteredSportEventsUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
-import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import com.spoonofcode.dojopro.feature.search.filter.FilterScreen
 import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsScreen
 import kotlinx.coroutines.launch
@@ -19,12 +18,12 @@ internal class SearchViewModel(
     }
 
     fun initView() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             val filteredSportEvents = getFilteredSportEventsUseCase()
             updateState {
                 copy(
+                    isLoadingView = false,
                     initSportEvents = filteredSportEvents,
                     filteredSportEvents = filteredSportEvents,
                 )
@@ -57,9 +56,9 @@ internal class SearchViewModel(
         }
     }
 
-    private fun setLoadingView(isLoading: Boolean) {
+    private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = isLoading)
+            copy(isLoadingView = true)
         }
     }
 }

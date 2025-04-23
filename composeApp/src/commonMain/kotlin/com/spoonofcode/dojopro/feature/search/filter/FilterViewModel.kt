@@ -5,7 +5,6 @@ import com.spoonofcode.dojopro.core.domain.GetFilterDataUseCase
 import com.spoonofcode.dojopro.core.domain.LoadSportEventFilterFormDataUseCase
 import com.spoonofcode.dojopro.core.domain.SetFilterDataUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
-import com.spoonofcode.dojopro.core.ui.ext.launchWithProgress
 import com.spoonofcode.dojopro.feature.search.filter.FilterViewState.Companion.ALL_OPTION_ID
 import com.spoonofcode.dojopro.feature.search.filter.FilterViewState.Companion.ALL_OPTION_NAME
 import kotlinx.coroutines.launch
@@ -22,9 +21,8 @@ internal class FilterViewModel(
     }
 
     fun initView() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             runCatching {
                 loadSportEventFilterFormDataUseCase()
             }.onSuccess { sportEventFilterFormData ->
@@ -35,6 +33,7 @@ internal class FilterViewModel(
                 val selectedTypeId = filterData.selectedTypeId ?: ALL_OPTION_ID
                 updateState {
                     copy(
+                        isLoadingView = false,
                         selectedClubId = selectedClubId,
                         selectedCoachId = selectedCoachId,
                         selectedLevelId = selectedLevelId,
@@ -46,14 +45,6 @@ internal class FilterViewModel(
                     )
                 }
             }
-        }
-    }
-
-    private fun addAllOption(): Map<Int, String> = mapOf(ALL_OPTION_ID to ALL_OPTION_NAME)
-
-    private fun setLoadingView(isLoading: Boolean) {
-        updateState {
-            copy(isLoadingView = isLoading)
         }
     }
 
@@ -106,9 +97,8 @@ internal class FilterViewModel(
     }
 
     fun applyFilter() {
-        viewModelScope.launchWithProgress(
-            onProgress = ::setLoadingView
-        ) {
+        viewModelScope.launch {
+            showLoadingView()
             val currentState = currentState()
             setFilterDataUseCase.invoke(
                 selectedClubId = currentState.selectedClubId,
@@ -122,9 +112,17 @@ internal class FilterViewModel(
         }
     }
 
+    private fun addAllOption(): Map<Int, String> = mapOf(ALL_OPTION_ID to ALL_OPTION_NAME)
+
     private fun navigateBack() {
         viewModelScope.launch {
             viewModelNavigator.pop()
+        }
+    }
+
+    private fun showLoadingView() {
+        updateState {
+            copy(isLoadingView = true)
         }
     }
 }
