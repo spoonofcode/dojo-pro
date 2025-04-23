@@ -1,6 +1,6 @@
 package com.spoonofcode.dojopro.core.ui.compose
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,19 +10,17 @@ import androidx.compose.ui.Modifier
 import com.spoonofcode.dojopro.core.ui.Paddings
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.dojo_pro
+import org.jetbrains.compose.resources.DrawableResource
 
 @Composable
-fun LoadingView() {
+fun LoadingView(
+    iconRes: DrawableResource = Res.drawable.dojo_pro,
+) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(Paddings.screenPadding)
+        modifier = Modifier.fillMaxSize().padding(Paddings.screenPadding),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            PulsatingIcon(iconRes = Res.drawable.dojo_pro)
-        }
+        PulsatingIcon(iconRes = iconRes)
     }
 }

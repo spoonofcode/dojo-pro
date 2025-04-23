@@ -60,7 +60,10 @@ internal class RegisterViewModel(
 
     private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = true)
+            copy(
+                isLoadingView = true,
+                isErrorView = false,
+            )
         }
     }
 }

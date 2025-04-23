@@ -26,6 +26,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.spoonofcode.dojopro.core.ui.compose.ErrorView
 import com.spoonofcode.dojopro.core.ui.compose.LoadingView
 import com.spoonofcode.dojopro.core.ui.compose.Snackbar
 import com.spoonofcode.dojopro.core.ui.compose.Texts
@@ -42,6 +43,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     open val verticalScrollEnable: Boolean = true,
     open val contentPadding: PaddingValues = PaddingValues(Paddings.screenPadding),
     open var topBarActions: List<TopBarAction> = emptyList(),
+    open var reloadScreen: () -> Unit = {},
 ) : Screen {
 
     @Composable
@@ -74,6 +76,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
             backNavigationEnable = backNavigationEnable,
             onBackClick = { navigator.pop() },
             isLoadingView = viewState.isLoadingView,
+            iErrorView = viewState.isErrorView,
             content = provideContentView(viewModel, viewState),
         )
     }
@@ -89,6 +92,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
         backNavigationEnable: Boolean = true,
         onBackClick: () -> Unit = {},
         isLoadingView: Boolean = false,
+        iErrorView: Boolean = false,
         content: @Composable ColumnScope.() -> Unit,
     ) {
         Scaffold(
@@ -129,19 +133,24 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
             },
             modifier = Modifier.viewEnable(isLoadingView.not()).fillMaxSize()
         ) { innerPadding ->
-            if (isLoadingView) {
-                LoadingView()
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .addIf(verticalScrollEnable) {
-                            verticalScroll(rememberScrollState())
-                        }
-                        .padding(innerPadding)
-                        .padding(contentPadding),
-                    content = content
+
+            when {
+                isLoadingView -> LoadingView()
+                iErrorView -> ErrorView(
+                    reload = reloadScreen,
                 )
+
+                else ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .addIf(verticalScrollEnable) {
+                                verticalScroll(rememberScrollState())
+                            }
+                            .padding(innerPadding)
+                            .padding(contentPadding),
+                        content = content
+                    )
             }
         }
     }

@@ -122,7 +122,10 @@ internal class FilterViewModel(
 
     private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = true)
+            copy(
+                isLoadingView = true,
+                isErrorView = false,
+            )
         }
     }
 }

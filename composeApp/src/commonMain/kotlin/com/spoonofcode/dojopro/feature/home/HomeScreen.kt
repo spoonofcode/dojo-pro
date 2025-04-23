@@ -64,6 +64,8 @@ internal class HomeScreen(
             ),
         )
 
+        super.reloadScreen = { viewModel.initView() }
+
         return ContentView(
             viewState = viewState,
             goToMyEvent = { viewModel.goToMyEvent(it) },

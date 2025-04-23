@@ -22,6 +22,7 @@
     <string name="search">Search</string>
     <string name="date">Date</string>
     <string name="location">Location</string>
+    <string name="reload">Reload</string>
 
     <!-- SECTION Login -->
     <string name="let_s_get_started">Let’s get started</string>
