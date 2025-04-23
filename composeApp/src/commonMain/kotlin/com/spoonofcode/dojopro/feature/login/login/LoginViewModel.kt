@@ -9,6 +9,7 @@ import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import com.spoonofcode.dojopro.feature.login.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.dojopro.feature.login.register.RegisterScreen
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class LoginViewModel(
     private val loginUseCase: LoginUseCase,
@@ -39,16 +40,17 @@ internal class LoginViewModel(
 
     fun signIn() {
         viewModelScope.launch {
-            runCatching {
-                showLoadingView()
+            showLoadingView()
+            try {
                 loginUseCase(
                     email = viewState.value.email,
                     password = viewState.value.password,
                 )
-            }.onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
-            }.onFailure {
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
             }
         }
     }
