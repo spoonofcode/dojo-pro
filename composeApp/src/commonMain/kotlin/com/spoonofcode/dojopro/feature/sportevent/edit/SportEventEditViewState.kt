@@ -22,7 +22,6 @@ internal data class SportEventEditViewState(
     val eventTitle: String? = null,
     val eventDescription: String? = null,
     val selectedClubId: Int? = null,
-    val selectedCoachId: Int? = null,
     val selectedRoomId: Int? = null,
     val selectedLevelId: Int? = null,
     val selectedTypeId: Int? = null,

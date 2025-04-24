@@ -8,18 +8,15 @@ import com.spoonofcode.dojopro.core.data.repository.TypeRepository
 import com.spoonofcode.dojopro.core.data.repository.UserRepository
 import com.spoonofcode.dojopro.core.model.Club
 import com.spoonofcode.dojopro.core.model.Level
-import com.spoonofcode.dojopro.core.model.Roles
 import com.spoonofcode.dojopro.core.model.Room
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.model.Type
-import com.spoonofcode.dojopro.core.model.User
 import com.spoonofcode.dojopro.feature.sportevent.edit.ScreenMode
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 data class SportEventFormData(
     val clubs: List<Club>,
-    val coaches: List<User>,
     val rooms: List<Room>,
     val levels: List<Level>,
     val types: List<Type>,
@@ -39,7 +36,6 @@ class LoadSportEventFormDataUseCase(
     ): SportEventFormData {
         return coroutineScope {
             val clubsAsync = async { clubRepository.readAll() }
-            val coachesAsync = async { userRepository.readAllUsersByRole(roleId = Roles.COACH.id) }
             val roomsAsync = async { roomRepository.readAll() }
             val levelsAsync = async { levelRepository.readAll() }
             val typesAsync = async { typeRepository.readAll() }
@@ -52,14 +48,12 @@ class LoadSportEventFormDataUseCase(
             }
 
             val clubs = clubsAsync.await()
-            val coaches = coachesAsync.await()
             val rooms = roomsAsync.await()
             val levels = levelsAsync.await()
             val types = typesAsync.await()
 
             SportEventFormData(
                 clubs = clubs,
-                coaches = coaches,
                 rooms = rooms,
                 levels = levels,
                 types = types,

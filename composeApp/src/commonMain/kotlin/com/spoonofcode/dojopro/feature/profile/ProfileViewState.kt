@@ -4,7 +4,8 @@ import com.spoonofcode.dojopro.core.model.Profile
 import com.spoonofcode.dojopro.core.ui.BaseViewState
 
 internal data class ProfileViewState(
-    override val isLoadingView: Boolean = false,
+    override val isLoadingView: Boolean = true,
+    override val isErrorView: Boolean = false,
     val profile: Profile? = null,
 ) : BaseViewState(
     isLoadingView = isLoadingView,
