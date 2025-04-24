@@ -6,6 +6,7 @@
     <string name="coach">Coach</string>
     <string name="club">Club</string>
     <string name="cost">Cost</string>
+    <string name="pln">zł</string>
     <string name="description">Description</string>
     <string name="end">End</string>
     <string name="level">Level</string>

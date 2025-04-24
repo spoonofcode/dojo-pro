@@ -20,6 +20,7 @@ import com.spoonofcode.dojopro.resources.edit_sport_event
 import com.spoonofcode.dojopro.resources.end
 import com.spoonofcode.dojopro.resources.level
 import com.spoonofcode.dojopro.resources.number_of_people
+import com.spoonofcode.dojopro.resources.pln
 import com.spoonofcode.dojopro.resources.room
 import com.spoonofcode.dojopro.resources.start
 import com.spoonofcode.dojopro.resources.submit
@@ -138,7 +139,8 @@ internal class SportEventEditScreen(
             )
 
             Sliders.Slider(
-                label = stringResource(resource = Res.string.cost),
+                labelPrefix = stringResource(resource = Res.string.cost),
+                labelPostfix = stringResource(resource = Res.string.pln),
                 minValue = COST_MIN_VALUE,
                 maxValue = COST_MAX_VALUE,
                 steps = COST_NUMBER_OF_STEPS,
