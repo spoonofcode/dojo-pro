@@ -34,7 +34,7 @@ internal data class SportEventEditViewState(
     val endDateTime: LocalDateTime = LocalDateTimeUtils.now().plus(hours = 1).roundToNextHour(),
 ) : BaseViewState() {
     companion object {
-        private const val DEFAULT_MIN_NUMBER_OF_PEOPLE = 4
-        private const val DEFAULT_MAX_NUMBER_OF_PEOPLE = 8
+        private const val DEFAULT_MIN_NUMBER_OF_PEOPLE = 8
+        private const val DEFAULT_MAX_NUMBER_OF_PEOPLE = 12
     }
 }

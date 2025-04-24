@@ -172,7 +172,7 @@ internal class SportEventEditScreen(
 
     companion object {
         private const val PEOPLE_RANGE_MIN_VALUE = 1f
-        private const val PEOPLE_RANGE_MAX_VALUE = 10f
-        private const val PEOPLE_RANGE_NUMBER_OF_STEPS = 8
+        private const val PEOPLE_RANGE_MAX_VALUE = 20f
+        private const val PEOPLE_RANGE_NUMBER_OF_STEPS = 18
     }
 }
