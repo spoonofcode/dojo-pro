@@ -15,7 +15,8 @@ object Sliders {
     @Preview
     @Composable
     fun Slider(
-        label: String,
+        labelPrefix: String = "",
+        labelPostfix: String = "",
         minValue: Float,
         maxValue: Float,
         steps: Int,
@@ -24,7 +25,7 @@ object Sliders {
     ) {
         var sliderPosition by remember { mutableStateOf(selectedPosition) }
         Column {
-            Texts.BLB(text = label + " ${sliderPosition.toInt()}")
+            Texts.BLB(text = "$labelPrefix ${sliderPosition.toInt()} $labelPostfix")
 
             Slider(
                 value = sliderPosition,
