@@ -13,7 +13,6 @@ import com.spoonofcode.dojopro.core.ui.compose.TextFields
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.club
-import com.spoonofcode.dojopro.resources.coach
 import com.spoonofcode.dojopro.resources.cost
 import com.spoonofcode.dojopro.resources.create_sport_event
 import com.spoonofcode.dojopro.resources.description
@@ -32,12 +31,12 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class SportEventEditScreen(
     private val screenMode: ScreenMode = ScreenMode.Create,
-    override val screenTopAppBarTitle: StringResource = if(screenMode == ScreenMode.Create){
+    override val screenTopAppBarTitle: StringResource = if (screenMode == ScreenMode.Create) {
         Res.string.create_sport_event
     } else {
         Res.string.edit_sport_event
     },
-    ) : BaseScreen<SportEventEditViewModel, SportEventEditViewState>() {
+) : BaseScreen<SportEventEditViewModel, SportEventEditViewState>() {
 
     @Composable
     override fun provideViewModel() = koinViewModel<SportEventEditViewModel>()
@@ -59,7 +58,6 @@ internal class SportEventEditScreen(
             changeTitle = { viewModel.changeTitle(it) },
             changeDescription = { viewModel.changeDescription(it) },
             changeClub = { viewModel.changeClub(it) },
-            changeCoach = { viewModel.changeCoach(it) },
             changeRoom = { viewModel.changeRoom(it) },
             changeLevel = { viewModel.changeLevel(it) },
             changeType = { viewModel.changeType(it) },
@@ -78,7 +76,6 @@ internal class SportEventEditScreen(
         changeTitle: (String) -> Unit,
         changeDescription: (String) -> Unit,
         changeClub: (Int) -> Unit,
-        changeCoach: (Int) -> Unit,
         changeRoom: (Int) -> Unit,
         changeLevel: (Int) -> Unit,
         changeType: (Int) -> Unit,
@@ -106,13 +103,6 @@ internal class SportEventEditScreen(
                 value = viewState.clubs.getValue(viewState.selectedClubId!!),
                 values = viewState.clubs,
                 onValueChange = { changeClub(it) }
-            )
-            DropDownMenus.DropdownMenu(
-                enabled = true,
-                label = stringResource(resource = Res.string.coach),
-                value = viewState.coaches.getValue(viewState.selectedCoachId!!),
-                values = viewState.coaches,
-                onValueChange = { changeCoach(it) }
             )
             DropDownMenus.DropdownMenu(
                 enabled = true,
@@ -182,7 +172,7 @@ internal class SportEventEditScreen(
 
     companion object {
         private const val PEOPLE_RANGE_MIN_VALUE = 1f
-        private const val PEOPLE_RANGE_MAX_VALUE = 10f
-        private const val PEOPLE_RANGE_NUMBER_OF_STEPS = 8
+        private const val PEOPLE_RANGE_MAX_VALUE = 20f
+        private const val PEOPLE_RANGE_NUMBER_OF_STEPS = 18
     }
 }

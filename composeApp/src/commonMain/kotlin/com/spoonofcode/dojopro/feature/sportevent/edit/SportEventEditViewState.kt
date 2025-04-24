@@ -22,7 +22,6 @@ internal data class SportEventEditViewState(
     val eventTitle: String? = null,
     val eventDescription: String? = null,
     val selectedClubId: Int? = null,
-    val selectedCoachId: Int? = null,
     val selectedRoomId: Int? = null,
     val selectedLevelId: Int? = null,
     val selectedTypeId: Int? = null,
@@ -35,7 +34,7 @@ internal data class SportEventEditViewState(
     val endDateTime: LocalDateTime = LocalDateTimeUtils.now().plus(hours = 1).roundToNextHour(),
 ) : BaseViewState() {
     companion object {
-        private const val DEFAULT_MIN_NUMBER_OF_PEOPLE = 4
-        private const val DEFAULT_MAX_NUMBER_OF_PEOPLE = 8
+        private const val DEFAULT_MIN_NUMBER_OF_PEOPLE = 8
+        private const val DEFAULT_MAX_NUMBER_OF_PEOPLE = 12
     }
 }
