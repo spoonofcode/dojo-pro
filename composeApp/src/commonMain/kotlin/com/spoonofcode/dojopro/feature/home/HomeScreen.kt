@@ -139,7 +139,7 @@ internal class HomeScreen(
                             description = "Trenten",
                             minNumberOfPeople = 4078,
                             maxNumberOfPeople = 3999,
-                            cost = "Abbe",
+                            cost = 100,
                             startDateTime = LocalDateTime(2023, 1, 1, 1, 1),
                             endDateTime = LocalDateTime(2023, 1, 1, 1, 1),
                             club = Club(
@@ -173,7 +173,7 @@ internal class HomeScreen(
                             description = "Trenten",
                             minNumberOfPeople = 4078,
                             maxNumberOfPeople = 3999,
-                            cost = "Abbe",
+                            cost = 100,
                             startDateTime = LocalDateTime(2023, 1, 1, 1, 1),
                             endDateTime = LocalDateTime(2023, 1, 1, 1, 1),
                             club = Club(
@@ -206,7 +206,7 @@ internal class HomeScreen(
                             description = "Trenten",
                             minNumberOfPeople = 4078,
                             maxNumberOfPeople = 3999,
-                            cost = "Abbe",
+                            cost = 100,
                             startDateTime = LocalDateTime(2023, 1, 1, 1, 1),
                             endDateTime = LocalDateTime(2023, 1, 1, 1, 1),
                             club = Club(
@@ -240,7 +240,7 @@ internal class HomeScreen(
                             description = "Trenten",
                             minNumberOfPeople = 4078,
                             maxNumberOfPeople = 3999,
-                            cost = "Abbe",
+                            cost = 100,
                             startDateTime = LocalDateTime(2023, 1, 1, 1, 1),
                             endDateTime = LocalDateTime(2023, 1, 1, 1, 1),
                             club = Club(

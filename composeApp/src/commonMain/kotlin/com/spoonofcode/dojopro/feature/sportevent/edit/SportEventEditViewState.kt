@@ -28,7 +28,8 @@ internal data class SportEventEditViewState(
     val selectedMinNumberOfPeople: Int = DEFAULT_MIN_NUMBER_OF_PEOPLE,
     val selectedMaxNumberOfPeople: Int = DEFAULT_MAX_NUMBER_OF_PEOPLE,
 
-    val cost: String = "",
+    val cost: Int = DEFAULT_COST,
+    val selectedCost: Int = DEFAULT_COST,
 
     val startDateTime: LocalDateTime = LocalDateTimeUtils.now().roundToNextHour(),
     val endDateTime: LocalDateTime = LocalDateTimeUtils.now().plus(hours = 1).roundToNextHour(),
@@ -36,5 +37,6 @@ internal data class SportEventEditViewState(
     companion object {
         private const val DEFAULT_MIN_NUMBER_OF_PEOPLE = 8
         private const val DEFAULT_MAX_NUMBER_OF_PEOPLE = 12
+        private const val DEFAULT_COST = 200
     }
 }

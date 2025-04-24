@@ -16,7 +16,7 @@ class CreateSportEventUseCase(
         description: String,
         minNumberOfPeople: Int,
         maxNumberOfPeople: Int,
-        cost: String,
+        cost: Int,
         startDateTime: LocalDateTime,
         endDateTime: LocalDateTime,
         selectedClubId: Int,

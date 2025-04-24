@@ -81,7 +81,7 @@ internal class SportEventEditScreen(
         changeType: (Int) -> Unit,
         changeMinNumberOfPeople: (Int) -> Unit,
         changeMaxNumberOfPeople: (Int) -> Unit,
-        changeCost: (String) -> Unit,
+        changeCost: (Int) -> Unit,
         changeStartDateTime: (LocalDateTime) -> Unit,
         changeEndDateTime: (LocalDateTime) -> Unit,
         submitSportEvent: () -> Unit,
@@ -137,10 +137,13 @@ internal class SportEventEditScreen(
                 onEndPositionChange = { changeMaxNumberOfPeople(it) },
             )
 
-            TextFields.Outlined(
+            Sliders.Slider(
                 label = stringResource(resource = Res.string.cost),
-                value = viewState.cost,
-                onValueChange = { changeCost(it) },
+                minValue = COST_MIN_VALUE,
+                maxValue = COST_MAX_VALUE,
+                steps = COST_NUMBER_OF_STEPS,
+                selectedPosition = viewState.selectedCost.toFloat(),
+                onPositionChange = { changeCost(it) }
             )
 
             DatePickers.DatePickerWithTimer(
@@ -174,5 +177,8 @@ internal class SportEventEditScreen(
         private const val PEOPLE_RANGE_MIN_VALUE = 1f
         private const val PEOPLE_RANGE_MAX_VALUE = 20f
         private const val PEOPLE_RANGE_NUMBER_OF_STEPS = 18
+        private const val COST_MIN_VALUE = 100f
+        private const val COST_MAX_VALUE = 300f
+        private const val COST_NUMBER_OF_STEPS = 7
     }
 }

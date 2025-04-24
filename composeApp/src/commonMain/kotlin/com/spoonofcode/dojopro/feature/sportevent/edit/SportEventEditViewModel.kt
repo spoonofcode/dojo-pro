@@ -53,7 +53,7 @@ internal class SportEventEditViewModel(
                             description = sportEventFormData.sportEvent.description,
                             selectedMinNumberOfPeople = sportEventFormData.sportEvent.minNumberOfPeople,
                             selectedMaxNumberOfPeople = sportEventFormData.sportEvent.maxNumberOfPeople,
-                            cost = sportEventFormData.sportEvent.cost,
+                            cost = sportEventFormData.sportEvent.cost.toInt(),
                             startDateTime = sportEventFormData.sportEvent.startDateTime,
                             endDateTime = sportEventFormData.sportEvent.endDateTime,
                         )
@@ -131,7 +131,7 @@ internal class SportEventEditViewModel(
         }
     }
 
-    fun changeCost(cost: String) {
+    fun changeCost(cost: Int) {
         viewModelScope.launch {
             updateState {
                 copy(cost = cost)
