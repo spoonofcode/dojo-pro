@@ -6,6 +6,7 @@ import com.spoonofcode.dojopro.core.domain.GetRolesByUserIdUseCase
 import com.spoonofcode.dojopro.core.domain.GetUserByIdUseCase
 import com.spoonofcode.dojopro.core.model.Roles
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -66,7 +67,7 @@ internal class UserDetailsViewModel(
         } catch (ce: CancellationException) {
             throw ce
         } catch (e: Exception) {
-            showErrorView()
+            showErrorSnackbar(e)
         }
     }
 
@@ -84,6 +85,15 @@ internal class UserDetailsViewModel(
             copy(
                 isLoadingView = false,
                 isErrorView = true,
+            )
+        }
+    }
+
+    private fun showErrorSnackbar(e: Exception) {
+        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+        updateState {
+            copy(
+                isLoadingView = false
             )
         }
     }

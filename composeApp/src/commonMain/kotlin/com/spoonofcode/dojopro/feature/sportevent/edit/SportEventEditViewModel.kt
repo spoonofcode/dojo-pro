@@ -170,8 +170,8 @@ internal class SportEventEditViewModel(
     fun submitSportEvent() {
         viewModelScope.launch {
             showLoadingView()
-            val currentState = currentState()
-            runCatching {
+            try {
+                val currentState = currentState()
                 when (currentState.screenMode) {
                     is ScreenMode.Edit -> {
                         editSportEventUseCase(
@@ -208,7 +208,6 @@ internal class SportEventEditViewModel(
                         )
                     }
                 }
-            }.onSuccess {
                 when (currentState.screenMode) {
                     is ScreenMode.Edit -> {
                         viewModelNavigator.popToRoot()
@@ -219,8 +218,10 @@ internal class SportEventEditViewModel(
                     }
                 }
                 viewModelNavigator.pop()
-            }.onFailure {
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorSnackbar(e)
             }
         }
     }
@@ -239,6 +240,15 @@ internal class SportEventEditViewModel(
             copy(
                 isLoadingView = false,
                 isErrorView = true,
+            )
+        }
+    }
+
+    private fun showErrorSnackbar(e: Exception) {
+        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+        updateState {
+            copy(
+                isLoadingView = false
             )
         }
     }

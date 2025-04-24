@@ -4,7 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.app.MainHostScreen
 import com.spoonofcode.dojopro.core.domain.RegisterUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class RegisterViewModel(
     private val registerUseCase: RegisterUseCase,
@@ -45,15 +47,18 @@ internal class RegisterViewModel(
     fun signUp() {
         viewModelScope.launch {
             showLoadingView()
-            runCatching {
+            try {
                 registerUseCase(
                     email = viewState.value.email,
                     password = viewState.value.password,
                     firstName = viewState.value.firstName,
                     lastName = viewState.value.lastName,
                 )
-            }.onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorSnackbar(e)
             }
         }
     }
@@ -63,6 +68,15 @@ internal class RegisterViewModel(
             copy(
                 isLoadingView = true,
                 isErrorView = false,
+            )
+        }
+    }
+
+    private fun showErrorSnackbar(e: Exception) {
+        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+        updateState {
+            copy(
+                isLoadingView = false
             )
         }
     }

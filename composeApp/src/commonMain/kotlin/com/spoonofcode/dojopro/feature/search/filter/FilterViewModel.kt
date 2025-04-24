@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.core.domain.GetFilterDataUseCase
 import com.spoonofcode.dojopro.core.domain.LoadSportEventFilterFormDataUseCase
 import com.spoonofcode.dojopro.core.domain.SetFilterDataUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import com.spoonofcode.dojopro.feature.search.filter.FilterViewState.Companion.ALL_OPTION_ID
 import com.spoonofcode.dojopro.feature.search.filter.FilterViewState.Companion.ALL_OPTION_NAME
 import kotlinx.coroutines.launch
@@ -103,16 +104,22 @@ internal class FilterViewModel(
     fun applyFilter() {
         viewModelScope.launch {
             showLoadingView()
-            val currentState = currentState()
-            setFilterDataUseCase.invoke(
-                selectedClubId = currentState.selectedClubId,
-                selectedCoachId = currentState.selectedCoachId,
-                selectedLevelId = currentState.selectedLevelId,
-                selectedTypeId = currentState.selectedTypeId,
-                startDateTime = currentState.startDateTime,
-                endDateTime = currentState.endDateTime,
-            )
-            navigateBack()
+            try {
+                val currentState = currentState()
+                setFilterDataUseCase.invoke(
+                    selectedClubId = currentState.selectedClubId,
+                    selectedCoachId = currentState.selectedCoachId,
+                    selectedLevelId = currentState.selectedLevelId,
+                    selectedTypeId = currentState.selectedTypeId,
+                    startDateTime = currentState.startDateTime,
+                    endDateTime = currentState.endDateTime,
+                )
+                navigateBack()
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorSnackbar(e)
+            }
         }
     }
 
@@ -138,6 +145,15 @@ internal class FilterViewModel(
             copy(
                 isLoadingView = false,
                 isErrorView = true,
+            )
+        }
+    }
+
+    private fun showErrorSnackbar(e: Exception) {
+        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+        updateState {
+            copy(
+                isLoadingView = false
             )
         }
     }

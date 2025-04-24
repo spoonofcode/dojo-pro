@@ -38,7 +38,6 @@ internal class SportEventDetailsViewModel(
 
     fun editSportEvent() {
         viewModelScope.launch {
-            showLoadingView()
             viewModelNavigator.push(SportEventEditScreen(screenMode = ScreenMode.Edit(sportEventId = currentState().sportEvent!!.id)))
         }
     }
@@ -46,15 +45,16 @@ internal class SportEventDetailsViewModel(
     fun deleteSportEvent() {
         viewModelScope.launch {
             showLoadingView()
-            runCatching {
+            try {
                 val currentState = currentState()
                 deleteSportEventUseCase(
                     sportEventId = currentState.sportEvent!!.id,
                 )
-            }.onSuccess {
                 viewModelNavigator.pop()
-            }.onFailure {
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorSnackbar(e)
             }
         }
     }
@@ -62,15 +62,16 @@ internal class SportEventDetailsViewModel(
     fun joinToSportEvent() {
         viewModelScope.launch {
             showLoadingView()
-            runCatching {
+            try {
                 val currentState = currentState()
                 addUserToSportEventUseCase(
                     sportEventId = currentState.sportEvent!!.id,
                 )
-            }.onSuccess {
                 viewModelNavigator.pop()
-            }.onFailure {
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorSnackbar(e)
             }
         }
     }
@@ -89,6 +90,15 @@ internal class SportEventDetailsViewModel(
             copy(
                 isLoadingView = false,
                 isErrorView = true,
+            )
+        }
+    }
+
+    private fun showErrorSnackbar(e: Exception) {
+        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+        updateState {
+            copy(
+                isLoadingView = false
             )
         }
     }
