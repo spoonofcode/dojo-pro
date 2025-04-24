@@ -154,7 +154,7 @@ internal data class SportEventDetailsScreen(
 
             SportEventItemRowElement(
                 label = Res.string.cost,
-                elementValue = viewState.sportEvent.cost,
+                elementValue = viewState.sportEvent.cost.toString(),
                 icon = Icons.Default.Paid,
                 contentDescription = "Cost",
             )

@@ -9,7 +9,7 @@ data class SportEventRequest(
     val description: String,
     val minNumberOfPeople: Int,
     val maxNumberOfPeople: Int,
-    val cost: String,
+    val cost: Int,
     val startDateTime: LocalDateTime,
     val endDateTime: LocalDateTime,
     val clubId: Int,
