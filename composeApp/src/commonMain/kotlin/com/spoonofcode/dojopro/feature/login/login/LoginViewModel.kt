@@ -50,7 +50,7 @@ internal class LoginViewModel(
             } catch (ce: CancellationException) {
                 throw ce
             } catch (e: Exception) {
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+                showErrorSnackbar(e)
             }
         }
     }
@@ -58,26 +58,38 @@ internal class LoginViewModel(
     fun signInWithGoogle(googleIdToken: String) {
         viewModelScope.launch {
             showLoadingView()
-            runCatching {
+            try {
                 loginGoogleUseCase(googleIdToken)
-            }.onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
-            }.onFailure {
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorSnackbar(e)
             }
         }
     }
 
     fun signUp() {
         viewModelScope.launch {
-            showLoadingView()
             viewModelNavigator.push(RegisterScreen())
         }
     }
 
     private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = true)
+            copy(
+                isLoadingView = true,
+                isErrorView = false,
+            )
+        }
+    }
+
+    private fun showErrorSnackbar(e: Exception) {
+        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+        updateState {
+            copy(
+                isLoadingView = false
+            )
         }
     }
 }

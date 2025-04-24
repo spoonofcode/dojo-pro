@@ -4,6 +4,7 @@ import com.spoonofcode.dojopro.core.ui.BaseViewState
 
 internal data class RegisterViewState(
     override val isLoadingView: Boolean = false,
+    override val isErrorView: Boolean = false,
     val email: String = "",
     val password: String = "",
     val firstName: String = "",

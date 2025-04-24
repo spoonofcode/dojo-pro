@@ -44,6 +44,8 @@ internal class ProfileScreen(
             ),
         )
 
+        super.reloadScreen = { viewModel.initView() }
+
         return ContentView(
             viewState = viewState,
         )

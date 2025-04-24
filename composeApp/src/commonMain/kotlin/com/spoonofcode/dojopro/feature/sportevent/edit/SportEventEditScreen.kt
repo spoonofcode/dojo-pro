@@ -52,6 +52,8 @@ internal class SportEventEditScreen(
             viewModel.initView(screenMode)
         }
 
+        super.reloadScreen = { viewModel.initView(screenMode) }
+
         return ContentView(
             viewState = viewState,
             changeTitle = { viewModel.changeTitle(it) },

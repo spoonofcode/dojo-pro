@@ -13,8 +13,19 @@ internal class DemoViewModel() : BaseViewModel<DemoViewState>(DemoViewState()) {
 
     private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = true)
+            copy(
+                isLoadingView = true,
+                isErrorView = false,
+            )
         }
     }
 
+    private fun showErrorView() {
+        updateState {
+            copy(
+                isLoadingView = false,
+                isErrorView = true,
+            )
+        }
+    }
 }

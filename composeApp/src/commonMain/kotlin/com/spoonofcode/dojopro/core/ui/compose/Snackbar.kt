@@ -1,6 +1,7 @@
 package com.spoonofcode.dojopro.core.ui.compose
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarData
 import androidx.compose.material3.SnackbarDuration
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.spoonofcode.dojopro.core.ui.Paddings
 import com.spoonofcode.dojopro.core.ui.SnackbarEvent
+import com.spoonofcode.dojopro.core.ui.SnackbarType
 import com.spoonofcode.dojopro.core.ui.ext.showSnackbar
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
@@ -24,9 +26,7 @@ data class CustomSnackbarVisuals(
     override val actionLabel: String? = null,
     override val withDismissAction: Boolean = false,
     override val duration: SnackbarDuration = SnackbarDuration.Short,
-    // Custom fields
-    val containerColor: Color = Color.Gray,
-    val contentColor: Color = Color.White
+    val type: SnackbarType,
 ) : SnackbarVisuals
 
 @Composable
@@ -38,8 +38,8 @@ fun Snackbar(
         // Our custom visuals
         Snackbar(
             modifier = Modifier.padding(Paddings.screenPadding),
-            containerColor = visuals.containerColor,
-            contentColor = visuals.contentColor,
+            containerColor = getContainerColor(visuals.type),
+            contentColor = getContentColor(visuals.type),
             action = {
                 visuals.actionLabel?.let { actionLabel ->
                     TextButton(onClick = { snackbarData.performAction() }) {
@@ -75,4 +75,18 @@ fun setSnackbarHostState(
             }
         }
     }
+}
+
+@Composable
+private fun getContainerColor(type: SnackbarType): Color = when (type) {
+    SnackbarType.INFO -> MaterialTheme.colorScheme.onPrimaryContainer
+    SnackbarType.ERROR -> MaterialTheme.colorScheme.onErrorContainer
+    SnackbarType.SUCCESS -> MaterialTheme.colorScheme.onSecondaryContainer
+}
+
+@Composable
+private fun getContentColor(type: SnackbarType): Color = when (type) {
+    SnackbarType.INFO -> MaterialTheme.colorScheme.onPrimary
+    SnackbarType.ERROR -> MaterialTheme.colorScheme.onError
+    SnackbarType.SUCCESS -> MaterialTheme.colorScheme.onSecondary
 }

@@ -7,6 +7,7 @@ import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsScreen
 import com.spoonofcode.dojopro.feature.sportevent.edit.SportEventEditScreen
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class HomeViewModel(
     private val getSportEventsUserParticipatedInUseCase: GetSportEventsUserParticipatedInUseCase,
@@ -20,14 +21,20 @@ internal class HomeViewModel(
     fun initView() {
         viewModelScope.launch {
             showLoadingView()
-            val sportEventsUserParticipatedIn = getSportEventsUserParticipatedInUseCase()
-            val sportEventsCreatedByUser = getSportEventsCreatedByUserUseCase()
-            updateState {
-                copy(
-                    sportEventsUserParticipatedIn = sportEventsUserParticipatedIn,
-                    sportEventsCreatedByUser = sportEventsCreatedByUser,
-                    isLoadingView = false,
-                )
+            try {
+                val sportEventsUserParticipatedIn = getSportEventsUserParticipatedInUseCase()
+                val sportEventsCreatedByUser = getSportEventsCreatedByUserUseCase()
+                updateState {
+                    copy(
+                        sportEventsUserParticipatedIn = sportEventsUserParticipatedIn,
+                        sportEventsCreatedByUser = sportEventsCreatedByUser,
+                        isLoadingView = false,
+                    )
+                }
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorView()
             }
         }
     }
@@ -50,7 +57,19 @@ internal class HomeViewModel(
 
     private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = true)
+            copy(
+                isLoadingView = true,
+                isErrorView = false,
+            )
+        }
+    }
+
+    private fun showErrorView() {
+        updateState {
+            copy(
+                isLoadingView = false,
+                isErrorView = true,
+            )
         }
     }
 }

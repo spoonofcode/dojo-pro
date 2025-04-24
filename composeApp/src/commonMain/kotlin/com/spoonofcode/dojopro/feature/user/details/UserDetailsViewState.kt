@@ -9,4 +9,4 @@ internal data class UserDetailsViewState(
     val roles: String = "",
     val isVisibleAddCoachRoleButton: Boolean = false,
     val isVisibleAddClubOwnerRoleButton: Boolean = false,
-    ): BaseViewState()
+) : BaseViewState()

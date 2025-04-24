@@ -8,6 +8,7 @@ import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class SportEventEditViewModel(
     private val createSportEventUseCase: CreateSportEventUseCase,
@@ -18,9 +19,8 @@ internal class SportEventEditViewModel(
     fun initView(screenMode: ScreenMode) {
         viewModelScope.launch {
             showLoadingView()
-            runCatching {
-                loadSportEventFormDataUseCase(screenMode = screenMode)
-            }.onSuccess { sportEventFormData ->
+            try {
+                val sportEventFormData = loadSportEventFormDataUseCase(screenMode = screenMode)
                 if (sportEventFormData.sportEvent == null) {
                     updateState {
                         copy(
@@ -63,6 +63,10 @@ internal class SportEventEditViewModel(
                         )
                     }
                 }
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorView()
             }
         }
     }
@@ -166,8 +170,8 @@ internal class SportEventEditViewModel(
     fun submitSportEvent() {
         viewModelScope.launch {
             showLoadingView()
-            val currentState = currentState()
-            runCatching {
+            try {
+                val currentState = currentState()
                 when (currentState.screenMode) {
                     is ScreenMode.Edit -> {
                         editSportEventUseCase(
@@ -204,7 +208,6 @@ internal class SportEventEditViewModel(
                         )
                     }
                 }
-            }.onSuccess {
                 when (currentState.screenMode) {
                     is ScreenMode.Edit -> {
                         viewModelNavigator.popToRoot()
@@ -215,15 +218,38 @@ internal class SportEventEditViewModel(
                     }
                 }
                 viewModelNavigator.pop()
-            }.onFailure {
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorSnackbar(e)
             }
         }
     }
 
     private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = true)
+            copy(
+                isLoadingView = true,
+                isErrorView = false,
+            )
+        }
+    }
+
+    private fun showErrorView() {
+        updateState {
+            copy(
+                isLoadingView = false,
+                isErrorView = true,
+            )
+        }
+    }
+
+    private fun showErrorSnackbar(e: Exception) {
+        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+        updateState {
+            copy(
+                isLoadingView = false
+            )
         }
     }
 }

@@ -8,6 +8,7 @@ import kotlinx.datetime.LocalDateTime
 
 internal data class FilterViewState(
     override val isLoadingView: Boolean = true,
+    override val isErrorView: Boolean = false,
     val clubs: Map<Int, String> = emptyMap(),
     val coaches: Map<Int, String> = emptyMap(),
     val levels: Map<Int, String> = emptyMap(),
@@ -18,8 +19,9 @@ internal data class FilterViewState(
     val selectedTypeId: Int = ALL_OPTION_ID,
 
     val startDateTime: LocalDateTime = LocalDateTimeUtils.now().roundToNextHour(),
-    val endDateTime: LocalDateTime = LocalDateTimeUtils.now().plus(hours = ONE_WEEK_IN_HOURS).roundToNextHour(),
-    ) : BaseViewState() {
+    val endDateTime: LocalDateTime = LocalDateTimeUtils.now().plus(hours = ONE_WEEK_IN_HOURS)
+        .roundToNextHour(),
+) : BaseViewState() {
     companion object {
         const val ALL_OPTION_ID = 0
         const val ALL_OPTION_NAME = "All"

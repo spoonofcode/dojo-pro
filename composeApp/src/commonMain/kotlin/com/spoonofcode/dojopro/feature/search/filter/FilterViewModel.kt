@@ -5,10 +5,12 @@ import com.spoonofcode.dojopro.core.domain.GetFilterDataUseCase
 import com.spoonofcode.dojopro.core.domain.LoadSportEventFilterFormDataUseCase
 import com.spoonofcode.dojopro.core.domain.SetFilterDataUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import com.spoonofcode.dojopro.feature.search.filter.FilterViewState.Companion.ALL_OPTION_ID
 import com.spoonofcode.dojopro.feature.search.filter.FilterViewState.Companion.ALL_OPTION_NAME
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class FilterViewModel(
     private val loadSportEventFilterFormDataUseCase: LoadSportEventFilterFormDataUseCase,
@@ -23,9 +25,8 @@ internal class FilterViewModel(
     fun initView() {
         viewModelScope.launch {
             showLoadingView()
-            runCatching {
-                loadSportEventFilterFormDataUseCase()
-            }.onSuccess { sportEventFilterFormData ->
+            try {
+                val sportEventFilterFormData = loadSportEventFilterFormDataUseCase()
                 val filterData = getFilterDataUseCase()
                 val selectedClubId = filterData.selectedClubId ?: ALL_OPTION_ID
                 val selectedCoachId = filterData.selectedCoachId ?: ALL_OPTION_ID
@@ -44,6 +45,10 @@ internal class FilterViewModel(
                         types = addAllOption().plus(sportEventFilterFormData.types.associate { it.id to it.name }),
                     )
                 }
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorView()
             }
         }
     }
@@ -99,16 +104,22 @@ internal class FilterViewModel(
     fun applyFilter() {
         viewModelScope.launch {
             showLoadingView()
-            val currentState = currentState()
-            setFilterDataUseCase.invoke(
-                selectedClubId = currentState.selectedClubId,
-                selectedCoachId = currentState.selectedCoachId,
-                selectedLevelId = currentState.selectedLevelId,
-                selectedTypeId = currentState.selectedTypeId,
-                startDateTime = currentState.startDateTime,
-                endDateTime = currentState.endDateTime,
-            )
-            navigateBack()
+            try {
+                val currentState = currentState()
+                setFilterDataUseCase.invoke(
+                    selectedClubId = currentState.selectedClubId,
+                    selectedCoachId = currentState.selectedCoachId,
+                    selectedLevelId = currentState.selectedLevelId,
+                    selectedTypeId = currentState.selectedTypeId,
+                    startDateTime = currentState.startDateTime,
+                    endDateTime = currentState.endDateTime,
+                )
+                navigateBack()
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorSnackbar(e)
+            }
         }
     }
 
@@ -122,7 +133,28 @@ internal class FilterViewModel(
 
     private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = true)
+            copy(
+                isLoadingView = true,
+                isErrorView = false,
+            )
+        }
+    }
+
+    private fun showErrorView() {
+        updateState {
+            copy(
+                isLoadingView = false,
+                isErrorView = true,
+            )
+        }
+    }
+
+    private fun showErrorSnackbar(e: Exception) {
+        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+        updateState {
+            copy(
+                isLoadingView = false
+            )
         }
     }
 }

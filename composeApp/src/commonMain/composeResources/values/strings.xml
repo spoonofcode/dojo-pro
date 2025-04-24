@@ -22,6 +22,8 @@
     <string name="search">Search</string>
     <string name="date">Date</string>
     <string name="location">Location</string>
+    <string name="reload">Reload</string>
+    <string name="data_could_not_be_loaded">Data could not be loaded</string>
 
     <!-- SECTION Login -->
     <string name="let_s_get_started">Let’s get started</string>

@@ -7,6 +7,7 @@ import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.feature.search.filter.FilterScreen
 import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsScreen
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class SearchViewModel(
     private val getFilteredSportEventsUseCase: GetFilteredSportEventsUseCase,
@@ -20,14 +21,21 @@ internal class SearchViewModel(
     fun initView() {
         viewModelScope.launch {
             showLoadingView()
-            val filteredSportEvents = getFilteredSportEventsUseCase()
-            updateState {
-                copy(
-                    isLoadingView = false,
-                    initSportEvents = filteredSportEvents,
-                    filteredSportEvents = filteredSportEvents,
-                )
+            try {
+                val filteredSportEvents = getFilteredSportEventsUseCase()
+                updateState {
+                    copy(
+                        isLoadingView = false,
+                        initSportEvents = filteredSportEvents,
+                        filteredSportEvents = filteredSportEvents,
+                    )
+                }
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorView()
             }
+
         }
     }
 
@@ -58,7 +66,19 @@ internal class SearchViewModel(
 
     private fun showLoadingView() {
         updateState {
-            copy(isLoadingView = true)
+            copy(
+                isLoadingView = true,
+                isErrorView = false,
+            )
+        }
+    }
+
+    private fun showErrorView() {
+        updateState {
+            copy(
+                isLoadingView = false,
+                isErrorView = true,
+            )
         }
     }
 }

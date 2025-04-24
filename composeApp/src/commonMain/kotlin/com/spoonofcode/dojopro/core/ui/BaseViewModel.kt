@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.mp.KoinPlatform.getKoin
 
@@ -45,28 +46,26 @@ abstract class BaseViewModel<VS : BaseViewState>(
         _viewState.value = newState
     }
 
-    fun showSnackbar(message: SnackbarEvent) {
+    fun showSnackbar(snackbarEvent: SnackbarEvent) {
         viewModelScope.launch {
-            _snackbarEvent.emit(message)
+            _snackbarEvent.emit(snackbarEvent)
         }
     }
 
     private fun observeNetworkState() {
         viewModelScope.launch {
-            networkManager.observeNetworkState().collect { status ->
+            networkManager.observeNetworkState().distinctUntilChanged().collect { status ->
                 when (status) {
-                    is Connectivity.Status.Connected -> _isOnline.value = true
-                    is Connectivity.Status.Disconnected -> _isOnline.value = false
+                    is Connectivity.Status.Connected -> {
+                        _isOnline.value = true
+                        showSnackbar(SnackbarEvent.Online)
+                    }
+                    is Connectivity.Status.Disconnected -> {
+                        _isOnline.value = false
+                        showSnackbar(SnackbarEvent.Offline)
+                    }
                 }
-                updateNetworkSnackbar()
             }
-        }
-    }
-
-    private fun updateNetworkSnackbar() {
-        when (isOnline.value) {
-            true -> showSnackbar(SnackbarEvent.Online)
-            false -> showSnackbar(SnackbarEvent.Offline)
         }
     }
 }

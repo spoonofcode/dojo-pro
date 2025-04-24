@@ -8,6 +8,7 @@ import kotlinx.datetime.LocalDateTime
 
 internal data class SportEventEditViewState(
     override val isLoadingView: Boolean = true,
+    override val isErrorView: Boolean = false,
     val screenMode: ScreenMode = ScreenMode.Create,
     val title: String = "",
     val description: String = "",
