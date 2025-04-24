@@ -11,9 +11,8 @@ suspend fun SnackbarHostState.showSnackbar(
         CustomSnackbarVisuals(
             message = snackbarEvent.message,
             actionLabel = snackbarEvent.actionLabel,
-            containerColor = snackbarEvent.containerColor,
-            contentColor = snackbarEvent.contentColor,
-            duration = snackbarEvent.duration
+            duration = snackbarEvent.duration,
+            type = snackbarEvent.type,
         )
     )
 }
