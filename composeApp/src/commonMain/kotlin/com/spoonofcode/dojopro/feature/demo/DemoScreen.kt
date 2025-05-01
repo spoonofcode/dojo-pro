@@ -4,7 +4,11 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.spoonofcode.dojopro.core.ui.BaseScreen
+import com.spoonofcode.dojopro.core.ui.compose.Texts
 import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.demo
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class DemoScreen(
@@ -35,6 +39,7 @@ internal class DemoScreen(
         viewState: DemoViewState,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
+            Texts.BL(text = stringResource(resource = Res.string.demo))
         }
     }
 

@@ -36,7 +36,7 @@ fun displayFontFamily() = FontFamily(
     Font(resource = Res.font.roboto_bold, weight = FontWeight.Bold),
     Font(resource = Res.font.roboto_extra_bold, weight = FontWeight.ExtraBold),)
 
-// Default Material 3 typography values
+// Default Material 3 typography values-en
 val baseline = Typography()
 
 @Composable

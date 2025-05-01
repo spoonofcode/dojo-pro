@@ -7,13 +7,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.shop
+import org.jetbrains.compose.resources.stringResource
 
 object ShopTab : Tab {
 
     override val options: TabOptions
         @Composable
         get() {
-            val title = "Shop"
+            val title = stringResource(resource = Res.string.shop)
             val icon = rememberVectorPainter(Icons.Default.ShoppingCart)
 
             return remember {

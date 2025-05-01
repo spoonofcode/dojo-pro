@@ -7,13 +7,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.home
+import org.jetbrains.compose.resources.stringResource
 
 object HomeTab : Tab {
 
     override val options: TabOptions
         @Composable
         get() {
-            val title = "Home"
+            val title = stringResource(resource = Res.string.home)
             val icon = rememberVectorPainter(Icons.Default.Home)
 
             return remember {

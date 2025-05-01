@@ -1,10 +1,13 @@
 <resources>
     <!-- SECTION General -->
+    <string name="demo">Demo EN</string>
     <string name="accept">Accept</string>
     <string name="app_name">DojoPro</string>
     <string name="cancel">Cancel</string>
     <string name="coach">Coach</string>
+    <string name="club">Club</string>
     <string name="cost">Cost</string>
+    <string name="pln">zł</string>
     <string name="description">Description</string>
     <string name="end">End</string>
     <string name="level">Level</string>
@@ -19,8 +22,13 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="search">Search</string>
+    <string name="date">Date</string>
+    <string name="location">Location</string>
+    <string name="reload">Reload</string>
+    <string name="data_could_not_be_loaded">Data could not be loaded</string>
 
     <!-- SECTION Login -->
+    <string name="let_s_get_started">Let’s get started</string>
     <string name="forget_password">Forget password?</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
@@ -30,7 +38,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
 
-    <!-- SECTION Forgot password -->
+    <!-- SECTION Register -->
     <string name="forgot_password">Forgot password</string>
 
     <!-- SECTION Home -->
@@ -46,14 +54,13 @@
     <string name="min_number_of_people">Min Number of People</string>
     <string name="number_of_people">Number of People</string>
     <string name="sport_event">Sport Event</string>
+    <string name="create_sport_event">Create Sport Event</string>
+    <string name="edit_sport_event">Edit Sport Event</string>
     <string name="join_to_sport_event">Join to Sport Event</string>
 
     <!-- SECTION Search Sport Event -->
     <string name="filter">Filter</string>
     <string name="search_sport_event">Search Sport Event</string>
-
-    <!-- SECTION Calendar -->
-    <string name="calendar">Calendar</string>
 
     <!-- SECTION Profile -->
     <string name="profile">Profile</string>
@@ -62,5 +69,17 @@
     <string name="shop">Shop</string>
 
     <!-- SECTION Filter Sport Event -->
-    <string name="applyFilter">Apply filter</string>
+    <string name="filter_sport_events">Filter Sport Events</string>
+    <string name="apply_filter">Apply filter</string>
+
+    <!-- SECTION Settings -->
+    <string name="update_users">Update Users</string>
+
+    <!-- SECTION Search User -->
+    <string name="search_user">Search user</string>
+
+    <!-- SECTION User Details -->
+    <string name="user_details">User details</string>
+    <string name="add_coach_role">Add Coach role</string>
+    <string name="add_club_owner_role">Add Club owner role</string>
 </resources>
