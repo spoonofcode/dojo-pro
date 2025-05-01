@@ -7,13 +7,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.search
+import org.jetbrains.compose.resources.stringResource
 
 object SearchTab : Tab {
 
     override val options: TabOptions
         @Composable
         get() {
-            val title = "Search"
+            val title = stringResource(resource = Res.string.search)
             val icon = rememberVectorPainter(Icons.Default.Search)
 
             return remember {
