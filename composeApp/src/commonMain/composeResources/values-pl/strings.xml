@@ -1,0 +1,85 @@
+<resources>
+    <!-- SECTION General -->
+    <string name="demo">Demo PL</string>
+    <string name="accept">Akceptuj</string>
+    <string name="app_name">DojoPro</string>
+    <string name="cancel">Anuluj</string>
+    <string name="coach">Trener</string>
+    <string name="club">Klub</string>
+    <string name="cost">Koszt</string>
+    <string name="pln">zł</string>
+    <string name="description">Opis</string>
+    <string name="end">Zakończ</string>
+    <string name="level">Poziom</string>
+    <string name="settings">Ustawienia</string>
+    <string name="start">Rozpocznij</string>
+    <string name="edit">Edytuj</string>
+    <string name="delete">Usuń</string>
+    <string name="submit">Wyślij</string>
+    <string name="time">Czas</string>
+    <string name="title">Tytuł</string>
+    <string name="type">Typ</string>
+    <string name="email">E-mail</string>
+    <string name="password">Hasło</string>
+    <string name="search">Szukaj</string>
+    <string name="date">Data</string>
+    <string name="location">Lokalizacja</string>
+    <string name="reload">Odśwież</string>
+    <string name="data_could_not_be_loaded">Nie udało się wczytać danych</string>
+
+    <!-- SECTION Login -->
+    <string name="let_s_get_started">Zaczynajmy</string>
+    <string name="forget_password">Zapomniałeś hasła?</string>
+    <string name="sign_in">Zaloguj się</string>
+    <string name="sign_up">Zarejestruj się</string>
+
+    <!-- SECTION Register -->
+    <string name="register">Rejestracja</string>
+    <string name="first_name">Imię</string>
+    <string name="last_name">Nazwisko</string>
+
+    <!-- SECTION Forgot Password -->
+    <string name="forgot_password">Zapomniane hasło</string>
+
+    <!-- SECTION Home -->
+    <string name="home">Strona główna</string>
+    <string name="create_event">Utwórz wydarzenie</string>
+    <string name="events_created_by_me">Wydarzenia utworzone przeze mnie</string>
+    <string name="events_i_participated_in">Wydarzenia, w których uczestniczyłem</string>
+
+    <!-- SECTION Sport Event -->
+    <string name="group_classes">Zajęcia grupowe</string>
+    <string name="room">Sala</string>
+    <string name="max_number_of_people">Maks. liczba osób</string>
+    <string name="min_number_of_people">Min. liczba osób</string>
+    <string name="number_of_people">Liczba osób</string>
+    <string name="sport_event">Wydarzenie sportowe</string>
+    <string name="create_sport_event">Utwórz wydarzenie sportowe</string>
+    <string name="edit_sport_event">Edytuj wydarzenie sportowe</string>
+    <string name="join_to_sport_event">Dołącz do wydarzenia sportowego</string>
+
+    <!-- SECTION Search Sport Event -->
+    <string name="filter">Filtruj</string>
+    <string name="search_sport_event">Szukaj wydarzenia sportowego</string>
+
+    <!-- SECTION Profile -->
+    <string name="profile">Profil</string>
+
+    <!-- SECTION Shop -->
+    <string name="shop">Sklep</string>
+
+    <!-- SECTION Filter Sport Event -->
+    <string name="filter_sport_events">Filtruj wydarzenia sportowe</string>
+    <string name="apply_filter">Zastosuj filtr</string>
+
+    <!-- SECTION Settings -->
+    <string name="update_users">Aktualizuj użytkowników</string>
+
+    <!-- SECTION Search User -->
+    <string name="search_user">Szukaj użytkownika</string>
+
+    <!-- SECTION User Details -->
+    <string name="user_details">Szczegóły użytkownika</string>
+    <string name="add_coach_role">Dodaj rolę trenera</string>
+    <string name="add_club_owner_role">Dodaj rolę właściciela klubu</string>
+</resources>
