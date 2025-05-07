@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.core.domain.di.domainModule
 import com.spoonofcode.dojopro.core.network.di.networkModule
 import com.spoonofcode.dojopro.core.settings.di.settingsModule
 import com.spoonofcode.dojopro.core.ui.di.uiModule
+import com.spoonofcode.dojopro.feature.appsettings.di.appSettingsModule
 import com.spoonofcode.dojopro.feature.demo.di.demoModule
 import com.spoonofcode.dojopro.feature.home.di.homeModule
 import com.spoonofcode.dojopro.feature.login.di.loginModule
@@ -25,14 +26,15 @@ val appModule = module {
         domainModule,
         uiModule,
         networkModule,
+        settingsModule,
 
         // features
+        appSettingsModule,
         demoModule,
         homeModule,
         loginModule,
         profileModule,
         searchModule,
-        settingsModule,
         shopModule,
         sportEventModule,
         userModule,

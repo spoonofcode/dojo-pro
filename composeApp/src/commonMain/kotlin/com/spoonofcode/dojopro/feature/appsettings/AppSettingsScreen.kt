@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.feature.settings
+package com.spoonofcode.dojopro.feature.appsettings
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
@@ -11,17 +11,17 @@ import com.spoonofcode.dojopro.resources.settings
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
-internal class SettingsScreen(
+internal class AppSettingsScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.settings,
-) : BaseScreen<SettingsViewModel, SettingsViewState>() {
+) : BaseScreen<AppSettingsViewModel, AppSettingsViewState>() {
 
     @Composable
-    override fun provideViewModel() = koinViewModel<SettingsViewModel>()
+    override fun provideViewModel() = koinViewModel<AppSettingsViewModel>()
 
     @Composable
     override fun provideContentView(
-        viewModel: SettingsViewModel,
-        viewState: SettingsViewState
+        viewModel: AppSettingsViewModel,
+        viewState: AppSettingsViewState
     ): @Composable ColumnScope.() -> Unit {
         super.reloadScreen = { viewModel.initView() }
 
@@ -33,7 +33,7 @@ internal class SettingsScreen(
 
     @Composable
     internal fun ContentView(
-        viewState: SettingsViewState,
+        viewState: AppSettingsViewState,
         navigateToUpdateUsers: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {

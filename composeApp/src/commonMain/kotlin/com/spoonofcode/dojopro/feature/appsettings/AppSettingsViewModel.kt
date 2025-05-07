@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.feature.settings
+package com.spoonofcode.dojopro.feature.appsettings
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.domain.HasSpecialSettingsUseCase
@@ -7,9 +7,9 @@ import com.spoonofcode.dojopro.feature.user.search.SearchUserScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
-internal class SettingsViewModel(
+internal class AppSettingsViewModel(
     private val hasSpecialSettingsUseCase: HasSpecialSettingsUseCase,
-) : BaseViewModel<SettingsViewState>(SettingsViewState()) {
+) : BaseViewModel<AppSettingsViewState>(AppSettingsViewState()) {
 
     init {
         initView()
