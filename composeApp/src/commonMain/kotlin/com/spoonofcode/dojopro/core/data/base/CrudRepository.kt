@@ -112,7 +112,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         }
     }
 
-    fun responseOrException(response: HttpResponse): HttpResponse {
+    open fun responseOrException(response: HttpResponse): HttpResponse {
         return when (response.status) {
             in HttpStatusCodes.HTTP_SUCCESS_CODES -> return response
             in HttpStatusCodes.HTTP_CLIENT_ERROR_CODES ->
@@ -125,7 +125,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         }
     }
 
-    fun unhandledException(response: HttpResponse): HttpResponse {
+    private fun unhandledException(response: HttpResponse): HttpResponse {
         throw Exception("Unhandled Error $response")
     }
 

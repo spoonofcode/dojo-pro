@@ -3,11 +3,12 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.mockative)
 }
 
 kotlin {
@@ -82,6 +83,14 @@ kotlin {
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab.navigator)
             implementation(libs.voyager.transitions)
+            implementation(libs.mockative)
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.turbine)
+            implementation(libs.koin.test)
+            implementation(libs.mockative)
         }
     }
 }

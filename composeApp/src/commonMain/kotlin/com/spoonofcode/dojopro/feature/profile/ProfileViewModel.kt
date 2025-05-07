@@ -20,12 +20,14 @@ internal class ProfileViewModel(
             showLoadingView()
             try {
                 val profile = getProfileUseCase()
-                updateState {
-                    copy(
-                        profile = profile,
-                        isLoadingView = false,
-                    )
-                }
+                println("BARTEK TEST profile = $profile")
+
+//                updateState {
+//                    copy(
+//                        profile = profile,
+//                        isLoadingView = false,
+//                    )
+//                }
             } catch (ce: CancellationException) {
                 throw ce
             } catch (e: Exception) {
@@ -37,6 +39,14 @@ internal class ProfileViewModel(
     fun navigateToSettings() {
         viewModelScope.launch {
             viewModelNavigator.push(screen = SettingsScreen())
+        }
+    }
+
+    fun testBartek() {
+        updateState {
+            copy(
+                isErrorView = true,
+            )
         }
     }
 
