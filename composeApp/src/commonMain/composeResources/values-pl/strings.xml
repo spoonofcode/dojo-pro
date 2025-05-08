@@ -42,7 +42,7 @@
     <string name="forgot_password">Zapomniane hasło</string>
 
     <!-- SECTION Home -->
-    <string name="home">Strona główna</string>
+    <string name="home">Home</string>
     <string name="create_event">Utwórz wydarzenie</string>
     <string name="events_created_by_me">Wydarzenia utworzone przeze mnie</string>
     <string name="events_i_participated_in">Wydarzenia, w których uczestniczyłem</string>

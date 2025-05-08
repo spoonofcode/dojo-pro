@@ -1,10 +1,6 @@
 package com.spoonofcode.dojopro.core.data.repository.mockdata
 
-import com.spoonofcode.dojopro.core.data.repository.ProfileRepositoryBartek
-import io.mockative.mock
-import io.mockative.of
-
-val profileRepositoryMock: ProfileRepositoryBartek = mock(of<ProfileRepositoryBartek>())
+//val profileRepositoryMock: ProfileRepository = mock(of<ProfileRepository>())
 //    .apply {
 //        runBlocking {
 //            coEvery { create(any<ProfileRequest>()) } returns Profile(

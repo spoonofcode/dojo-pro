@@ -1,17 +1,21 @@
 package com.spoonofcode.dojopro.core.data.repository
 
-import com.spoonofcode.dojopro.core.data.base.GenericCrudRepository
-import com.spoonofcode.dojopro.core.model.Profile
-import com.spoonofcode.dojopro.core.model.ProfileRequest
-import io.mockative.Mockable
+interface ProfileRepositoryInterface {
+    fun testBartek (): String
+}
 
-@Mockable
-class ProfileRepository : GenericCrudRepository<ProfileRequest, Profile>(
-    resourceName = "profile",
-    requestSerializer = ProfileRequest.serializer(),
-    responseSerializer = Profile.serializer(),
-) {
-    fun testBartek(): String {
+//class ProfileRepository : GenericCrudRepository<ProfileRequest, Profile>(
+//    resourceName = "profile",
+//    requestSerializer = ProfileRequest.serializer(),
+//    responseSerializer = Profile.serializer(),
+//) {
+//    fun testBartek(): String {
+//        return "Sdas "
+//    }
+//}
+
+class ProfileRepository : ProfileRepositoryInterface {
+    override fun testBartek(): String {
         return "Sdas "
     }
 }
