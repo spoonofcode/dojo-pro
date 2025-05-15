@@ -1,7 +1,9 @@
 package com.spoonofcode.dojopro.core.network
 
 import com.russhwolf.settings.Settings
+import com.spoonofcode.dojopro.core.test.OpenForMokkery
 
+@OpenForMokkery
 class SessionManager(private val settings: Settings) {
     fun isSessionInitialized(): Boolean = getSessionAccessToken() != null
 

@@ -13,6 +13,9 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
+    plugins {
+        kotlin("plugin.allopen")
+    }
 }
 
 dependencyResolutionManagement {

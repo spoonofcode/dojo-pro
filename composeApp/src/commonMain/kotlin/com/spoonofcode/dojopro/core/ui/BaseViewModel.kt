@@ -2,15 +2,12 @@ package com.spoonofcode.dojopro.core.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.dojopro.core.network.NetworkManager
 import com.spoonofcode.dojopro.core.ui.navigation.ViewModelNavigator
-import dev.jordond.connectivity.Connectivity
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.mp.KoinPlatform.getKoin
 
@@ -19,7 +16,7 @@ abstract class BaseViewModel<VS : BaseViewState>(
 ) : ViewModel() {
 
     protected val viewModelNavigator: ViewModelNavigator by getKoin().inject()
-    protected val networkManager: NetworkManager by getKoin().inject()
+//    protected val networkManager: NetworkManager by getKoin().inject()
 
     val navigationFlow = viewModelNavigator.navigationEvents
 
@@ -33,7 +30,7 @@ abstract class BaseViewModel<VS : BaseViewState>(
     val snackbarEvent = _snackbarEvent.asSharedFlow()
 
     init {
-        observeNetworkState()
+//        observeNetworkState()
     }
 
     fun currentState(): VS = viewState.value
@@ -52,20 +49,20 @@ abstract class BaseViewModel<VS : BaseViewState>(
         }
     }
 
-    private fun observeNetworkState() {
-        viewModelScope.launch {
-            networkManager.observeNetworkState().distinctUntilChanged().collect { status ->
-                when (status) {
-                    is Connectivity.Status.Connected -> {
-                        _isOnline.value = true
-                        showSnackbar(SnackbarEvent.Online)
-                    }
-                    is Connectivity.Status.Disconnected -> {
-                        _isOnline.value = false
-                        showSnackbar(SnackbarEvent.Offline)
-                    }
-                }
-            }
-        }
-    }
+//    private fun observeNetworkState() {
+//        viewModelScope.launch {
+//            networkManager.observeNetworkState().distinctUntilChanged().collect { status ->
+//                when (status) {
+//                    is Connectivity.Status.Connected -> {
+//                        _isOnline.value = true
+//                        showSnackbar(SnackbarEvent.Online)
+//                    }
+//                    is Connectivity.Status.Disconnected -> {
+//                        _isOnline.value = false
+//                        showSnackbar(SnackbarEvent.Offline)
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

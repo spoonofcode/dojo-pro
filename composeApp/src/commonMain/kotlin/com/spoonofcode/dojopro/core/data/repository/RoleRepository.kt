@@ -18,6 +18,8 @@ class RoleRepository : GenericCrudRepository<Role, Role>(
 ) {
     suspend fun readAllRolesByUserId(userId: Int): List<Role> {
         return withContext(Dispatchers.IO) {
+
+            readAll()
             val response: HttpResponse = doRequest(
                 urlPath = "roles",
                 method = HttpMethod.Get,

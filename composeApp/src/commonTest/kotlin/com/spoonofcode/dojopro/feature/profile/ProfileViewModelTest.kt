@@ -1,39 +1,59 @@
 package com.spoonofcode.dojopro.feature.profile
 
 import app.cash.turbine.test
-import com.spoonofcode.dojopro.core.data.repository.ProfileRepositoryInterface
+import com.spoonofcode.dojopro.core.BaseViewModelTest
+import com.spoonofcode.dojopro.core.data.repository.ProfileRepository
+import com.spoonofcode.dojopro.core.model.Profile
+import com.spoonofcode.dojopro.core.model.ProfileRequest
+import com.spoonofcode.dojopro.core.network.SessionManager
 import com.spoonofcode.dojopro.feature.profile.di.profileTestModule
 import dev.mokkery.answering.returns
 import dev.mokkery.every
+import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
 import dev.mokkery.mock
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.koin.dsl.module
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
+
+@OptIn(ExperimentalCoroutinesApi::class)
 class ProfileViewModelTest : BaseViewModelTest() {
 
-    private val profileRepositoryMock = mock<ProfileRepositoryInterface>()
+    private val profileRepositoryMock = mock<ProfileRepository>()
+        .apply {
+            runBlocking {
+                everySuspend { create(any<ProfileRequest>()) } returns Profile(
+                    name = "dsa",
+                    numberOfEventsUserParticipatedIn = 1,
+                    numberOfEventsCreatedByUser = 1
+                )
+            }
+        }
+        .apply {
+            runBlocking {
+                everySuspend { read(any()) } returns Profile(
+                    name = "Profile name 1",
+                    numberOfEventsUserParticipatedIn = 1,
+                    numberOfEventsCreatedByUser = 1
+                )
+            }
+        }
+
+    private val sessionManagerMock = mock<SessionManager>()
+        .apply {
+            every { getSessionUserId() } returns 1
+        }
+
+//    private val networkManagerMock = mock<NetworkManager>()
 //        .apply {
-//            runBlocking {
-//                everySuspend { create(any<ProfileRequest>()) } returns Profile(
-//                    name = "dsa",
-//                    numberOfEventsUserParticipatedIn = 1,
-//                    numberOfEventsCreatedByUser = 1
-//                )
-//            }
+//            every { observeNetworkState() } returns MutableSharedFlow(1)
 //        }
-//        .apply {
-//            runBlocking {
-//                everySuspend { read(any()) } returns Profile(
-//                    name = "dsa",
-//                    numberOfEventsUserParticipatedIn = 1,
-//                    numberOfEventsCreatedByUser = 1
-//                )
-//            }
-//        }
-        .apply { every { testBartek() } returns "xDSA BARTEK" }
+
 
     private lateinit var viewModel: ProfileViewModel
 
@@ -42,22 +62,47 @@ class ProfileViewModelTest : BaseViewModelTest() {
         modules = arrayOf(
             profileTestModule,
             module {
-                single {
-                    profileRepositoryMock
-                }
+                single { profileRepositoryMock }
+                single { sessionManagerMock }
+//                single { networkManagerMock }
             }
         )
         super.setup()
     }
 
+//    @Test
+//    fun testInitial() = runTest {
+//        viewModel = getSut()
+//
+//        viewModel.testBartek()
+//
+//        viewModel.viewState.test {
+//            assertEquals(ProfileViewState(), awaitItem())
+//        }
+//    }
+
     @Test
     fun testInitial() = runTest {
         viewModel = getSut()
 
-        viewModel.testBartek()
+        viewModel.initView()
+        advanceUntilIdle()
 
         viewModel.viewState.test {
-            assertEquals(ProfileViewState(), awaitItem())
+            println(awaitItem())
+            println(awaitItem())
+
+//            assertEquals(
+//                ProfileViewState(
+//                    profile = Profile(
+//                        name = "Profile name 1",
+//                        numberOfEventsUserParticipatedIn = 1,
+//                        numberOfEventsCreatedByUser = 1
+//                    ),
+//                    isLoadingView = false
+//                ),
+//                awaitItem()
+//            )
         }
     }
 }

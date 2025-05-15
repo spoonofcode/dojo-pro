@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.feature.profile
+package com.spoonofcode.dojopro.core
 
 import kotlin.test.BeforeTest
 

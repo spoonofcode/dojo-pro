@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.feature.profile
+package com.spoonofcode.dojopro.core
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

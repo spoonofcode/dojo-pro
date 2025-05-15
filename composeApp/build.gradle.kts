@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.mokkery)
+    alias(libs.plugins.allopen)
 }
 
 kotlin {
@@ -91,6 +92,10 @@ kotlin {
             implementation(libs.koin.test)
         }
     }
+}
+
+allOpen {
+    annotation("com.spoonofcode.dojopro.core.test.OpenForMokkery")
 }
 
 android {

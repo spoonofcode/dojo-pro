@@ -20,14 +20,12 @@ internal class ProfileViewModel(
             showLoadingView()
             try {
                 val profile = getProfileUseCase()
-                println("BARTEK TEST profile = $profile")
-
-//                updateState {
-//                    copy(
-//                        profile = profile,
-//                        isLoadingView = false,
-//                    )
-//                }
+                updateState {
+                    copy(
+                        profile = profile,
+                        isLoadingView = false,
+                    )
+                }
             } catch (ce: CancellationException) {
                 throw ce
             } catch (e: Exception) {

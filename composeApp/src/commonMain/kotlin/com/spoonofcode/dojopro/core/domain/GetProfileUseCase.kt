@@ -1,14 +1,14 @@
 package com.spoonofcode.dojopro.core.domain
 
-import com.spoonofcode.dojopro.core.data.repository.ProfileRepositoryInterface
+import com.spoonofcode.dojopro.core.data.repository.ProfileRepository
+import com.spoonofcode.dojopro.core.model.Profile
+import com.spoonofcode.dojopro.core.network.SessionManager
 
 class GetProfileUseCase(
-    private val profileRepository: ProfileRepositoryInterface,
-//    private val sessionManager: SessionManager,
+    private val profileRepository: ProfileRepository,
+    private val sessionManager: SessionManager,
 ) {
-//    suspend operator fun invoke(): Profile = profileRepository.read(
-//        id = sessionManager.getSessionUserId()!!
-//    )
-
-    suspend operator fun invoke(): String = profileRepository.testBartek()
+    suspend operator fun invoke(): Profile = profileRepository.read(
+        id = sessionManager.getSessionUserId()!!
+    )
 }

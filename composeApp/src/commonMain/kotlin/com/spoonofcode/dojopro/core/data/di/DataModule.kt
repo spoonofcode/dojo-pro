@@ -6,7 +6,6 @@ import com.spoonofcode.dojopro.core.data.repository.LevelRepository
 import com.spoonofcode.dojopro.core.data.repository.LoginGoogleRepository
 import com.spoonofcode.dojopro.core.data.repository.LoginRepository
 import com.spoonofcode.dojopro.core.data.repository.ProfileRepository
-import com.spoonofcode.dojopro.core.data.repository.ProfileRepositoryInterface
 import com.spoonofcode.dojopro.core.data.repository.RefreshRepository
 import com.spoonofcode.dojopro.core.data.repository.RegisterRepository
 import com.spoonofcode.dojopro.core.data.repository.RoleRepository
@@ -15,7 +14,6 @@ import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
 import com.spoonofcode.dojopro.core.data.repository.TypeRepository
 import com.spoonofcode.dojopro.core.data.repository.UserRepository
 import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -28,7 +26,7 @@ val dataModule = module {
     singleOf(::RefreshRepository)
     singleOf(::UserRepository)
     singleOf(::RegisterRepository)
-    singleOf(::ProfileRepository) bind ProfileRepositoryInterface::class
+    singleOf(::ProfileRepository)
     singleOf(::RoleRepository)
     singleOf(::FilterRepository)
     singleOf(::TypeRepository)
