@@ -1,15 +1,17 @@
 package com.spoonofcode.dojopro.feature.demo
 
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Texts
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.demo
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class DemoScreen(
     override val backNavigationEnable: Boolean = false,
@@ -46,6 +48,11 @@ internal class DemoScreen(
     @Preview
     @Composable
     private fun DemoScreenPreview() {
-        DemoScreen()
+        ContentView(
+            snackbarHostState = remember { SnackbarHostState() },
+            content = ContentView(
+                viewState = DemoViewState(),
+            )
+        )
     }
 }

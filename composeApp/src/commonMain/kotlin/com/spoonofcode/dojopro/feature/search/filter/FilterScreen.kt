@@ -7,7 +7,6 @@ import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.DatePickers
 import com.spoonofcode.dojopro.core.ui.compose.DropDownMenus
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.apply_filter
 import com.spoonofcode.dojopro.resources.club
@@ -20,6 +19,7 @@ import com.spoonofcode.dojopro.resources.type
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class FilterScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.filter_sport_events,

@@ -1,5 +1,11 @@
 package com.spoonofcode.dojopro.feature.sportevent.di
 
-import org.koin.core.module.Module
+import com.spoonofcode.dojopro.feature.sportevent.details.SportEventDetailsViewModel
+import com.spoonofcode.dojopro.feature.sportevent.edit.SportEventEditViewModel
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.module
 
-expect val sportEventModule: Module
+val sportEventModule = module {
+    viewModelOf(::SportEventDetailsViewModel)
+    viewModelOf(::SportEventEditViewModel)
+}

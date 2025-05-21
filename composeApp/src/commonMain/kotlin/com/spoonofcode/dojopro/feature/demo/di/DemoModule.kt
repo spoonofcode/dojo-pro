@@ -1,5 +1,9 @@
 package com.spoonofcode.dojopro.feature.demo.di
 
-import org.koin.core.module.Module
+import com.spoonofcode.dojopro.feature.demo.DemoViewModel
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.module
 
-expect val demoModule: Module
+val demoModule = module {
+    viewModelOf(::DemoViewModel)
+}

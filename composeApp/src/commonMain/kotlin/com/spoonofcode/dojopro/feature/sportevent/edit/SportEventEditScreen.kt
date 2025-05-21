@@ -10,7 +10,6 @@ import com.spoonofcode.dojopro.core.ui.compose.DropDownMenus
 import com.spoonofcode.dojopro.core.ui.compose.Sliders
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.club
 import com.spoonofcode.dojopro.resources.cost
@@ -29,6 +28,7 @@ import com.spoonofcode.dojopro.resources.type
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class SportEventEditScreen(
     private val screenMode: ScreenMode = ScreenMode.Create,
