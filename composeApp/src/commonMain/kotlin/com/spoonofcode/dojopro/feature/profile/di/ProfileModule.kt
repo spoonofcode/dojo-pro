@@ -1,5 +1,9 @@
 package com.spoonofcode.dojopro.feature.profile.di
 
-import org.koin.core.module.Module
+import com.spoonofcode.dojopro.feature.profile.ProfileViewModel
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.module
 
-expect val profileModule: Module
+val profileModule = module {
+    viewModelOf(::ProfileViewModel)
+}

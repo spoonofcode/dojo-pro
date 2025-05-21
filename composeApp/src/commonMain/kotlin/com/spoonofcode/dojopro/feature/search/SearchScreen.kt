@@ -36,13 +36,13 @@ import com.spoonofcode.dojopro.core.ui.Paddings.spaceBetweenListElements
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
 import com.spoonofcode.dojopro.core.ui.compose.Texts
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.filter
 import com.spoonofcode.dojopro.resources.search
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class SearchScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.search,

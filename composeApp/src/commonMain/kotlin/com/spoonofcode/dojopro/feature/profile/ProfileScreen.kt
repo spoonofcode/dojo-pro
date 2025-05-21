@@ -13,7 +13,6 @@ import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.RoundedImage
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.Texts
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.dojo_room
 import com.spoonofcode.dojopro.resources.events_created_by_me
@@ -22,6 +21,7 @@ import com.spoonofcode.dojopro.resources.profile
 import com.spoonofcode.dojopro.resources.settings
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class ProfileScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.profile,

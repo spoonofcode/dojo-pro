@@ -14,7 +14,6 @@ import com.spoonofcode.dojopro.core.ui.compose.RoundedImage
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
 import com.spoonofcode.dojopro.core.ui.compose.Texts
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.dojo_pro
 import com.spoonofcode.dojopro.resources.email
@@ -24,6 +23,7 @@ import com.spoonofcode.dojopro.resources.password
 import com.spoonofcode.dojopro.resources.sign_in
 import com.spoonofcode.dojopro.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class LoginScreen(
     override val backNavigationEnable: Boolean = false,

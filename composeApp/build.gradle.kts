@@ -58,8 +58,6 @@ kotlin {
             implementation(libs.googleid)
         }
         commonMain.dependencies {
-            api(libs.koin.core)
-
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -69,7 +67,9 @@ kotlin {
 
             implementation(libs.connectivity.core)
             implementation(libs.connectivity.device)
+            implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.ktor.client.content.negotiation)

@@ -6,7 +6,6 @@ import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.email
 import com.spoonofcode.dojopro.resources.first_name
@@ -16,6 +15,7 @@ import com.spoonofcode.dojopro.resources.register
 import com.spoonofcode.dojopro.resources.sign_up
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class RegisterScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.register,

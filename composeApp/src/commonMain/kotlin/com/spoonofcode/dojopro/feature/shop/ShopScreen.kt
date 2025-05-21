@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.MyWebView
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.shop
 import org.jetbrains.compose.resources.StringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class ShopScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.shop,

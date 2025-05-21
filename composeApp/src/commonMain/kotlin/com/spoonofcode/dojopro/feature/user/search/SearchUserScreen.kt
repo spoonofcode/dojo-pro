@@ -22,12 +22,12 @@ import androidx.compose.ui.unit.sp
 import com.spoonofcode.dojopro.core.model.User
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.search
 import com.spoonofcode.dojopro.resources.search_user
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class SearchUserScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.search_user,

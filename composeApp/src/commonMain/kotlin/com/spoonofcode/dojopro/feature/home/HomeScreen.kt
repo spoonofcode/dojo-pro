@@ -16,7 +16,6 @@ import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.Paddings
 import com.spoonofcode.dojopro.core.ui.compose.CarouselSportEventItem
 import com.spoonofcode.dojopro.core.ui.compose.Carousels
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.create_event
 import com.spoonofcode.dojopro.resources.dojo_advanced_group_training
@@ -36,6 +35,7 @@ import com.spoonofcode.dojopro.resources.home
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class HomeScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.home,

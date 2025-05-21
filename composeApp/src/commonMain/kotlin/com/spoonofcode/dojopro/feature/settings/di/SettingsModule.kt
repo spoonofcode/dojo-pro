@@ -1,5 +1,9 @@
 package com.spoonofcode.dojopro.feature.settings.di
 
-import org.koin.core.module.Module
+import com.spoonofcode.dojopro.feature.settings.SettingsViewModel
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.module
 
-expect val settingsModule: Module
+val settingsModule = module {
+    viewModelOf(::SettingsViewModel)
+}
