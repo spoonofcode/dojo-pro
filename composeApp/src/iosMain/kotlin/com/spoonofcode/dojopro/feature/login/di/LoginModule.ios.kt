@@ -1,13 +1,10 @@
-package com.spoonofcode.dojopro.feature.shop.di
+package com.spoonofcode.dojopro.feature.login.di
 
 import com.spoonofcode.dojopro.core.ui.utils.GoogleAuthProvider
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import com.spoonofcode.dojopro.feature.shop.ShopViewModel
-import org.koin.core.module.dsl.singleOf
 
-actual val shopModule = module {
+actual val platformLoginModule = module {
     factoryOf(::GoogleAuthProvider) bind GoogleAuthProvider::class
-    singleOf(::ShopViewModel)
 }

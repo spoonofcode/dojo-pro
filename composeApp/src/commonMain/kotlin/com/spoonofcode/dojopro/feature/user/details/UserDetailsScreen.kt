@@ -7,13 +7,13 @@ import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.Texts
-import com.spoonofcode.dojopro.core.ui.ext.koinViewModel
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.add_club_owner_role
 import com.spoonofcode.dojopro.resources.add_coach_role
 import com.spoonofcode.dojopro.resources.user_details
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class UserDetailsScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.user_details,
