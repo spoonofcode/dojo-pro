@@ -19,12 +19,13 @@ import kotlinx.coroutines.test.runTest
 import org.koin.dsl.module
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ProfileViewModelTest : BaseViewModelTest() {
 
-    private val profileRepositoryMock = mock<ProfileRepository>()
+    private fun profileRepositoryMock() = mock<ProfileRepository>()
         .apply {
             runBlocking {
                 everySuspend { create(any<ProfileRequest>()) } returns Profile(
@@ -44,7 +45,7 @@ class ProfileViewModelTest : BaseViewModelTest() {
             }
         }
 
-    private val sessionManagerMock = mock<SessionManager>()
+    private fun sessionManagerMock() = mock<SessionManager>()
         .apply {
             every { getSessionUserId() } returns 1
         }
@@ -62,10 +63,10 @@ class ProfileViewModelTest : BaseViewModelTest() {
         modules = arrayOf(
             profileTestModule,
             module {
-                single { profileRepositoryMock }
-                single { sessionManagerMock }
+                single { profileRepositoryMock() }
+                single { sessionManagerMock() }
 //                single { networkManagerMock }
-            }
+            },
         )
         super.setup()
     }
@@ -89,20 +90,17 @@ class ProfileViewModelTest : BaseViewModelTest() {
         advanceUntilIdle()
 
         viewModel.viewState.test {
-            println(awaitItem())
-            println(awaitItem())
-
-//            assertEquals(
-//                ProfileViewState(
-//                    profile = Profile(
-//                        name = "Profile name 1",
-//                        numberOfEventsUserParticipatedIn = 1,
-//                        numberOfEventsCreatedByUser = 1
-//                    ),
-//                    isLoadingView = false
-//                ),
-//                awaitItem()
-//            )
+            assertEquals(
+                ProfileViewState(
+                    profile = Profile(
+                        name = "Profile name 1",
+                        numberOfEventsUserParticipatedIn = 1,
+                        numberOfEventsCreatedByUser = 1
+                    ),
+                    isLoadingView = false
+                ),
+                awaitItem()
+            )
         }
     }
 }

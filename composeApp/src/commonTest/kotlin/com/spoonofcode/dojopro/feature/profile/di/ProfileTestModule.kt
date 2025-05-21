@@ -1,6 +1,5 @@
 package com.spoonofcode.dojopro.feature.profile.di
 
-import com.spoonofcode.dojopro.core.data.di.dataModule
 import com.spoonofcode.dojopro.core.domain.di.domainModule
 import com.spoonofcode.dojopro.core.network.di.networkModule
 import com.spoonofcode.dojopro.core.settings.di.settingsModule
@@ -11,7 +10,7 @@ val profileTestModule = module {
     includes(
         settingsModule,
         networkModule,
-        dataModule,
+//        dataModule,
 //        dataTestModule,
         domainModule,
         profileModule,
