@@ -21,6 +21,7 @@ import com.spoonofcode.dojopro.resources.profile
 import com.spoonofcode.dojopro.resources.settings
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 internal class ProfileScreen(
@@ -82,10 +83,9 @@ internal class ProfileScreen(
     }
 
     // region previews
-    // TODO This functions should be private and with @Preview annotation but now
-    //  Android Studio will be support previews in commonMain
+    @Preview
     @Composable
-    fun InitializedProfileScreenPreview() {
+    private fun InitializedProfileScreenPreview() {
         ContentView(
             content = ContentView(
                 viewState = ProfileViewState(

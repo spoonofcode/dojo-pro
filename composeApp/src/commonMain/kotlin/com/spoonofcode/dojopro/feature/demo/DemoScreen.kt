@@ -1,8 +1,10 @@
 package com.spoonofcode.dojopro.feature.demo
 
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Texts
 import com.spoonofcode.dojopro.resources.Res
@@ -46,6 +48,11 @@ internal class DemoScreen(
     @Preview
     @Composable
     private fun DemoScreenPreview() {
-        DemoScreen()
+        ContentView(
+            snackbarHostState = remember { SnackbarHostState() },
+            content = ContentView(
+                viewState = DemoViewState(),
+            )
+        )
     }
 }
