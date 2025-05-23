@@ -1,15 +1,19 @@
 package com.spoonofcode.dojopro.core.ui.navigation
 
 import cafe.adriel.voyager.core.screen.Screen
+import com.spoonofcode.dojopro.core.test.OpenForMokkery
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlin.reflect.KClass
 
+@OpenForMokkery
 class ViewModelNavigator {
 
-    val _navigationEvents = MutableSharedFlow<NavigationEvent>()
-    val navigationEvents: SharedFlow<NavigationEvent> = _navigationEvents.asSharedFlow()
+    private val _navigationEvents = MutableSharedFlow<NavigationEvent>()
+
+    val navigationEvents: SharedFlow<NavigationEvent>
+        get() = _navigationEvents.asSharedFlow()
 
     suspend fun pop() = navigate(NavigationEvent.Pop)
 
@@ -23,5 +27,4 @@ class ViewModelNavigator {
     suspend fun replaceAll(screens: List<Screen>) = navigate(NavigationEvent.ReplaceAll(screens))
 
     private suspend fun navigate(event: NavigationEvent) = _navigationEvents.emit(event)
-
 }
