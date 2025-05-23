@@ -128,8 +128,6 @@ kotlin {
         }
     }
 }
-// ensures every test set is instrumented
-mokkery { rule.set(dev.mokkery.gradle.ApplicationRule.All) }
 
 allOpen {
     annotation("com.spoonofcode.dojopro.core.test.OpenForMokkery")

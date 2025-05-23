@@ -12,7 +12,6 @@ import dev.mokkery.matcher.any
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -59,9 +58,7 @@ class ProfileViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `init view with error`() = runTest {
-        runBlocking {
-            everySuspend { profileRepository.read(any()) } throws Exception("test exception")
-        }
+        everySuspend { profileRepository.read(any()) } throws Exception("test exception")
 
         viewModel = getSut()
 
