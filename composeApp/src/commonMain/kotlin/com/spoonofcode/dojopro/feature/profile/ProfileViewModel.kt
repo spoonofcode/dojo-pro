@@ -40,14 +40,6 @@ internal class ProfileViewModel(
         }
     }
 
-    fun testBartek() {
-        updateState {
-            copy(
-                isErrorView = true,
-            )
-        }
-    }
-
     private fun showLoadingView() {
         updateState {
             copy(
