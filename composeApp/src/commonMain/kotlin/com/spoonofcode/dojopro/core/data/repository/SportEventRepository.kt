@@ -4,6 +4,7 @@ import com.spoonofcode.dojopro.core.data.base.GenericCrudRepository
 import com.spoonofcode.dojopro.core.model.AddUserToSportEventRequest
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.model.SportEventRequest
+import com.spoonofcode.dojopro.core.test.OpenForMokkery
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
@@ -13,6 +14,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
+@OpenForMokkery
 class SportEventRepository : GenericCrudRepository<SportEventRequest, SportEvent>(
     resourceName = "sportEvents",
     requestSerializer = SportEventRequest.serializer(),
