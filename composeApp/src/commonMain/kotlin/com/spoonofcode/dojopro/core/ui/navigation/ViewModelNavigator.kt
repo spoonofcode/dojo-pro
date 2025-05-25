@@ -9,7 +9,6 @@ import kotlin.reflect.KClass
 
 @OpenForMokkery
 class ViewModelNavigator {
-
     private val _navigationEvents = MutableSharedFlow<NavigationEvent>()
 
     val navigationEvents: SharedFlow<NavigationEvent>
