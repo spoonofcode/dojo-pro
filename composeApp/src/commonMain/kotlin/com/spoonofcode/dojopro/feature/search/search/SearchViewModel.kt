@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.feature.search
+package com.spoonofcode.dojopro.feature.search.search
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.domain.GetFilteredSportEventsByTextUseCase

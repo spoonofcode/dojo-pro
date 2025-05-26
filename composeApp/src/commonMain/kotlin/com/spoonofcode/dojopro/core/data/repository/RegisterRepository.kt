@@ -3,7 +3,9 @@ package com.spoonofcode.dojopro.core.data.repository
 import com.spoonofcode.dojopro.core.data.base.GenericCrudRepository
 import com.spoonofcode.dojopro.core.model.Register
 import com.spoonofcode.dojopro.core.model.RegisterRequest
+import com.spoonofcode.dojopro.core.test.OpenForMokkery
 
+@OpenForMokkery
 class RegisterRepository : GenericCrudRepository<RegisterRequest, Register>(
     resourceName = "register",
     requestSerializer = RegisterRequest.serializer(),

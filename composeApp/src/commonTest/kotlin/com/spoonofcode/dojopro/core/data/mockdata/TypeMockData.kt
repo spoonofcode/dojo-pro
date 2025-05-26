@@ -15,4 +15,5 @@ object TypeMockData {
         id = 3,
         name = "Type 3",
     )
+    val TYPES = listOf(TYPE_1, TYPE_2, TYPE_3)
 }

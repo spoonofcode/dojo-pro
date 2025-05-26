@@ -37,8 +37,8 @@ class HomeViewModelTest : BaseViewModelTest() {
     fun `init view`() = runTest {
         // when
         viewModel = getSut()
-        viewModel.initView()      // even though HomeViewModel calls this in its init block,
-        advanceUntilIdle()        // we repeat it to keep the pattern identical to ProfileViewModelTest
+        viewModel.initView()
+        advanceUntilIdle()
 
         viewModel.viewState.test {
             assertEquals(
@@ -89,7 +89,6 @@ class HomeViewModelTest : BaseViewModelTest() {
         viewModel.goToMyEvent(eventId)
         advanceUntilIdle()
 
-        // Verify the navigator was asked to push a details screen carrying the right id
         verifySuspend {
             viewModelNavigator.push(
                 eq(SportEventDetailsScreen(sportEventId = eventId))

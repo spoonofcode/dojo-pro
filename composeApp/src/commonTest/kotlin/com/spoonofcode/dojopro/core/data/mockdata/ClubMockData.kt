@@ -18,4 +18,6 @@ object ClubMockData {
         name = "Club 3",
         location = "Location 3",
     )
+
+    val CLUBS = listOf(CLUB_1, CLUB_2, CLUB_3)
 }

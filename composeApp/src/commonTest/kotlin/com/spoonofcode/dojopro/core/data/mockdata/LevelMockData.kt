@@ -15,4 +15,5 @@ object LevelMockData {
         id = 3,
         name = "Level 3",
     )
+    val LEVELS = listOf(LEVEL_1, LEVEL_2, LEVEL_3)
 }

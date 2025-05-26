@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.feature.search
+package com.spoonofcode.dojopro.feature.search.search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

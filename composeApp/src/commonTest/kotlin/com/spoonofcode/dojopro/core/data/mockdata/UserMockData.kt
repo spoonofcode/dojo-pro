@@ -21,4 +21,5 @@ object UserMockData {
         lastName = "Last Name 3",
         email = "user3@email.com"
     )
+    val USERS = listOf(USER_1, USER_2, USER_3)
 }

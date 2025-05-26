@@ -3,6 +3,7 @@ package com.spoonofcode.dojopro.core.data.repository
 import com.spoonofcode.dojopro.core.model.Refresh
 import com.spoonofcode.dojopro.core.network.HttpStatusCodes
 import com.spoonofcode.dojopro.core.network.NetworkConfig
+import com.spoonofcode.dojopro.core.test.OpenForMokkery
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.header
@@ -14,6 +15,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
+@OpenForMokkery
 class RefreshRepository(
     private val httpClient: HttpClient,
     private val networkConfig: NetworkConfig,

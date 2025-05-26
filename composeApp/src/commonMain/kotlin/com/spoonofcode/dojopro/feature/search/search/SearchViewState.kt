@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.feature.search
+package com.spoonofcode.dojopro.feature.search.search
 
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.ui.BaseViewState

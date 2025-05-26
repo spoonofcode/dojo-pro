@@ -12,8 +12,8 @@ class SetFilterDataUseCase(
         selectedCoachId: Int? = null,
         selectedLevelId: Int? = null,
         selectedTypeId: Int? = null,
-        startDateTime: LocalDateTime? = null,
-        endDateTime: LocalDateTime? = null,
+        startDateTime: LocalDateTime,
+        endDateTime: LocalDateTime,
     ) {
         filterRepository.setSelectedFilters(
             newFilterData = FilterData(
