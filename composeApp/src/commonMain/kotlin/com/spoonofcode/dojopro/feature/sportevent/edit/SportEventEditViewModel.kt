@@ -203,7 +203,6 @@ internal class SportEventEditViewModel(
                         viewModelNavigator.pop()
                     }
                 }
-                viewModelNavigator.pop()
             } catch (ce: CancellationException) {
                 throw ce
             } catch (e: Exception) {

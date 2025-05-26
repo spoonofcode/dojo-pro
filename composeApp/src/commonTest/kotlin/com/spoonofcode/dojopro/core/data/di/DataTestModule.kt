@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.core.data.repository.filterRepositoryMock
 import com.spoonofcode.dojopro.core.data.repository.levelRepositoryMock
 import com.spoonofcode.dojopro.core.data.repository.profileRepositoryMock
 import com.spoonofcode.dojopro.core.data.repository.roleRepositoryMock
+import com.spoonofcode.dojopro.core.data.repository.roomRepositoryMock
 import com.spoonofcode.dojopro.core.data.repository.sportEventRepositoryMock
 import com.spoonofcode.dojopro.core.data.repository.typeRepositoryMock
 import com.spoonofcode.dojopro.core.data.repository.userRepositoryMock
@@ -17,6 +18,7 @@ val dataTestModule = module {
     singleOf(::levelRepositoryMock)
     singleOf(::profileRepositoryMock)
     singleOf(::roleRepositoryMock)
+    singleOf(::roomRepositoryMock)
     singleOf(::sportEventRepositoryMock)
     singleOf(::userRepositoryMock)
     singleOf(::typeRepositoryMock)

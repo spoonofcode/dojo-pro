@@ -15,4 +15,5 @@ object RoomMockData {
         id = 3,
         name = "Room 3",
     )
+    val ROOMS = listOf(ROOM_1, ROOM_2, ROOM_3)
 }

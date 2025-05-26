@@ -5,7 +5,6 @@ import com.spoonofcode.dojopro.core.data.repository.LevelRepository
 import com.spoonofcode.dojopro.core.data.repository.RoomRepository
 import com.spoonofcode.dojopro.core.data.repository.SportEventRepository
 import com.spoonofcode.dojopro.core.data.repository.TypeRepository
-import com.spoonofcode.dojopro.core.data.repository.UserRepository
 import com.spoonofcode.dojopro.core.model.Club
 import com.spoonofcode.dojopro.core.model.Level
 import com.spoonofcode.dojopro.core.model.Room
@@ -29,7 +28,6 @@ class LoadSportEventFormDataUseCase(
     private val levelRepository: LevelRepository,
     private val typeRepository: TypeRepository,
     private val sportEventRepository: SportEventRepository,
-    private val userRepository: UserRepository,
 ) {
     suspend operator fun invoke(
         screenMode: ScreenMode
