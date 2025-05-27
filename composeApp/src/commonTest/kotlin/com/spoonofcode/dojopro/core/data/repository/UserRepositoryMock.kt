@@ -12,6 +12,7 @@ import dev.mokkery.mock
 internal fun userRepositoryMock() = mock<UserRepository> {
     everySuspend { create(any<UserRequest>()) } returns USER_1
     everySuspend { read(any()) } returns USER_1
+    everySuspend { readAll() } returns USERS
     everySuspend { readAllUsersByRole(any()) } returns USERS
     everySuspend { readSportEventsUserParticipatedIn(any()) } returns SPORT_EVENTS
 }
