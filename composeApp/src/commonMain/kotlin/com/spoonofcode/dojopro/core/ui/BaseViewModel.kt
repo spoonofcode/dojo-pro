@@ -60,6 +60,7 @@ abstract class BaseViewModel<VS : BaseViewState>(
                         _isOnline.value = true
                         showSnackbar(SnackbarEvent.Online)
                     }
+
                     is Connectivity.Status.Disconnected -> {
                         _isOnline.value = false
                         showSnackbar(SnackbarEvent.Offline)

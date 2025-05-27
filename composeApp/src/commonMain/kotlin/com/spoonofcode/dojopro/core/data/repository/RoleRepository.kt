@@ -2,6 +2,7 @@ package com.spoonofcode.dojopro.core.data.repository
 
 import com.spoonofcode.dojopro.core.data.base.GenericCrudRepository
 import com.spoonofcode.dojopro.core.model.Role
+import com.spoonofcode.dojopro.core.test.OpenForMokkery
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
@@ -11,6 +12,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
+@OpenForMokkery
 class RoleRepository : GenericCrudRepository<Role, Role>(
     resourceName = "roles",
     requestSerializer = Role.serializer(),
@@ -18,6 +20,8 @@ class RoleRepository : GenericCrudRepository<Role, Role>(
 ) {
     suspend fun readAllRolesByUserId(userId: Int): List<Role> {
         return withContext(Dispatchers.IO) {
+
+            readAll()
             val response: HttpResponse = doRequest(
                 urlPath = "roles",
                 method = HttpMethod.Get,

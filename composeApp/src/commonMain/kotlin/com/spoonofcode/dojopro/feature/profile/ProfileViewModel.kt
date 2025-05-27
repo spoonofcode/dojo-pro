@@ -3,7 +3,7 @@ package com.spoonofcode.dojopro.feature.profile
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.domain.GetProfileUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
-import com.spoonofcode.dojopro.feature.settings.SettingsScreen
+import com.spoonofcode.dojopro.feature.appsettings.AppSettingsScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -36,7 +36,7 @@ internal class ProfileViewModel(
 
     fun navigateToSettings() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = SettingsScreen())
+            viewModelNavigator.push(screen = AppSettingsScreen())
         }
     }
 

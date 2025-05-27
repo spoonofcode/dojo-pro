@@ -32,6 +32,8 @@ internal class FilterViewModel(
                 val selectedCoachId = filterData.selectedCoachId ?: ALL_OPTION_ID
                 val selectedLevelId = filterData.selectedLevelId ?: ALL_OPTION_ID
                 val selectedTypeId = filterData.selectedTypeId ?: ALL_OPTION_ID
+                val startDateTime = filterData.startDateTime
+                val endDateTime = filterData.endDateTime
                 updateState {
                     copy(
                         isLoadingView = false,
@@ -39,6 +41,8 @@ internal class FilterViewModel(
                         selectedCoachId = selectedCoachId,
                         selectedLevelId = selectedLevelId,
                         selectedTypeId = selectedTypeId,
+                        startDateTime = startDateTime,
+                        endDateTime = endDateTime,
                         clubs = addAllOption().plus(sportEventFilterFormData.clubs.associate { it.id to it.name }),
                         coaches = addAllOption().plus(sportEventFilterFormData.coaches.associate { it.id to it.fullName }),
                         levels = addAllOption().plus(sportEventFilterFormData.levels.associate { it.id to it.name }),

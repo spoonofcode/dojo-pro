@@ -3,11 +3,48 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.mokkery)
+    alias(libs.plugins.allopen)
+    alias(libs.plugins.kover)
+}
+
+kover {
+    reports {
+        verify {
+            rule {
+                minBound(80)
+            }
+        }
+
+        filters {
+            excludes {
+                classes("MainKt")
+                classes("*.MainActivity")
+
+                // Generated Classes & Resources
+                packages("*.generated.*")
+                packages("*resources*")
+
+                // Dependecy Injection
+                packages("*di*")
+
+                // Compose Related
+                classes("*ComposeSingletons*")
+                annotatedBy("androidx.compose.runtime.Composable")
+
+                // Voyager
+                classes("*.*Screen")
+
+                // ViewStates
+                classes("*.*ViewState")
+            }
+        }
+    }
 }
 
 kotlin {
@@ -39,7 +76,7 @@ kotlin {
         iosArm64(),
         iosSimulatorArm64()
     )
-    
+
     sourceSets {
         iosMain.dependencies {
             implementation(libs.ktor.client.ios)
@@ -83,7 +120,17 @@ kotlin {
             implementation(libs.voyager.tab.navigator)
             implementation(libs.voyager.transitions)
         }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.turbine)
+            implementation(libs.koin.test)
+        }
     }
+}
+
+allOpen {
+    annotation("com.spoonofcode.dojopro.core.test.OpenForMokkery")
 }
 
 android {
