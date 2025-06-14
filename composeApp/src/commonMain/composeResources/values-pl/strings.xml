@@ -1,6 +1,7 @@
 <resources>
     <!-- SECTION General -->
     <string name="demo">Demo PL</string>
+    <string name="chat">Chat</string>
     <string name="accept">Akceptuj</string>
     <string name="app_name">DojoPro</string>
     <string name="cancel">Anuluj</string>

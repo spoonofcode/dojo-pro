@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.mokkery)
     alias(libs.plugins.allopen)
     alias(libs.plugins.kover)
+    alias(libs.plugins.google.services)
 }
 
 kover {
@@ -93,6 +94,11 @@ kotlin {
             implementation(libs.androidx.credentials)
             implementation(libs.androidx.credentials.play.service.auth)
             implementation(libs.googleid)
+            implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
+            implementation("com.google.firebase:firebase-messaging")
+
+            implementation("com.squareup.retrofit2:retrofit:2.9.0")
+            implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
