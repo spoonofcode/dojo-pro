@@ -5,6 +5,7 @@ import com.spoonofcode.dojopro.core.data.repository.FilterRepository
 import com.spoonofcode.dojopro.core.data.repository.LevelRepository
 import com.spoonofcode.dojopro.core.data.repository.LoginGoogleRepository
 import com.spoonofcode.dojopro.core.data.repository.LoginRepository
+import com.spoonofcode.dojopro.core.data.repository.MessageFCMRepository
 import com.spoonofcode.dojopro.core.data.repository.ProfileRepository
 import com.spoonofcode.dojopro.core.data.repository.RefreshRepository
 import com.spoonofcode.dojopro.core.data.repository.RegisterRepository
@@ -30,4 +31,5 @@ val dataModule = module {
     singleOf(::RoleRepository)
     singleOf(::FilterRepository)
     singleOf(::TypeRepository)
+    singleOf(::MessageFCMRepository)
 }

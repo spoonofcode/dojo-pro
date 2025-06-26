@@ -1,5 +1,6 @@
 package com.spoonofcode.dojopro.core.services
 
+import com.spoonofcode.dojopro.core.model.MessageFCM
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -7,12 +8,12 @@ interface FcmApi {
 
     @POST("/send")
     suspend fun sendMessage(
-        @Body body: SendMessageDto
+        @Body body: MessageFCM
     )
 
     @POST("/broadcast")
     suspend fun broadcast(
-        @Body body: SendMessageDto
+        @Body body: MessageFCM
     )
 
 }

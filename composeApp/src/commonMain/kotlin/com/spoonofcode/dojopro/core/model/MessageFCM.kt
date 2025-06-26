@@ -1,10 +1,14 @@
-package com.spoonofcode.dojopro.core.services
+package com.spoonofcode.dojopro.core.model
 
-data class SendMessageDto(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class MessageFCM(
     val to: String?,
     val notification: NotificationBody,
 )
 
+@Serializable
 data class NotificationBody(
     val title: String,
     val body: String,

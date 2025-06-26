@@ -3,25 +3,24 @@ package com.spoonofcode.dojopro.feature.chat
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Firebase
 import com.google.firebase.messaging.messaging
-import com.spoonofcode.dojopro.core.services.FcmApi
-import com.spoonofcode.dojopro.core.services.NotificationBody
-import com.spoonofcode.dojopro.core.services.SendMessageDto
+import com.spoonofcode.dojopro.core.domain.SendMessageFCMUseCase
+import com.spoonofcode.dojopro.core.model.MessageFCM
+import com.spoonofcode.dojopro.core.model.NotificationBody
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.io.IOException
 import retrofit2.HttpException
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 
-class ChatViewModel : BaseViewModel<ChatViewState>(ChatViewState()) {
+class ChatViewModel(
+    private val sendMessageFCMUseCase: SendMessageFCMUseCase,
+) : BaseViewModel<ChatViewState>(ChatViewState()) {
 
-    private val api: FcmApi = Retrofit.Builder()
-        .baseUrl("https://10.0.2.2:8443/")
-        .addConverterFactory(MoshiConverterFactory.create())
-        .build()
-        .create()
+//    private val api: FcmApi = Retrofit.Builder()
+//        .baseUrl("https://10.0.2.2:8443/")
+//        .addConverterFactory(MoshiConverterFactory.create())
+//        .build()
+//        .create()
 
     init {
         viewModelScope.launch {
@@ -55,7 +54,7 @@ class ChatViewModel : BaseViewModel<ChatViewState>(ChatViewState()) {
 
     fun onMessageSend(isBroadcast: Boolean) {
         viewModelScope.launch {
-            val messageDto = SendMessageDto(
+            val messageDto = MessageFCM(
                 to = if (isBroadcast) null else currentState().remoteToken,
                 notification = NotificationBody(
                     title = "New message!",
@@ -64,11 +63,15 @@ class ChatViewModel : BaseViewModel<ChatViewState>(ChatViewState()) {
             )
 
             try {
-                if (isBroadcast) {
-                    api.broadcast(messageDto)
-                } else {
-                    api.sendMessage(messageDto)
-                }
+                sendMessageFCMUseCase(
+                    messageDto = messageDto,
+                )
+
+//                if (isBroadcast) {
+//                    api.broadcast(messageDto)
+//                } else {
+//                    api.sendMessage(messageDto)
+//                }
 
                 updateState {
                     copy(
