@@ -8,4 +8,5 @@ data class ChatViewState(
     val isEnteringToken: Boolean = true,
     val remoteToken: String = "",
     val messageText: String = "",
+    val firebaseMessageToken: String = "",
 ) : BaseViewState()

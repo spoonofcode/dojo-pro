@@ -79,6 +79,9 @@
     <!-- SECTION Search User -->
     <string name="search_user">Szukaj użytkownika</string>
 
+    <!-- SECTION Message FCM -->
+    <string name="message_fcm">MessageFCM</string>
+
     <!-- SECTION User Details -->
     <string name="user_details">Szczegóły użytkownika</string>
     <string name="add_coach_role">Dodaj rolę trenera</string>

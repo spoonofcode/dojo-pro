@@ -79,6 +79,9 @@
     <!-- SECTION Search User -->
     <string name="search_user">Search user</string>
 
+    <!-- SECTION Message FCM -->
+    <string name="message_fcm">MessageFCM</string>
+
     <!-- SECTION User Details -->
     <string name="user_details">User details</string>
     <string name="add_coach_role">Add Coach role</string>

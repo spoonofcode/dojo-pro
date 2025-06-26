@@ -4,11 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.transitions.SlideTransition
 import com.spoonofcode.dojopro.core.settings.appContext
-import com.spoonofcode.dojopro.core.ui.theme.AppTheme
-import com.spoonofcode.dojopro.feature.chat.ChatScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,12 +13,12 @@ class MainActivity : ComponentActivity() {
         appContext = this
         installSplashScreen()
         setContent {
-//            App()
-            AppTheme {
-                Navigator(ChatScreen()) { navigator ->
-                    SlideTransition(navigator = navigator)
-                }
-            }
+            App()
+//            AppTheme {
+//                Navigator(ChatScreen()) { navigator ->
+//                    SlideTransition(navigator = navigator)
+//                }
+//            }
         }
     }
 

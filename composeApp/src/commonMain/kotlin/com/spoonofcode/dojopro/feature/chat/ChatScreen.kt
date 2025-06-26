@@ -1,6 +1,5 @@
 package com.spoonofcode.dojopro.feature.chat
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,20 +22,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.google.firebase.Firebase
-import com.google.firebase.messaging.messaging
 import com.spoonofcode.dojopro.core.ui.BaseScreen
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import org.koin.compose.viewmodel.koinViewModel
 
 internal class ChatScreen(
@@ -63,6 +54,7 @@ internal class ChatScreen(
             onMessageSend = { viewModel.onMessageSend(isBroadcast = false) },
             onMessageBroadcast = { viewModel.onMessageSend(isBroadcast = true) },
             onRemoteTokenChange = { viewModel.onRemoteTokenChange(it) },
+            getFirebaseMessageToken = { viewModel.getFirebaseMessageToken() },
             onSubmitRemoteToken = { viewModel.onSubmitRemoteToken() },
         )
     }
@@ -118,6 +110,7 @@ internal class ChatScreen(
         onMessageSend: () -> Unit,
         onMessageBroadcast: () -> Unit,
         onRemoteTokenChange: (String) -> Unit,
+        getFirebaseMessageToken: () -> Unit,
         onSubmitRemoteToken: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
@@ -126,6 +119,7 @@ internal class ChatScreen(
                 EnterTokenDialog(
                     token = viewState.remoteToken,
                     onTokenChange = { onRemoteTokenChange(it) },
+                    getFirebaseMessageToken = { getFirebaseMessageToken() },
                     onSubmit = { onSubmitRemoteToken() }
                 )
             } else {
@@ -144,12 +138,9 @@ internal class ChatScreen(
     fun EnterTokenDialog(
         token: String,
         onTokenChange: (String) -> Unit,
+        getFirebaseMessageToken: () -> Unit,
         onSubmit: () -> Unit,
     ) {
-        val clipboardManager = LocalClipboardManager.current
-        val context = LocalContext.current
-        val scope = rememberCoroutineScope()
-
         Dialog(
             onDismissRequest = {},
             properties = DialogProperties(
@@ -180,18 +171,9 @@ internal class ChatScreen(
                     horizontalArrangement = Arrangement.End,
                 ) {
                     OutlinedButton(
-                        onClick = {
-                            scope.launch {
-                                val token = Firebase.messaging.token.await()
-                                clipboardManager.setText(AnnotatedString(token))
-
-                                Toast.makeText(
-                                    context, "Copied local token!", Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        }
+                        onClick = getFirebaseMessageToken
                     ) {
-                        Text("Copy token")
+                        Text("Get token")
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))

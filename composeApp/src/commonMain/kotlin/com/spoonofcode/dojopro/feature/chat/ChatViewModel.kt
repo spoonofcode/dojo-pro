@@ -1,25 +1,24 @@
 package com.spoonofcode.dojopro.feature.chat
 
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.Firebase
-import com.google.firebase.messaging.messaging
 import com.spoonofcode.dojopro.core.domain.SendMessageFCMUseCase
 import com.spoonofcode.dojopro.core.model.MessageFCM
 import com.spoonofcode.dojopro.core.model.NotificationBody
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.utils.FirebaseMessageTokenProvider
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.cancellation.CancellationException
 
 class ChatViewModel(
     private val sendMessageFCMUseCase: SendMessageFCMUseCase,
+    private val firebaseMessageTokenProvider: FirebaseMessageTokenProvider,
 ) : BaseViewModel<ChatViewState>(ChatViewState()) {
 
-    init {
-        viewModelScope.launch {
-            Firebase.messaging.subscribeToTopic("chat").await()
-        }
-    }
+//    init {
+//        viewModelScope.launch {
+//            Firebase.messaging.subscribeToTopic("chat").await()
+//        }
+//    }
 
     fun onRemoteTokenChange(newToken: String) {
         updateState {
@@ -42,6 +41,18 @@ class ChatViewModel(
             copy(
                 messageText = message,
             )
+        }
+    }
+
+    fun getFirebaseMessageToken() {
+        viewModelScope.launch {
+            val token = firebaseMessageTokenProvider.getFirebaseMessageToken()
+
+            updateState {
+                copy(
+                    firebaseMessageToken = token,
+                )
+            }
         }
     }
 
