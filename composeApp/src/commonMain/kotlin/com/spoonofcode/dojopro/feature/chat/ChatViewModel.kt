@@ -5,18 +5,18 @@ import com.spoonofcode.dojopro.core.domain.SendMessageFCMUseCase
 import com.spoonofcode.dojopro.core.model.MessageFCM
 import com.spoonofcode.dojopro.core.model.NotificationBody
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
-import com.spoonofcode.dojopro.core.ui.utils.FirebaseMessageTokenProvider
+import com.spoonofcode.dojopro.core.ui.utils.FirebasePushService
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
 class ChatViewModel(
     private val sendMessageFCMUseCase: SendMessageFCMUseCase,
-    private val firebaseMessageTokenProvider: FirebaseMessageTokenProvider,
+    private val firebasePushService: FirebasePushService,
 ) : BaseViewModel<ChatViewState>(ChatViewState()) {
 
 //    init {
 //        viewModelScope.launch {
-//            Firebase.messaging.subscribeToTopic("chat").await()
+//            firebasePushService.subscribeToTopic("chat")
 //        }
 //    }
 
@@ -46,7 +46,7 @@ class ChatViewModel(
 
     fun getFirebaseMessageToken() {
         viewModelScope.launch {
-            val token = firebaseMessageTokenProvider.getFirebaseMessageToken()
+            val token = firebasePushService.getMessageToken()
 
             updateState {
                 copy(
