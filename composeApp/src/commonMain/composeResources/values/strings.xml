@@ -27,6 +27,9 @@
     <string name="location">Location</string>
     <string name="reload">Reload</string>
     <string name="data_could_not_be_loaded">Data could not be loaded</string>
+    <string name="message_title">Message title</string>
+    <string name="message_text">Message text</string>
+    <string name="remote_user_token">Remote user token</string>
 
     <!-- SECTION Login -->
     <string name="let_s_get_started">Let’s get started</string>

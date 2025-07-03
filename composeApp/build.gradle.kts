@@ -94,8 +94,8 @@ kotlin {
             implementation(libs.androidx.credentials)
             implementation(libs.androidx.credentials.play.service.auth)
             implementation(libs.googleid)
-            implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
-            implementation("com.google.firebase:firebase-messaging")
+            implementation(libs.firebase.messaging)
+            implementation(project.dependencies.platform(libs.firebase.bom))
         }
         commonMain.dependencies {
             implementation(compose.runtime)

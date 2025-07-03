@@ -27,6 +27,9 @@
     <string name="location">Lokalizacja</string>
     <string name="reload">Odśwież</string>
     <string name="data_could_not_be_loaded">Nie udało się wczytać danych</string>
+    <string name="message_title">Tytuł wiadomość</string>
+    <string name="message_text">Tekst wiadomość</string>
+    <string name="remote_user_token">Remote user token</string>
 
     <!-- SECTION Login -->
     <string name="let_s_get_started">Zaczynajmy</string>

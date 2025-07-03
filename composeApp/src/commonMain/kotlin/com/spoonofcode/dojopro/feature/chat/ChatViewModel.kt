@@ -14,24 +14,16 @@ class ChatViewModel(
     private val firebasePushService: FirebasePushService,
 ) : BaseViewModel<ChatViewState>(ChatViewState()) {
 
-//    init {
-//        viewModelScope.launch {
-//            firebasePushService.subscribeToTopic("chat")
-//        }
-//    }
+    init {
+        viewModelScope.launch {
+            firebasePushService.subscribeToTopic("chat")
+        }
+    }
 
     fun onRemoteTokenChange(newToken: String) {
         updateState {
             copy(
                 remoteToken = newToken,
-            )
-        }
-    }
-
-    fun onSubmitRemoteToken() {
-        updateState {
-            copy(
-                isEnteringToken = false
             )
         }
     }
@@ -58,11 +50,12 @@ class ChatViewModel(
 
     fun onMessageSend(isBroadcast: Boolean) {
         viewModelScope.launch {
+            val currentState = currentState()
             val messageDto = MessageFCM(
-                to = if (isBroadcast) null else currentState().remoteToken,
+                to = if (isBroadcast) null else currentState.remoteToken,
                 notification = NotificationBody(
-                    title = "New message!",
-                    body = currentState().messageText,
+                    title = currentState.messageTitle,
+                    body = currentState.messageText,
                 )
             )
 

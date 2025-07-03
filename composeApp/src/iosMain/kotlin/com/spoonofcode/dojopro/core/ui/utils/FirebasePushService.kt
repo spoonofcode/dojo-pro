@@ -14,7 +14,7 @@ actual class FirebasePushService {
 //    actual fun unsubscribeFromTopic(topic: String) {
 //        FirebasePushServiceObjC.unsubscribeWithTopic(topic)
 //    }
-    actual fun getMessageToken(): String {
+    actual suspend fun getMessageToken(): String {
         TODO("Not yet implemented")
     }
 

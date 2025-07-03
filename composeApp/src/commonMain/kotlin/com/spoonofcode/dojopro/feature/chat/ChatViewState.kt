@@ -5,8 +5,8 @@ import com.spoonofcode.dojopro.core.ui.BaseViewState
 data class ChatViewState(
     override val isLoadingView: Boolean = false,
     override val isErrorView: Boolean = false,
-    val isEnteringToken: Boolean = true,
     val remoteToken: String = "",
+    val messageTitle: String = "",
     val messageText: String = "",
     val firebaseMessageToken: String = "",
 ) : BaseViewState()

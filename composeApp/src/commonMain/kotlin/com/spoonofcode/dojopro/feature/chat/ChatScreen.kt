@@ -1,33 +1,19 @@
 package com.spoonofcode.dojopro.feature.chat
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Send
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.spoonofcode.dojopro.core.ui.BaseScreen
+import com.spoonofcode.dojopro.core.ui.compose.Buttons
+import com.spoonofcode.dojopro.core.ui.compose.Chips
+import com.spoonofcode.dojopro.core.ui.compose.Spacers
+import com.spoonofcode.dojopro.core.ui.compose.TextFields
+import com.spoonofcode.dojopro.core.ui.compose.Texts
+import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.message_text
+import com.spoonofcode.dojopro.resources.message_title
+import com.spoonofcode.dojopro.resources.remote_user_token
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 internal class ChatScreen(
@@ -55,52 +41,7 @@ internal class ChatScreen(
             onMessageBroadcast = { viewModel.onMessageSend(isBroadcast = true) },
             onRemoteTokenChange = { viewModel.onRemoteTokenChange(it) },
             getFirebaseMessageToken = { viewModel.getFirebaseMessageToken() },
-            onSubmitRemoteToken = { viewModel.onSubmitRemoteToken() },
         )
-    }
-
-    @Composable
-    fun LocalChatScreen(
-        messageText: String,
-        onMessageChange: (String) -> Unit,
-        onMessageSend: () -> Unit,
-        onMessageBroadcast: () -> Unit,
-    ) {
-        OutlinedTextField(
-            value = messageText,
-            onValueChange = onMessageChange,
-            placeholder = {
-                Text("Enter a message")
-            },
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth()
-        )
-        Spacer(Modifier.height(16.dp))
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
-        ) {
-            IconButton(
-                onClick = onMessageSend
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Send,
-                    contentDescription = "Send"
-                )
-            }
-            Spacer(Modifier.width(16.dp))
-            IconButton(
-                onClick = onMessageBroadcast
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Share,
-                    contentDescription = "Broadcast"
-                )
-            }
-        }
     }
 
     @Composable
@@ -111,79 +52,53 @@ internal class ChatScreen(
         onMessageBroadcast: () -> Unit,
         onRemoteTokenChange: (String) -> Unit,
         getFirebaseMessageToken: () -> Unit,
-        onSubmitRemoteToken: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-
-            if (viewState.isEnteringToken) {
-                EnterTokenDialog(
-                    token = viewState.remoteToken,
-                    onTokenChange = { onRemoteTokenChange(it) },
-                    getFirebaseMessageToken = { getFirebaseMessageToken() },
-                    onSubmit = { onSubmitRemoteToken() }
-                )
-            } else {
-                LocalChatScreen(
-                    messageText = viewState.messageText,
-                    onMessageSend = { onMessageSend() },
-                    onMessageBroadcast = { onMessageBroadcast() },
-                    onMessageChange = { onMessageChange(it) }
-                )
-            }
-        }
-    }
-
-
-    @Composable
-    fun EnterTokenDialog(
-        token: String,
-        onTokenChange: (String) -> Unit,
-        getFirebaseMessageToken: () -> Unit,
-        onSubmit: () -> Unit,
-    ) {
-        Dialog(
-            onDismissRequest = {},
-            properties = DialogProperties(
-                dismissOnBackPress = false,
-                dismissOnClickOutside = false,
+            Buttons.PrimaryButton(
+                text = "Get user token",
+                onClick = getFirebaseMessageToken
             )
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(5.dp))
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(16.dp)
-            ) {
-                OutlinedTextField(
-                    value = token,
-                    onValueChange = onTokenChange,
-                    modifier = Modifier.fillMaxWidth(),
-                    placeholder = {
-                        Text("Remote user token")
-                    },
-                    maxLines = 1
-                )
-                Spacer(Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                ) {
-                    OutlinedButton(
-                        onClick = getFirebaseMessageToken
-                    ) {
-                        Text("Get token")
-                    }
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                OutlinedButton(
-                    onClick = onSubmit,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text("Submit")
-                }
-            }
+
+            Texts.HSB("Firebase user message token: ${viewState.firebaseMessageToken}")
+
+            Spacers.VerticalBetweenFields()
+
+            TextFields.Outlined(
+                value = viewState.remoteToken,
+                onValueChange = onRemoteTokenChange,
+                label = stringResource(resource = Res.string.remote_user_token),
+            )
+
+            Spacers.VerticalBetweenFields()
+
+            TextFields.Outlined(
+                value = viewState.messageTitle,
+                onValueChange = onMessageChange,
+                label = stringResource(resource = Res.string.message_title),
+            )
+
+            Spacers.VerticalBetweenFields()
+
+            TextFields.Outlined(
+                value = viewState.messageText,
+                onValueChange = onMessageChange,
+                label = stringResource(resource = Res.string.message_text),
+            )
+
+            Spacers.VerticalBetweenFields()
+
+            Buttons.PrimaryButton(
+                text = "Send to user",
+                onClick = onMessageSend
+            )
+            Spacers.VerticalBetweenFields()
+
+            Buttons.PrimaryButton(
+                text = "Send to topics",
+                onClick = onMessageBroadcast
+            )
+
+            Chips.SelectableChipsGroup()
         }
     }
 

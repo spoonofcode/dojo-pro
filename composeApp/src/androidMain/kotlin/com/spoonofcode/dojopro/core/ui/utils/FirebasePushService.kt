@@ -5,8 +5,8 @@ import com.google.firebase.messaging.messaging
 import kotlinx.coroutines.tasks.await
 
 actual class FirebasePushService() {
-    actual fun getMessageToken(): String {
-        return Firebase.messaging.token.result
+    actual suspend fun getMessageToken(): String {
+        return Firebase.messaging.token.await()
     }
 
     actual suspend fun subscribeToTopic(topic: String) {
