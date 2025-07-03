@@ -78,6 +78,34 @@ class ChatViewModel(
         }
     }
 
+    fun clickOnTopicToSend(clickedTopic: String) {
+        val currentSelectedTopicsToSend = currentState().selectedTopicsToSend.toMutableList()
+        if (clickedTopic in currentSelectedTopicsToSend) {
+            currentSelectedTopicsToSend.remove(clickedTopic)
+        } else {
+            currentSelectedTopicsToSend.add(clickedTopic)
+        }
+        updateState {
+            copy(
+                selectedTopicsToSend = currentSelectedTopicsToSend.toList()
+            )
+        }
+    }
+
+    fun clickOnTopicToSubscribe(clickedTopic: String) {
+        val currentSelectedTopicsToSubscribe = currentState().selectedTopicsToSubscribe.toMutableList()
+        if (clickedTopic in currentSelectedTopicsToSubscribe) {
+            currentSelectedTopicsToSubscribe.remove(clickedTopic)
+        } else {
+            currentSelectedTopicsToSubscribe.add(clickedTopic)
+        }
+        updateState {
+            copy(
+                selectedTopicsToSubscribe = currentSelectedTopicsToSubscribe.toList()
+            )
+        }
+    }
+
     private fun showErrorView() {
         updateState {
             copy(

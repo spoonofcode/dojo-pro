@@ -13,27 +13,25 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 object Chips {
     @Composable
-    fun SelectableChipsGroup() {
-        val options = listOf("Sports", "Music", "Travel", "Technology", "Books")
-        val selectedOptions = remember { mutableStateListOf<String>() }
-
+    fun SelectableChipsGroup(
+        label: String,
+        options: List<String>,
+        selectedOptions: List<String>,
+        onOptionClick: (String) -> Unit,
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text("Select your interests:", style = MaterialTheme.typography.titleMedium)
-
+            Text(label)
             Spacer(modifier = Modifier.height(8.dp))
 
             FlowRow(
@@ -45,13 +43,7 @@ object Chips {
 
                     FilterChip(
                         selected = isSelected,
-                        onClick = {
-                            if (isSelected) {
-                                selectedOptions.remove(option)
-                            } else {
-                                selectedOptions.add(option)
-                            }
-                        },
+                        onClick = { onOptionClick(option) },
                         label = { Text(option) },
                         leadingIcon = if (isSelected) {
                             {

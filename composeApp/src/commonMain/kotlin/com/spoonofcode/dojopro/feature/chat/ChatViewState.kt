@@ -9,4 +9,7 @@ data class ChatViewState(
     val messageTitle: String = "",
     val messageText: String = "",
     val firebaseMessageToken: String = "",
+    val topics: List<String> = listOf("Sports", "Music", "Travel", "Technology", "Books"),
+    val selectedTopicsToSend: List<String> = emptyList(),
+    val selectedTopicsToSubscribe: List<String> = emptyList(),
 ) : BaseViewState()

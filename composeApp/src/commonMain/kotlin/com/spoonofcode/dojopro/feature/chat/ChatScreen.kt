@@ -41,6 +41,8 @@ internal class ChatScreen(
             onMessageBroadcast = { viewModel.onMessageSend(isBroadcast = true) },
             onRemoteTokenChange = { viewModel.onRemoteTokenChange(it) },
             getFirebaseMessageToken = { viewModel.getFirebaseMessageToken() },
+            clickOnTopicToSend = { viewModel.clickOnTopicToSend(it) },
+            clickOnTopicToSubscribe = { viewModel.clickOnTopicToSubscribe(it) },
         )
     }
 
@@ -52,6 +54,8 @@ internal class ChatScreen(
         onMessageBroadcast: () -> Unit,
         onRemoteTokenChange: (String) -> Unit,
         getFirebaseMessageToken: () -> Unit,
+        clickOnTopicToSend: (String) -> Unit,
+        clickOnTopicToSubscribe: (String) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Buttons.PrimaryButton(
@@ -98,7 +102,19 @@ internal class ChatScreen(
                 onClick = onMessageBroadcast
             )
 
-            Chips.SelectableChipsGroup()
+            Chips.SelectableChipsGroup(
+                label = "Selected topics to send",
+                options = viewState.topics,
+                selectedOptions = viewState.selectedTopicsToSend,
+                onOptionClick = clickOnTopicToSend,
+            )
+
+            Chips.SelectableChipsGroup(
+                label = "Selected topics to subscribe",
+                options = viewState.topics,
+                selectedOptions = viewState.selectedTopicsToSubscribe,
+                onOptionClick = clickOnTopicToSubscribe,
+            )
         }
     }
 
