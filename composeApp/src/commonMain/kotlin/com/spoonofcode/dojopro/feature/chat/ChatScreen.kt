@@ -36,9 +36,10 @@ internal class ChatScreen(
 
         return ContentView(
             viewState = viewState,
-            onMessageChange = { viewModel.onMessageChange(it) },
-            onMessageSend = { viewModel.onMessageSend(isBroadcast = false) },
-            onMessageBroadcast = { viewModel.onMessageSend(isBroadcast = true) },
+            onMessageTextChange = { viewModel.onMessageTextChange(it) },
+            onMessageTitleChange = { viewModel.onMessageTitleChange(it) },
+            sendToUser = { viewModel.sendToUser() },
+            sendToTopics = { viewModel.sendToTopics() },
             onRemoteTokenChange = { viewModel.onRemoteTokenChange(it) },
             getFirebaseMessageToken = { viewModel.getFirebaseMessageToken() },
             clickOnTopicToSend = { viewModel.clickOnTopicToSend(it) },
@@ -49,9 +50,10 @@ internal class ChatScreen(
     @Composable
     internal fun ContentView(
         viewState: ChatViewState,
-        onMessageChange: (String) -> Unit,
-        onMessageSend: () -> Unit,
-        onMessageBroadcast: () -> Unit,
+        onMessageTextChange: (String) -> Unit,
+        onMessageTitleChange: (String) -> Unit,
+        sendToUser: () -> Unit,
+        sendToTopics: () -> Unit,
         onRemoteTokenChange: (String) -> Unit,
         getFirebaseMessageToken: () -> Unit,
         clickOnTopicToSend: (String) -> Unit,
@@ -77,7 +79,7 @@ internal class ChatScreen(
 
             TextFields.Outlined(
                 value = viewState.messageTitle,
-                onValueChange = onMessageChange,
+                onValueChange = onMessageTitleChange,
                 label = stringResource(resource = Res.string.message_title),
             )
 
@@ -85,7 +87,7 @@ internal class ChatScreen(
 
             TextFields.Outlined(
                 value = viewState.messageText,
-                onValueChange = onMessageChange,
+                onValueChange = onMessageTextChange,
                 label = stringResource(resource = Res.string.message_text),
             )
 
@@ -93,13 +95,13 @@ internal class ChatScreen(
 
             Buttons.PrimaryButton(
                 text = "Send to user",
-                onClick = onMessageSend
+                onClick = sendToUser
             )
             Spacers.VerticalBetweenFields()
 
             Buttons.PrimaryButton(
                 text = "Send to topics",
-                onClick = onMessageBroadcast
+                onClick = sendToTopics
             )
 
             Chips.SelectableChipsGroup(

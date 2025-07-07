@@ -26,7 +26,8 @@ class MessageFCMRepository : GenericBaseRepository<MessageFCM, MessageFCM>(
                 customRequestBody = Json.encodeToString(
                     MessageFCM.serializer(),
                     MessageFCM(
-                        to = body.to,
+                        token = body.token,
+                        topics = body.topics,
                         notification = body.notification
                     )
                 ),

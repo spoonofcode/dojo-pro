@@ -3,8 +3,9 @@ package com.spoonofcode.dojopro.feature.chat
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.domain.SendMessageFCMUseCase
 import com.spoonofcode.dojopro.core.model.MessageFCM
-import com.spoonofcode.dojopro.core.model.NotificationBody
+import com.spoonofcode.dojopro.core.model.NotificationFCM
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.core.ui.SnackbarEvent
 import com.spoonofcode.dojopro.core.ui.utils.FirebasePushService
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
@@ -14,12 +15,6 @@ class ChatViewModel(
     private val firebasePushService: FirebasePushService,
 ) : BaseViewModel<ChatViewState>(ChatViewState()) {
 
-    init {
-        viewModelScope.launch {
-            firebasePushService.subscribeToTopic("chat")
-        }
-    }
-
     fun onRemoteTokenChange(newToken: String) {
         updateState {
             copy(
@@ -28,10 +23,18 @@ class ChatViewModel(
         }
     }
 
-    fun onMessageChange(message: String) {
+    fun onMessageTitleChange(messageTitle: String) {
         updateState {
             copy(
-                messageText = message,
+                messageTitle = messageTitle,
+            )
+        }
+    }
+
+    fun onMessageTextChange(messageText: String) {
+        updateState {
+            copy(
+                messageText = messageText,
             )
         }
     }
@@ -48,12 +51,12 @@ class ChatViewModel(
         }
     }
 
-    fun onMessageSend(isBroadcast: Boolean) {
+    fun sendToUser() {
         viewModelScope.launch {
             val currentState = currentState()
             val messageDto = MessageFCM(
-                to = if (isBroadcast) null else currentState.remoteToken,
-                notification = NotificationBody(
+                token = currentState.remoteToken,
+                notification = NotificationFCM(
                     title = currentState.messageTitle,
                     body = currentState.messageText,
                 )
@@ -78,12 +81,42 @@ class ChatViewModel(
         }
     }
 
-    fun clickOnTopicToSend(clickedTopic: String) {
+    fun sendToTopics() {
+        viewModelScope.launch {
+            val currentState = currentState()
+            val messageDto = MessageFCM(
+                topics = currentState.selectedTopicsToSend,
+                notification = NotificationFCM(
+                    title = currentState.messageTitle,
+                    body = currentState.messageText,
+                )
+            )
+
+            try {
+                sendMessageFCMUseCase(
+                    messageDto = messageDto,
+                )
+
+                updateState {
+                    copy(
+                        messageText = "",
+                    )
+                }
+
+            } catch (ce: CancellationException) {
+                throw ce
+            } catch (e: Exception) {
+                showErrorView()
+            }
+        }
+    }
+
+    fun clickOnTopicToSend(topic: String) {
         val currentSelectedTopicsToSend = currentState().selectedTopicsToSend.toMutableList()
-        if (clickedTopic in currentSelectedTopicsToSend) {
-            currentSelectedTopicsToSend.remove(clickedTopic)
+        if (topic in currentSelectedTopicsToSend) {
+            currentSelectedTopicsToSend.remove(topic)
         } else {
-            currentSelectedTopicsToSend.add(clickedTopic)
+            currentSelectedTopicsToSend.add(topic)
         }
         updateState {
             copy(
@@ -92,17 +125,27 @@ class ChatViewModel(
         }
     }
 
-    fun clickOnTopicToSubscribe(clickedTopic: String) {
-        val currentSelectedTopicsToSubscribe = currentState().selectedTopicsToSubscribe.toMutableList()
-        if (clickedTopic in currentSelectedTopicsToSubscribe) {
-            currentSelectedTopicsToSubscribe.remove(clickedTopic)
-        } else {
-            currentSelectedTopicsToSubscribe.add(clickedTopic)
-        }
-        updateState {
-            copy(
-                selectedTopicsToSubscribe = currentSelectedTopicsToSubscribe.toList()
-            )
+    fun clickOnTopicToSubscribe(topic: String) {
+        viewModelScope.launch {
+            try {
+                val currentSelectedTopicsToSubscribe =
+                    currentState().selectedTopicsToSubscribe.toMutableList()
+                if (topic in currentSelectedTopicsToSubscribe) {
+                    currentSelectedTopicsToSubscribe.remove(topic)
+                    firebasePushService.unsubscribeFromTopic(topic = topic)
+                } else {
+                    currentSelectedTopicsToSubscribe.add(topic)
+                    firebasePushService.subscribeToTopic(topic = topic)
+                }
+                updateState {
+                    copy(
+                        selectedTopicsToSubscribe = currentSelectedTopicsToSubscribe.toList()
+                    )
+                }
+            } catch (e: Exception) {
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+            }
+
         }
     }
 
