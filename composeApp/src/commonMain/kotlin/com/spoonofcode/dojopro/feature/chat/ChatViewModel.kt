@@ -61,18 +61,10 @@ class ChatViewModel(
                     body = currentState.messageText,
                 )
             )
-
             try {
                 sendMessageFCMUseCase(
                     messageDto = messageDto,
                 )
-
-                updateState {
-                    copy(
-                        messageText = "",
-                    )
-                }
-
             } catch (ce: CancellationException) {
                 throw ce
             } catch (e: Exception) {
@@ -91,18 +83,10 @@ class ChatViewModel(
                     body = currentState.messageText,
                 )
             )
-
             try {
                 sendMessageFCMUseCase(
                     messageDto = messageDto,
                 )
-
-                updateState {
-                    copy(
-                        messageText = "",
-                    )
-                }
-
             } catch (ce: CancellationException) {
                 throw ce
             } catch (e: Exception) {

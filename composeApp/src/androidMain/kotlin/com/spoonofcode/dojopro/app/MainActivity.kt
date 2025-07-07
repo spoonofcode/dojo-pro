@@ -11,6 +11,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         requestNotificationPermission()
         appContext = this
+
+        val screen = intent.getStringExtra("screen")
+        val itemId = intent.getStringExtra("item_id")
+
+        println("BARTEK screen: $screen")
+        println("BARTEK itemId: $itemId")
+
         installSplashScreen()
         setContent {
             App()
