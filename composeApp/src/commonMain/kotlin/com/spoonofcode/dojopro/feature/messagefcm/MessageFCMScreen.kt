@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.feature.chat
+package com.spoonofcode.dojopro.feature.messagefcm
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
@@ -11,21 +11,23 @@ import com.spoonofcode.dojopro.core.ui.compose.TextFields
 import com.spoonofcode.dojopro.core.ui.compose.Texts
 import com.spoonofcode.dojopro.core.ui.utils.LocalClipboardManager
 import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.copy_to_clipboard
+import com.spoonofcode.dojopro.resources.get_user_token
 import com.spoonofcode.dojopro.resources.notification_body
 import com.spoonofcode.dojopro.resources.notification_title
 import com.spoonofcode.dojopro.resources.remote_user_token
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-internal class ChatScreen : BaseScreen<ChatViewModel, ChatViewState>() {
+internal class MessageFCMScreen : BaseScreen<MessageFCMViewModel, MessageFCMViewState>() {
 
     @Composable
-    override fun provideViewModel() = koinViewModel<ChatViewModel>()
+    override fun provideViewModel() = koinViewModel<MessageFCMViewModel>()
 
     @Composable
     override fun provideContentView(
-        viewModel: ChatViewModel,
-        viewState: ChatViewState,
+        viewModel: MessageFCMViewModel,
+        viewState: MessageFCMViewState,
     ): @Composable ColumnScope.() -> Unit {
 
         LaunchedEffect(Unit) {
@@ -47,7 +49,7 @@ internal class ChatScreen : BaseScreen<ChatViewModel, ChatViewState>() {
 
     @Composable
     internal fun ContentView(
-        viewState: ChatViewState,
+        viewState: MessageFCMViewState,
         onMessageTextChange: (String) -> Unit,
         onMessageTitleChange: (String) -> Unit,
         sendToUser: () -> Unit,
@@ -59,7 +61,7 @@ internal class ChatScreen : BaseScreen<ChatViewModel, ChatViewState>() {
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Buttons.PrimaryButton(
-                text = "Get user token",
+                text = stringResource(resource = Res.string.get_user_token),
                 onClick = getFirebaseMessageToken
             )
 
@@ -68,7 +70,7 @@ internal class ChatScreen : BaseScreen<ChatViewModel, ChatViewState>() {
             val clipboardManager = LocalClipboardManager.current
 
             Buttons.PrimaryButton(
-                text = "Copy to Clipboard",
+                text = stringResource(resource = Res.string.copy_to_clipboard),
                 onClick = { clipboardManager?.setText(viewState.fcmUserToken) }
             )
 

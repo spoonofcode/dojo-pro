@@ -25,7 +25,6 @@ fun App() {
 @Composable
 private fun getStartScreen(sessionInitialized: Boolean): Screen {
 //    return DemoScreen()
-//    return ChatScreen()
 
     return if (sessionInitialized) {
         MainHostScreen()

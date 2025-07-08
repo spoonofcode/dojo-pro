@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.feature.chat
+package com.spoonofcode.dojopro.feature.messagefcm
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.domain.SendMessageFCMUseCase
@@ -10,10 +10,10 @@ import com.spoonofcode.dojopro.core.ui.utils.FirebasePushService
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
-class ChatViewModel(
+class MessageFCMViewModel(
     private val sendMessageFCMUseCase: SendMessageFCMUseCase,
     private val firebasePushService: FirebasePushService,
-) : BaseViewModel<ChatViewState>(ChatViewState()) {
+) : BaseViewModel<MessageFCMViewState>(MessageFCMViewState()) {
 
     fun onRemoteTokenChange(newToken: String) {
         updateState {

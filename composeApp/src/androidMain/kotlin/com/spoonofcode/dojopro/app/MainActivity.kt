@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             App()
 //            AppTheme {
-//                Navigator(ChatScreen()) { navigator ->
+//                Navigator(DemoScreen()) { navigator ->
 //                    SlideTransition(navigator = navigator)
 //                }
 //            }

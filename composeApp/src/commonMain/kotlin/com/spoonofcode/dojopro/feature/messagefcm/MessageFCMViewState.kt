@@ -1,8 +1,8 @@
-package com.spoonofcode.dojopro.feature.chat
+package com.spoonofcode.dojopro.feature.messagefcm
 
 import com.spoonofcode.dojopro.core.ui.BaseViewState
 
-data class ChatViewState(
+data class MessageFCMViewState(
     override val isLoadingView: Boolean = false,
     override val isErrorView: Boolean = false,
     val fcmUserToken: String = "",
