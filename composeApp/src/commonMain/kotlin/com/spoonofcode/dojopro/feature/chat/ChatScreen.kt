@@ -10,8 +10,8 @@ import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
 import com.spoonofcode.dojopro.core.ui.compose.Texts
 import com.spoonofcode.dojopro.resources.Res
-import com.spoonofcode.dojopro.resources.message_text
-import com.spoonofcode.dojopro.resources.message_title
+import com.spoonofcode.dojopro.resources.notification_body
+import com.spoonofcode.dojopro.resources.notification_title
 import com.spoonofcode.dojopro.resources.remote_user_token
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -65,12 +65,12 @@ internal class ChatScreen(
                 onClick = getFirebaseMessageToken
             )
 
-            Texts.HSB("Firebase user message token: ${viewState.firebaseMessageToken}")
+            Texts.HSB("Firebase user message token: ${viewState.fcmUserToken}")
 
             Spacers.VerticalBetweenFields()
 
             TextFields.Outlined(
-                value = viewState.remoteToken,
+                value = viewState.fcmRemoteUserToken,
                 onValueChange = onRemoteTokenChange,
                 label = stringResource(resource = Res.string.remote_user_token),
             )
@@ -78,17 +78,17 @@ internal class ChatScreen(
             Spacers.VerticalBetweenFields()
 
             TextFields.Outlined(
-                value = viewState.messageTitle,
+                value = viewState.notificationTitle,
                 onValueChange = onMessageTitleChange,
-                label = stringResource(resource = Res.string.message_title),
+                label = stringResource(resource = Res.string.notification_title),
             )
 
             Spacers.VerticalBetweenFields()
 
             TextFields.Outlined(
-                value = viewState.messageText,
+                value = viewState.notificationBody,
                 onValueChange = onMessageTextChange,
-                label = stringResource(resource = Res.string.message_text),
+                label = stringResource(resource = Res.string.notification_body),
             )
 
             Spacers.VerticalBetweenFields()

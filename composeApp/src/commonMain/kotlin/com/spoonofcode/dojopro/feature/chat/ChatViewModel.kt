@@ -18,7 +18,7 @@ class ChatViewModel(
     fun onRemoteTokenChange(newToken: String) {
         updateState {
             copy(
-                remoteToken = newToken,
+                fcmRemoteUserToken = newToken,
             )
         }
     }
@@ -26,7 +26,7 @@ class ChatViewModel(
     fun onMessageTitleChange(messageTitle: String) {
         updateState {
             copy(
-                messageTitle = messageTitle,
+                notificationTitle = messageTitle,
             )
         }
     }
@@ -34,7 +34,7 @@ class ChatViewModel(
     fun onMessageTextChange(messageText: String) {
         updateState {
             copy(
-                messageText = messageText,
+                notificationBody = messageText,
             )
         }
     }
@@ -42,10 +42,9 @@ class ChatViewModel(
     fun getFirebaseMessageToken() {
         viewModelScope.launch {
             val token = firebasePushService.getMessageToken()
-
             updateState {
                 copy(
-                    firebaseMessageToken = token,
+                    fcmUserToken = token,
                 )
             }
         }
@@ -55,10 +54,11 @@ class ChatViewModel(
         viewModelScope.launch {
             val currentState = currentState()
             val messageDto = MessageFCM(
-                token = currentState.remoteToken,
+                tokens = listOf(currentState.fcmRemoteUserToken),
                 notification = NotificationFCM(
-                    title = currentState.messageTitle,
-                    body = currentState.messageText,
+                    title = currentState.notificationTitle,
+                    body = currentState.notificationBody,
+                    imageUrl = currentState.notificationImageUrl,
                 )
             )
             try {
@@ -79,8 +79,8 @@ class ChatViewModel(
             val messageDto = MessageFCM(
                 topics = currentState.selectedTopicsToSend,
                 notification = NotificationFCM(
-                    title = currentState.messageTitle,
-                    body = currentState.messageText,
+                    title = currentState.notificationTitle,
+                    body = currentState.notificationBody,
                 )
             )
             try {
