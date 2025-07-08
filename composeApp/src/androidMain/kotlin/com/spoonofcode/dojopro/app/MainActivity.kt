@@ -12,11 +12,7 @@ class MainActivity : ComponentActivity() {
         requestNotificationPermission()
         appContext = this
 
-        val screen = intent.getStringExtra("screen")
-        val itemId = intent.getStringExtra("item_id")
-
-        println("BARTEK screen: $screen")
-        println("BARTEK itemId: $itemId")
+        checkDataFromNotification()
 
         installSplashScreen()
         setContent {
@@ -29,7 +25,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    fun requestNotificationPermission() {
+    private fun requestNotificationPermission() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             val hasPermission =
                 checkSelfPermission(
@@ -41,5 +37,11 @@ class MainActivity : ComponentActivity() {
             }
 
         }
+    }
+
+    private fun checkDataFromNotification() {
+        // We can get data from notifaction like below
+//        val screen = intent.getStringExtra("screen")
+//        val itemId = intent.getStringExtra("item_id")
     }
 }

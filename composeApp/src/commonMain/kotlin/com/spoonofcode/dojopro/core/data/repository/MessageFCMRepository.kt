@@ -28,6 +28,7 @@ class MessageFCMRepository : GenericBaseRepository<MessageFCM, MessageFCM>(
                     MessageFCM(
                         tokens = body.tokens,
                         topics = body.topics,
+                        data = body.data,
                         notification = body.notification
                     )
                 ),
@@ -35,5 +36,4 @@ class MessageFCMRepository : GenericBaseRepository<MessageFCM, MessageFCM>(
             responseOrException(response).body<String>()
         }
     }
-
 }
