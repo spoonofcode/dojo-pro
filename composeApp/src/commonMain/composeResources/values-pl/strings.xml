@@ -1,6 +1,7 @@
 <resources>
     <!-- SECTION General -->
     <string name="demo">Demo PL</string>
+    <string name="chat">Chat</string>
     <string name="accept">Akceptuj</string>
     <string name="app_name">DojoPro</string>
     <string name="cancel">Anuluj</string>
@@ -26,6 +27,11 @@
     <string name="location">Lokalizacja</string>
     <string name="reload">Odśwież</string>
     <string name="data_could_not_be_loaded">Nie udało się wczytać danych</string>
+    <string name="notification_title">Tytuł powiadomienia</string>
+    <string name="notification_body">Treść powiadomienia</string>
+    <string name="remote_user_token">Remote user token</string>
+    <string name="get_user_token">Get user token</string>
+    <string name="copy_to_clipboard">Copy to Clipboard</string>
 
     <!-- SECTION Login -->
     <string name="let_s_get_started">Zaczynajmy</string>
@@ -77,6 +83,9 @@
 
     <!-- SECTION Search User -->
     <string name="search_user">Szukaj użytkownika</string>
+
+    <!-- SECTION Message FCM -->
+    <string name="message_fcm">MessageFCM</string>
 
     <!-- SECTION User Details -->
     <string name="user_details">Szczegóły użytkownika</string>

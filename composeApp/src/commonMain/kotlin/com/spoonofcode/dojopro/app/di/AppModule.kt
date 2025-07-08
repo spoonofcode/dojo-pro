@@ -9,6 +9,7 @@ import com.spoonofcode.dojopro.feature.appsettings.di.appSettingsModule
 import com.spoonofcode.dojopro.feature.demo.di.demoModule
 import com.spoonofcode.dojopro.feature.home.di.homeModule
 import com.spoonofcode.dojopro.feature.login.di.loginModule
+import com.spoonofcode.dojopro.feature.messagefcm.di.messageFCMModule
 import com.spoonofcode.dojopro.feature.profile.di.profileModule
 import com.spoonofcode.dojopro.feature.search.di.searchModule
 import com.spoonofcode.dojopro.feature.shop.di.shopModule
@@ -38,6 +39,7 @@ val appModule = module {
         shopModule,
         sportEventModule,
         userModule,
+        messageFCMModule,
     )
     single {
         HttpClient {

@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.mokkery)
     alias(libs.plugins.allopen)
     alias(libs.plugins.kover)
+    alias(libs.plugins.google.services)
 }
 
 kover {
@@ -93,6 +94,8 @@ kotlin {
             implementation(libs.androidx.credentials)
             implementation(libs.androidx.credentials.play.service.auth)
             implementation(libs.googleid)
+            implementation(libs.firebase.messaging)
+            implementation(project.dependencies.platform(libs.firebase.bom))
         }
         commonMain.dependencies {
             implementation(compose.runtime)

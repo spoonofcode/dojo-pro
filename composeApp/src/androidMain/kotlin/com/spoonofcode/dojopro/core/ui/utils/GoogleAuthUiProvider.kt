@@ -21,8 +21,8 @@ actual class GoogleAuthUiProvider(
             request = getCredentialRequest()
         ).credential
         handleSignIn(credential)
-    } catch (e: Exception) {
-        null
+    } catch (exception: Exception) {
+        throw exception
     }
 
     actual suspend fun signOut() {

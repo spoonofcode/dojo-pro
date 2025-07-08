@@ -3,6 +3,7 @@ package com.spoonofcode.dojopro.feature.appsettings
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.dojopro.core.domain.HasSpecialSettingsUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.feature.messagefcm.MessageFCMScreen
 import com.spoonofcode.dojopro.feature.user.search.SearchUserScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
@@ -37,6 +38,12 @@ internal class AppSettingsViewModel(
     fun navigateToSearchUser() {
         viewModelScope.launch {
             viewModelNavigator.push(screen = SearchUserScreen())
+        }
+    }
+
+    fun navigateToMessageFCM() {
+        viewModelScope.launch {
+            viewModelNavigator.push(screen = MessageFCMScreen())
         }
     }
 

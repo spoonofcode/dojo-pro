@@ -101,6 +101,7 @@ internal class LoginScreen(
 
             GoogleSignInButton(onGoogleSignInResult = { googleUser ->
                 // send Google id token to your server
+                println("googleUser = $googleUser")
                 val googleUserToken = requireNotNull(googleUser?.token)
                 signInWithGoogle(googleUserToken)
             })

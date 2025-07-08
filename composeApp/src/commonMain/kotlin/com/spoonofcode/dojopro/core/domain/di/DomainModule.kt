@@ -24,6 +24,7 @@ import com.spoonofcode.dojopro.core.domain.LoginGoogleUseCase
 import com.spoonofcode.dojopro.core.domain.LoginUseCase
 import com.spoonofcode.dojopro.core.domain.RefreshAccessTokenUseCase
 import com.spoonofcode.dojopro.core.domain.RegisterUseCase
+import com.spoonofcode.dojopro.core.domain.SendMessageFCMUseCase
 import com.spoonofcode.dojopro.core.domain.SetFilterDataUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -54,4 +55,5 @@ val domainModule = module {
     factoryOf(::AddRoleToUserUseCase)
     factoryOf(::GetUserByIdUseCase)
     factoryOf(::HasSpecialSettingsUseCase)
+    factoryOf(::SendMessageFCMUseCase)
 }
