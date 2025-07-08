@@ -9,6 +9,7 @@ import com.spoonofcode.dojopro.core.ui.compose.Chips
 import com.spoonofcode.dojopro.core.ui.compose.Spacers
 import com.spoonofcode.dojopro.core.ui.compose.TextFields
 import com.spoonofcode.dojopro.core.ui.compose.Texts
+import com.spoonofcode.dojopro.core.ui.utils.LocalClipboardManager
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.notification_body
 import com.spoonofcode.dojopro.resources.notification_title
@@ -16,10 +17,7 @@ import com.spoonofcode.dojopro.resources.remote_user_token
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-internal class ChatScreen(
-    override val backNavigationEnable: Boolean = false,
-    override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<ChatViewModel, ChatViewState>() {
+internal class ChatScreen : BaseScreen<ChatViewModel, ChatViewState>() {
 
     @Composable
     override fun provideViewModel() = koinViewModel<ChatViewModel>()
@@ -66,6 +64,13 @@ internal class ChatScreen(
             )
 
             Texts.HSB("Firebase user message token: ${viewState.fcmUserToken}")
+
+            val clipboardManager = LocalClipboardManager.current
+
+            Buttons.PrimaryButton(
+                text = "Copy to Clipboard",
+                onClick = { clipboardManager?.setText(viewState.fcmUserToken) }
+            )
 
             Spacers.VerticalBetweenFields()
 
