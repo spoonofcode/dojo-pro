@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.core.ext
+package com.spoonofcode.dojopro.core.base.ext
 
 import com.spoonofcode.dojopro.core.ui.utils.TimeZoneUtils
 import kotlinx.datetime.LocalDate

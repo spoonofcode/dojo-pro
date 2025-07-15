@@ -18,7 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.spoonofcode.dojopro.core.ext.formatedLocalDate
+import com.spoonofcode.dojopro.core.base.ext.formatedLocalDate
 import com.spoonofcode.dojopro.core.ui.utils.LocalDateTimeUtils
 import com.spoonofcode.dojopro.core.ui.utils.TimeZoneUtils
 import com.spoonofcode.dojopro.resources.Res
