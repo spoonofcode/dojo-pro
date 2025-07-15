@@ -1,7 +1,7 @@
 package com.spoonofcode.dojopro.feature.search.filter
 
-import com.spoonofcode.dojopro.core.ext.plus
-import com.spoonofcode.dojopro.core.ext.roundToNextHour
+import com.spoonofcode.dojopro.core.base.ext.plus
+import com.spoonofcode.dojopro.core.base.ext.roundToNextHour
 import com.spoonofcode.dojopro.core.ui.BaseViewState
 import com.spoonofcode.dojopro.core.ui.utils.LocalDateTimeUtils
 import kotlinx.datetime.LocalDateTime

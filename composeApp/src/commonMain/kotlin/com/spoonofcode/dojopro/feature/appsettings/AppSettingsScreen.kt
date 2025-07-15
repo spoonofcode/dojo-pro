@@ -5,9 +5,11 @@ import androidx.compose.runtime.Composable
 import com.spoonofcode.dojopro.core.ui.BaseScreen
 import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.resources.Res
+import com.spoonofcode.dojopro.resources.delete_account
 import com.spoonofcode.dojopro.resources.message_fcm
 import com.spoonofcode.dojopro.resources.search_user
 import com.spoonofcode.dojopro.resources.settings
+import com.spoonofcode.dojopro.resources.sign_out
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -30,6 +32,8 @@ internal class AppSettingsScreen(
             viewState = viewState,
             navigateToSearchUser = { viewModel.navigateToSearchUser() },
             navigateToMessageFCM = { viewModel.navigateToMessageFCM() },
+            signOut = { viewModel.signOut() },
+            deleteAccount = { viewModel.deleteAccount() },
         )
     }
 
@@ -38,6 +42,8 @@ internal class AppSettingsScreen(
         viewState: AppSettingsViewState,
         navigateToSearchUser: () -> Unit,
         navigateToMessageFCM: () -> Unit,
+        signOut: () -> Unit,
+        deleteAccount: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             if (viewState.isSearchUserButtonVisible) {
@@ -49,6 +55,16 @@ internal class AppSettingsScreen(
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.message_fcm),
                 onClick = navigateToMessageFCM
+            )
+
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.sign_out),
+                onClick = signOut
+            )
+
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.delete_account),
+                onClick = deleteAccount
             )
         }
     }

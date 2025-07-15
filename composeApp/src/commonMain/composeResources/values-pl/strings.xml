@@ -32,6 +32,8 @@
     <string name="remote_user_token">Remote user token</string>
     <string name="get_user_token">Get user token</string>
     <string name="copy_to_clipboard">Copy to Clipboard</string>
+    <string name="sign_out">Wyloguj</string>
+    <string name="delete_account">Usuń konto</string>
 
     <!-- SECTION Login -->
     <string name="let_s_get_started">Zaczynajmy</string>

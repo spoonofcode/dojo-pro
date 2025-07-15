@@ -1,8 +1,11 @@
 package com.spoonofcode.dojopro.feature.appsettings
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.dojopro.core.domain.DeleteAccountUseCase
 import com.spoonofcode.dojopro.core.domain.HasSpecialSettingsUseCase
+import com.spoonofcode.dojopro.core.domain.LogoutUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
+import com.spoonofcode.dojopro.feature.login.login.LoginScreen
 import com.spoonofcode.dojopro.feature.messagefcm.MessageFCMScreen
 import com.spoonofcode.dojopro.feature.user.search.SearchUserScreen
 import kotlinx.coroutines.launch
@@ -10,6 +13,8 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class AppSettingsViewModel(
     private val hasSpecialSettingsUseCase: HasSpecialSettingsUseCase,
+    private val logoutUseCase: LogoutUseCase,
+    private val deleteAccountUseCase: DeleteAccountUseCase,
 ) : BaseViewModel<AppSettingsViewState>(AppSettingsViewState()) {
 
     init {
@@ -44,6 +49,20 @@ internal class AppSettingsViewModel(
     fun navigateToMessageFCM() {
         viewModelScope.launch {
             viewModelNavigator.push(screen = MessageFCMScreen())
+        }
+    }
+
+    fun signOut() {
+        viewModelScope.launch {
+            logoutUseCase()
+            viewModelNavigator.replaceAll(listOf(LoginScreen()))
+        }
+    }
+
+    fun deleteAccount() {
+        viewModelScope.launch {
+            deleteAccountUseCase()
+            viewModelNavigator.replaceAll(listOf(LoginScreen()))
         }
     }
 

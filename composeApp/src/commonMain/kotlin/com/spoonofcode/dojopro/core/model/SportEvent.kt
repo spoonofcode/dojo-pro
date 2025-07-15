@@ -1,7 +1,7 @@
 package com.spoonofcode.dojopro.core.model
 
-import com.spoonofcode.dojopro.core.ext.formatedLocalDateTime
-import com.spoonofcode.dojopro.core.ext.formatedTime
+import com.spoonofcode.dojopro.core.base.ext.formatedLocalDateTime
+import com.spoonofcode.dojopro.core.base.ext.formatedTime
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone

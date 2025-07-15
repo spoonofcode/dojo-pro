@@ -1,4 +1,4 @@
-package com.spoonofcode.dojopro.core.ext
+package com.spoonofcode.dojopro.core.base.ext
 
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format

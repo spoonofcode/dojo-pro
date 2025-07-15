@@ -3,6 +3,7 @@ package com.spoonofcode.dojopro.core.domain.di
 import com.spoonofcode.dojopro.core.domain.AddRoleToUserUseCase
 import com.spoonofcode.dojopro.core.domain.AddUserToSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.CreateSportEventUseCase
+import com.spoonofcode.dojopro.core.domain.DeleteAccountUseCase
 import com.spoonofcode.dojopro.core.domain.DeleteSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.EditSportEventUseCase
 import com.spoonofcode.dojopro.core.domain.GetAllSportEventsUseCase
@@ -22,6 +23,7 @@ import com.spoonofcode.dojopro.core.domain.LoadSportEventFilterFormDataUseCase
 import com.spoonofcode.dojopro.core.domain.LoadSportEventFormDataUseCase
 import com.spoonofcode.dojopro.core.domain.LoginGoogleUseCase
 import com.spoonofcode.dojopro.core.domain.LoginUseCase
+import com.spoonofcode.dojopro.core.domain.LogoutUseCase
 import com.spoonofcode.dojopro.core.domain.RefreshAccessTokenUseCase
 import com.spoonofcode.dojopro.core.domain.RegisterUseCase
 import com.spoonofcode.dojopro.core.domain.SendMessageFCMUseCase
@@ -30,8 +32,10 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val domainModule = module {
+    factoryOf(::DeleteAccountUseCase)
     factoryOf(::LoginUseCase)
     factoryOf(::LoginGoogleUseCase)
+    factoryOf(::LogoutUseCase)
     factoryOf(::RegisterUseCase)
     factoryOf(::RefreshAccessTokenUseCase)
     factoryOf(::GetProfileUseCase)

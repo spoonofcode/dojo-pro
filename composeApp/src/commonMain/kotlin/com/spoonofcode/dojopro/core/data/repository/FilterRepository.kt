@@ -1,7 +1,7 @@
 package com.spoonofcode.dojopro.core.data.repository
 
-import com.spoonofcode.dojopro.core.ext.plus
-import com.spoonofcode.dojopro.core.ext.roundToNextHour
+import com.spoonofcode.dojopro.core.base.ext.plus
+import com.spoonofcode.dojopro.core.base.ext.roundToNextHour
 import com.spoonofcode.dojopro.core.test.OpenForMokkery
 import com.spoonofcode.dojopro.core.ui.utils.LocalDateTimeUtils
 import com.spoonofcode.dojopro.feature.search.filter.FilterViewState.Companion.ONE_WEEK_IN_HOURS

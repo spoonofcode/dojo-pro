@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.dojopro.core.ext.formatedLocalDate
+import com.spoonofcode.dojopro.core.base.ext.formatedLocalDate
 import com.spoonofcode.dojopro.core.model.Levels
 import com.spoonofcode.dojopro.core.model.SportEvent
 import com.spoonofcode.dojopro.core.ui.BaseScreen
