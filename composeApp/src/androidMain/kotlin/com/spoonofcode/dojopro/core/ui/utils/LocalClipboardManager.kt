@@ -7,22 +7,6 @@ import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 
-//actual val LocalClipboardManager = compositionLocalOf<ClipboardManager?> {
-//    error("ClipboardManager not provided")
-//}
-//
-//@Composable
-//fun ProvideAndroidClipboardManager(): ClipboardManager {
-//    val context = LocalContext.current
-//    return object : ClipboardManager {
-//        override fun setText(text: String) {
-//            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
-//            val clip = ClipData.newPlainText("label", text)
-//            clipboard.setPrimaryClip(clip)
-//        }
-//    }
-//}
-
 actual val LocalClipboardManager: ProvidableCompositionLocal<ClipboardManager?>
     @Composable
     get() {
