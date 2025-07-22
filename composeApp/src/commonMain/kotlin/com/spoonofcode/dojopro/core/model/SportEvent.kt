@@ -2,16 +2,17 @@ package com.spoonofcode.dojopro.core.model
 
 import com.spoonofcode.dojopro.core.base.ext.formatedLocalDateTime
 import com.spoonofcode.dojopro.core.base.ext.formatedTime
-import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.Serializable
+import kotlin.time.Clock
 import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
 @Serializable
-data class SportEvent(
+data class SportEvent @OptIn(ExperimentalTime::class) constructor(
     val id: Int,
     val creationDate: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC),
     val updateDate: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC),
@@ -51,6 +52,7 @@ data class SportEvent(
      * Length in whole minutes, computed with Kotlin‑time only.
      * You must supply the time‑zone that gives meaning to the LocalDateTimes.
      */
+    @OptIn(ExperimentalTime::class)
     private fun durationMinutes(zone: TimeZone = TimeZone.UTC): Long {
         val start = startDateTime.toInstant(zone)
         val end = endDateTime.toInstant(zone)
