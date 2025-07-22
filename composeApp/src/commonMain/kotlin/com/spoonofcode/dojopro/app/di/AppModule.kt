@@ -35,11 +35,11 @@ val appModule = module {
         homeModule,
         loginModule,
         profileModule,
+        messageFCMModule,
         searchModule,
         shopModule,
         sportEventModule,
         userModule,
-        messageFCMModule,
     )
     single {
         HttpClient {
