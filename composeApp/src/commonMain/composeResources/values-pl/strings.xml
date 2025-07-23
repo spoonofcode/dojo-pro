@@ -40,6 +40,7 @@
     <string name="max_number_of_people">Maks. liczba osób</string>
     <string name="message_fcm">MessageFCM</string>
     <string name="min_number_of_people">Min. liczba osób</string>
+    <string name="nfc">NFC</string>
     <string name="notification_body">Treść powiadomienia</string>
     <string name="notification_title">Tytuł powiadomienia</string>
     <string name="number_of_people">Liczba osób</string>

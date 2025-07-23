@@ -13,13 +13,17 @@ import com.spoonofcode.dojopro.core.ui.utils.LocalClipboardManager
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.copy_to_clipboard
 import com.spoonofcode.dojopro.resources.get_user_token
+import com.spoonofcode.dojopro.resources.message_fcm
 import com.spoonofcode.dojopro.resources.notification_body
 import com.spoonofcode.dojopro.resources.notification_title
 import com.spoonofcode.dojopro.resources.remote_user_token
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-internal class MessageFCMScreen : BaseScreen<MessageFCMViewModel, MessageFCMViewState>() {
+internal class MessageFCMScreen(
+    override val screenTopAppBarTitle: StringResource = Res.string.message_fcm,
+) : BaseScreen<MessageFCMViewModel, MessageFCMViewState>() {
 
     @Composable
     override fun provideViewModel() = koinViewModel<MessageFCMViewModel>()

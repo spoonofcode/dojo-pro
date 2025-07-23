@@ -7,6 +7,7 @@ import com.spoonofcode.dojopro.core.ui.compose.Buttons
 import com.spoonofcode.dojopro.resources.Res
 import com.spoonofcode.dojopro.resources.delete_account
 import com.spoonofcode.dojopro.resources.message_fcm
+import com.spoonofcode.dojopro.resources.nfc
 import com.spoonofcode.dojopro.resources.search_user
 import com.spoonofcode.dojopro.resources.settings
 import com.spoonofcode.dojopro.resources.sign_out
@@ -32,6 +33,7 @@ internal class AppSettingsScreen(
             viewState = viewState,
             navigateToSearchUser = { viewModel.navigateToSearchUser() },
             navigateToMessageFCM = { viewModel.navigateToMessageFCM() },
+            navigateToNFC = { viewModel.navigateToNFC() },
             signOut = { viewModel.signOut() },
             deleteAccount = { viewModel.deleteAccount() },
         )
@@ -42,6 +44,7 @@ internal class AppSettingsScreen(
         viewState: AppSettingsViewState,
         navigateToSearchUser: () -> Unit,
         navigateToMessageFCM: () -> Unit,
+        navigateToNFC: () -> Unit,
         signOut: () -> Unit,
         deleteAccount: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
@@ -55,6 +58,11 @@ internal class AppSettingsScreen(
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.message_fcm),
                 onClick = navigateToMessageFCM
+            )
+
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.nfc),
+                onClick = navigateToNFC
             )
 
             Buttons.PrimaryButton(

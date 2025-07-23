@@ -7,6 +7,7 @@ import com.spoonofcode.dojopro.core.domain.LogoutUseCase
 import com.spoonofcode.dojopro.core.ui.BaseViewModel
 import com.spoonofcode.dojopro.feature.login.login.LoginScreen
 import com.spoonofcode.dojopro.feature.messagefcm.MessageFCMScreen
+import com.spoonofcode.dojopro.feature.nfc.NFCScreen
 import com.spoonofcode.dojopro.feature.user.search.SearchUserScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
@@ -49,6 +50,12 @@ internal class AppSettingsViewModel(
     fun navigateToMessageFCM() {
         viewModelScope.launch {
             viewModelNavigator.push(screen = MessageFCMScreen())
+        }
+    }
+
+    fun navigateToNFC() {
+        viewModelScope.launch {
+            viewModelNavigator.push(screen = NFCScreen())
         }
     }
 
